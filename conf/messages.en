@@ -37,8 +37,10 @@ site.hidden-edit = Change {0}
 site.no = No
 site.yes = Yes
 site.continue = Continue
-site.service_name = maintain-other-individuals-frontend
+site.service_name = Register and Maintain a Trust
 site.textarea.char_limit = (Limit is {0} characters)
+site.sign_out = Sign out
+site.date.hint = For example, 31 3 1980
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
