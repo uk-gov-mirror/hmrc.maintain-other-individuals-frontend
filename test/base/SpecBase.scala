@@ -16,24 +16,35 @@
 
 package base
 
+import java.time.LocalDate
+
 import config.FrontendAppConfig
 import controllers.actions._
 import models.UserAnswers
-import org.scalatest.TryValues
+import org.mockito.Matchers.any
+import org.mockito.Mockito.when
+import org.scalatest.{TestSuite, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
+import play.api.mvc.BodyParsers
 import play.api.test.FakeRequest
+import repositories.PlaybackRepository
+import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolment, Enrolments}
 
-trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience {
+import scala.concurrent.{ExecutionContext, Future}
+
+trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience with MockitoSugar {
+  this: TestSuite =>
 
   val userAnswersId = "id"
 
-  def emptyUserAnswers = UserAnswers(userAnswersId, Json.obj())
+  def emptyUserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", LocalDate.now(), Json.obj())
 
   def injector: Injector = app.injector
 
@@ -41,15 +52,30 @@ trait SpecBase extends PlaySpec with GuiceOneAppPerSuite with TryValues with Sca
 
   def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
 
+  val bodyParsers = injector.instanceOf[BodyParsers.Default]
+
   def fakeRequest = FakeRequest("", "")
+
+  implicit def executionContext = injector.instanceOf[ExecutionContext]
 
   implicit def messages: Messages = messagesApi.preferred(fakeRequest)
 
-  protected def applicationBuilder(userAnswers: Option[UserAnswers] = None): GuiceApplicationBuilder =
+  val playbackRepository: PlaybackRepository = mock[PlaybackRepository]
+
+  when(playbackRepository.set(any())).thenReturn(Future.successful(true))
+
+  protected def applicationBuilder(userAnswers: Option[models.UserAnswers] = None,
+                                   affinityGroup: AffinityGroup = AffinityGroup.Organisation,
+                                   enrolments: Enrolments = Enrolments(Set.empty[Enrolment])
+                                  ): GuiceApplicationBuilder =
     new GuiceApplicationBuilder()
       .overrides(
+        bind[IdentifierAction].toInstance(new FakeIdentifierAction(bodyParsers, affinityGroup)),
+//        bind[PlaybackIdentifierAction].toInstance(new FakePlaybackIdentifierAction()),
+        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers)),
         bind[DataRequiredAction].to[DataRequiredActionImpl],
-        bind[IdentifierAction].to[FakeIdentifierAction],
-        bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers))
+        bind[PlaybackRepository].toInstance(playbackRepository)
       )
 }
+
+trait SpecBase extends PlaySpec with SpecBaseHelpers
