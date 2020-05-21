@@ -17,7 +17,7 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.{TrustConnector, TrustStoreConnector}
+import connectors.TrustStoreConnector
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import javax.inject.Inject
@@ -26,6 +26,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
+import services.TrustService
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import utils.AddAnOtherIndividualViewHelper
 import views.html.{AddAnOtherIndividualView, AddAnOtherIndividualYesNoView, MaxedOutOtherIndividualsView}
@@ -38,14 +39,14 @@ class AddAnOtherIndividualController @Inject()(
                                                 val controllerComponents: MessagesControllerComponents,
                                                 val appConfig: FrontendAppConfig,
                                                 trustStoreConnector: TrustStoreConnector,
-                                                trustConnector: TrustConnector,
+                                                trustService: TrustService,
                                                 addAnotherFormProvider: AddAnOtherIndividualFormProvider,
                                                 yesNoFormProvider: YesNoFormProvider,
                                                 repository: PlaybackRepository,
                                                 addAnotherView: AddAnOtherIndividualView,
                                                 yesNoView: AddAnOtherIndividualYesNoView,
                                                 completeView: MaxedOutOtherIndividualsView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val addAnotherForm : Form[AddAnOtherIndividual] = addAnotherFormProvider()
 
@@ -55,7 +56,7 @@ class AddAnOtherIndividualController @Inject()(
     implicit request =>
 
       for {
-        otherIndividuals <- trustConnector.getOtherIndividuals(request.userAnswers.utr)
+        otherIndividuals <- trustService.getOtherIndividuals(request.userAnswers.utr)
         updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
         _ <- repository.set(updatedAnswers)
       } yield {
@@ -108,7 +109,7 @@ class AddAnOtherIndividualController @Inject()(
   def submitAnother(): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      trustConnector.getOtherIndividuals(request.userAnswers.utr).flatMap { otherIndividuals =>
+      trustService.getOtherIndividuals(request.userAnswers.utr).flatMap { otherIndividuals =>
         addAnotherForm.bindFromRequest().fold(
           (formWithErrors: Form[_]) => {
 
