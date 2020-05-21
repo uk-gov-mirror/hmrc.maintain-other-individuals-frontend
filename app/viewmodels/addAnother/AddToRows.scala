@@ -14,14 +14,10 @@
  * limitations under the License.
  */
 
-package navigation
+package viewmodels.addAnother
 
-import models._
-import pages._
-import play.api.mvc.Call
+case class AddToRows(inProgress : List[AddRow], complete: List[AddRow]) {
 
-trait Navigator {
-
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+  def count : Int = inProgress.size + complete.size
 
 }

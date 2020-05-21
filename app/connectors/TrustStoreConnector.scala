@@ -14,14 +14,21 @@
  * limitations under the License.
  */
 
-package navigation
+package connectors
 
-import models._
-import pages._
-import play.api.mvc.Call
+import config.FrontendAppConfig
+import javax.inject.Inject
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
+import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
-trait Navigator {
+import scala.concurrent.{ExecutionContext, Future}
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+class TrustStoreConnector @Inject()(http: HttpClient, config: FrontendAppConfig) {
+
+  private def maintainTasksUrl(utr: String) = s"${config.trustsStoreUrl}/trusts-store/maintain/tasks/others/$utr"
+
+  def setTaskComplete(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[HttpResponse] = {
+    http.POSTEmpty[HttpResponse](maintainTasksUrl(utr))
+  }
 
 }

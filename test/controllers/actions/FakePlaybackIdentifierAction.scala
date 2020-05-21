@@ -14,14 +14,18 @@
  * limitations under the License.
  */
 
-package navigation
+package controllers.actions
 
-import models._
-import pages._
-import play.api.mvc.Call
+import com.google.inject.Inject
+import models.requests.DataRequest
+import play.api.mvc.Result
 
-trait Navigator {
+import scala.concurrent.{ExecutionContext, Future}
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+class FakePlaybackIdentifierAction @Inject()(
+                                              implicit val executionContext: ExecutionContext
+                                            ) extends PlaybackIdentifierAction {
+
+  override def refine[A](request: DataRequest[A]): Future[Either[Result, DataRequest[A]]] = Future.successful(Right(request))
 
 }

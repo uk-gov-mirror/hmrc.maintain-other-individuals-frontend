@@ -14,14 +14,16 @@
  * limitations under the License.
  */
 
-package navigation
+package models
 
-import models._
-import pages._
-import play.api.mvc.Call
+import java.time.LocalDate
 
-trait Navigator {
+import play.api.libs.json.{Format, Json}
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+case class TrustDetails(startDate: LocalDate)
+
+object TrustDetails {
+
+  implicit val formats: Format[TrustDetails] = Json.format[TrustDetails]
 
 }

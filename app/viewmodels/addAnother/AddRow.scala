@@ -14,14 +14,7 @@
  * limitations under the License.
  */
 
-package navigation
+package viewmodels.addAnother
 
-import models._
-import pages._
-import play.api.mvc.Call
+case class AddRow(name: String, typeLabel: String, changeLabel : String, changeUrl: Option[String], removeLabel: String, removeUrl: Option[String])
 
-trait Navigator {
-
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
-
-}

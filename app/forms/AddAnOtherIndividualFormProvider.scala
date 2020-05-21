@@ -14,14 +14,17 @@
  * limitations under the License.
  */
 
-package navigation
+package forms
 
-import models._
-import pages._
-import play.api.mvc.Call
+import forms.mappings.Mappings
+import javax.inject.Inject
+import models.AddAnOtherIndividual
+import play.api.data.Form
 
-trait Navigator {
+class AddAnOtherIndividualFormProvider @Inject() extends Mappings {
 
-  def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
-
+  def apply(): Form[AddAnOtherIndividual] =
+    Form(
+      "value" -> enumerable[AddAnOtherIndividual]("addAnOtherIndividual.error.required")
+    )
 }
