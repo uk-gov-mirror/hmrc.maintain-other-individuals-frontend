@@ -39,5 +39,5 @@ case class OtherIndividuals(otherIndividuals: List[OtherIndividual]) {
 
 object OtherIndividuals {
   implicit val reads: Reads[OtherIndividuals] =
-    (__ \ "naturalPerson").readWithDefault[List[OtherIndividual]](Nil).map(othersIndividuals => OtherIndividuals(othersIndividuals))
+    (__ \ "naturalPerson").readWithDefault[List[OtherIndividual]](Nil).map(otherIndividuals => OtherIndividuals(otherIndividuals))
 }

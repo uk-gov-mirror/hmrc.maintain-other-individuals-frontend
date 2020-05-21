@@ -286,6 +286,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val otherIndividuals = OtherIndividuals(List.fill(2)(otherIndividual))
         val fakeService = new FakeService(otherIndividuals)
+        val otherIndividualRows = new AddAnOtherIndividualViewHelper(otherIndividuals.otherIndividuals).rows
 
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(Seq(
           bind(classOf[TrustService]).toInstance(fakeService)
@@ -306,8 +307,8 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         contentAsString(result) mustEqual
           view(
             boundForm,
-            Nil,
-            otherIndividualRows,
+            otherIndividualRows.inProgress,
+            otherIndividualRows.complete,
             "The trust has 2 individuals"
           )(fakeRequest, messages).toString
 
