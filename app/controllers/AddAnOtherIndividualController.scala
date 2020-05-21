@@ -21,9 +21,9 @@ import connectors.{TrustConnector, TrustStoreConnector}
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import javax.inject.Inject
-import models.{AddAnOtherIndividual, OtherIndividual}
+import models.AddAnOtherIndividual
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, Messages, MessagesApi, MessagesProvider}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
@@ -59,23 +59,23 @@ class AddAnOtherIndividualController @Inject()(
         updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
         _ <- repository.set(updatedAnswers)
       } yield {
-        val otherIndividualRows = new AddAnOtherIndividualViewHelper(otherIndividuals).rows
+        val otherIndividualRows = new AddAnOtherIndividualViewHelper(otherIndividuals.otherIndividuals).rows
 
         otherIndividuals.size match {
           case 0 =>
             Ok(yesNoView(yesNoForm))
-          case x if x < 25 =>
+          case _ if otherIndividuals.isNotMaxedOut =>
             Ok(addAnotherView(
               form = addAnotherForm,
               inProgressOtherIndividuals = otherIndividualRows.inProgress,
               completeOtherIndividuals = otherIndividualRows.complete,
-              heading = addToHeading(otherIndividuals)
+              heading = otherIndividuals.addToHeading
             ))
-          case _ =>
+          case _ if otherIndividuals.isMaxedOut =>
             Ok(completeView(
               inProgressOtherIndividuals = otherIndividualRows.inProgress,
               completeOtherIndividuals = otherIndividualRows.complete,
-              heading = addToHeading(otherIndividuals)
+              heading = otherIndividuals.addToHeading
             ))
         }
       }
@@ -112,14 +112,14 @@ class AddAnOtherIndividualController @Inject()(
         addAnotherForm.bindFromRequest().fold(
           (formWithErrors: Form[_]) => {
 
-            val rows = new AddAnOtherIndividualViewHelper(otherIndividuals).rows
+            val rows = new AddAnOtherIndividualViewHelper(otherIndividuals.otherIndividuals).rows
 
             Future.successful(BadRequest(
               addAnotherView(
                 formWithErrors,
                 rows.inProgress,
                 rows.complete,
-                addToHeading(otherIndividuals)
+                otherIndividuals.addToHeading
               )
             ))
           },
@@ -152,14 +152,5 @@ class AddAnOtherIndividualController @Inject()(
       } yield {
         Redirect(appConfig.maintainATrustOverview)
       }
-  }
-
-  private def addToHeading(otherIndividuals: List[OtherIndividual])
-                     (implicit mp: MessagesProvider): String = {
-    otherIndividuals.size match {
-      case 0 => Messages("addAnOtherIndividual.heading")
-      case 1 => Messages("addAnOtherIndividual.singular.heading")
-      case l => Messages("addAnOtherIndividual.count.heading", l)
-    }
   }
 }

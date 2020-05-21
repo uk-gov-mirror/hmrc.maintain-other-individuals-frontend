@@ -20,7 +20,7 @@ import java.time.LocalDate
 
 import base.SpecBase
 import connectors.TrustConnector
-import models.{Name, OtherIndividual, TrustDetails}
+import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
 import org.mockito.Matchers.any
 import org.mockito.Mockito._
 import play.api.inject.bind
@@ -42,7 +42,9 @@ class IndexControllerSpec extends SpecBase {
 
       when(mockTrustConnector.getOtherIndividuals(any())(any(), any()))
         .thenReturn(Future.successful(
-          List(OtherIndividual(Name("Adam", None, "Test"), None, None, None, LocalDate.now, provisional = false))
+          OtherIndividuals(
+            List(OtherIndividual(Name("Adam", None, "Test"), None, None, None, LocalDate.now, provisional = false))
+          )
         ))
 
       val application = applicationBuilder(userAnswers = None)
