@@ -50,7 +50,7 @@ class IndexController @Inject()(
           ))
           _ <- repo.set(ua)
         } yield {
-          Redirect(???)
+          Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
         }
     }
 }
