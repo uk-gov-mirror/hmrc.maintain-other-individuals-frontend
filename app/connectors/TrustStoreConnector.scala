@@ -18,24 +18,17 @@ package connectors
 
 import config.FrontendAppConfig
 import javax.inject.Inject
-import models.{OtherIndividual, TrustDetails}
-import uk.gov.hmrc.http.HeaderCarrier
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
+class TrustStoreConnector @Inject()(http: HttpClient, config: FrontendAppConfig) {
 
-  private def getTrustDetailsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/trust-details"
+  private def maintainTasksUrl(utr: String) = s"${config.trustsStoreUrl}/trusts-store/maintain/tasks/others/$utr"
 
-  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext):  Future[TrustDetails] = {
-    http.GET[TrustDetails](getTrustDetailsUrl(utr))
-  }
-
-  private def getOtherIndividualsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/transformed/other-individuals"
-
-  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[List[OtherIndividual]] = {
-    http.GET[List[OtherIndividual]](getOtherIndividualsUrl(utr))
+  def setTaskComplete(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[HttpResponse] = {
+    http.POSTEmpty[HttpResponse](maintainTasksUrl(utr))
   }
 
 }

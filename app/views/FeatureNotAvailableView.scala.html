@@ -14,28 +14,22 @@
  * limitations under the License.
  *@
 
-@import viewmodels.{AnswerSection, RepeaterAnswerSection, Section}
-
 @this(
     main_template: MainTemplate
 )
 
-@(answerSections: Seq[Section])(implicit request: Request[_], messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("checkYourAnswers.title")
+    title = messages("featureNotAvailable.title")
     ) {
 
-    @components.heading("checkYourAnswers.heading")</h1>
+    @components.back_link()
 
-    <p>@messages("checkYourAnswers.guidance")</p>
+    @components.heading("featureNotAvailable.heading")
 
-    @for(section <- answerSections){
-        @{
-            section match {
-                case a: AnswerSection => components.answer_section(a)
-                case r: RepeaterAnswerSection => components.repeater_answer_section(r)
-            }
-        }
-    }
+    <p>@messages("featureNotAvailable.p1") <a href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/trusts" target="_blank">@messages("featureNotAvailable.link")</a></p>
+
+    <p>@messages("featureNotAvailable.p2")</p>
+
 }
