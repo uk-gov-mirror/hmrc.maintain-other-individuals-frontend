@@ -19,7 +19,8 @@ package connectors
 import config.FrontendAppConfig
 import javax.inject.Inject
 import models.{OtherIndividual, TrustDetails}
-import uk.gov.hmrc.http.HeaderCarrier
+import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -36,6 +37,12 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
   def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[List[OtherIndividual]] = {
     http.GET[List[OtherIndividual]](getOtherIndividualsUrl(utr))
+  }
+
+  private def addOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/"
+
+  def addOtherIndividual(utr: String, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    http.POST[JsValue, HttpResponse](addOtherIndividualUrl(utr), Json.toJson(otherIndividual))
   }
 
 }
