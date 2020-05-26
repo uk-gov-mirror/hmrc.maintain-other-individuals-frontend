@@ -5,6 +5,12 @@ POST       /add                                         controllers.AddAnOtherIn
 POST       /add-another                                 controllers.AddAnOtherIndividualController.submitAnother()
 POST       /complete                                    controllers.AddAnOtherIndividualController.submitComplete()
 
+GET        /:index/remove                               controllers.individual.remove.RemoveOtherIndividualController.onPageLoad(index: Int)
+POST       /:index/remove                               controllers.individual.remove.RemoveOtherIndividualController.onSubmit(index: Int)
+
+GET        /:index/when-removed                         controllers.individual.remove.WhenRemovedController.onPageLoad(index: Int)
+POST       /:index/when-removed                         controllers.individual.remove.WhenRemovedController.onSubmit(index: Int)
+
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
 GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)

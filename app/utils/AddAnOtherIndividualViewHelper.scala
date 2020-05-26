@@ -29,7 +29,7 @@ class AddAnOtherIndividualViewHelper(otherIndividuals: List[OtherIndividual])(im
       changeLabel = messages("site.change.details"),
       changeUrl = Some(controllers.routes.FeatureNotAvailableController.onPageLoad().url),
       removeLabel =  messages("site.delete"),
-      removeUrl = Some(controllers.routes.FeatureNotAvailableController.onPageLoad().url)
+      removeUrl = Some(controllers.individual.remove.routes.RemoveOtherIndividualController.onPageLoad(index).url)
     )
   }
 
