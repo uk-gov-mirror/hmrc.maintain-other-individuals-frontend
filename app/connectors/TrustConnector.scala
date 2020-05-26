@@ -18,8 +18,9 @@ package connectors
 
 import config.FrontendAppConfig
 import javax.inject.Inject
-import models.{OtherIndividuals, TrustDetails}
-import uk.gov.hmrc.http.HeaderCarrier
+import models.{OtherIndividuals, RemoveOtherIndividual, TrustDetails}
+import play.api.libs.json.{JsValue, Json}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -38,4 +39,9 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
     http.GET[OtherIndividuals](getOtherIndividualsUrl(utr))
   }
 
+  private def removeOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/$utr/remove"
+
+  def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    http.PUT[JsValue, HttpResponse](removeOtherIndividualUrl(utr), Json.toJson(otherIndividual))
+  }
 }

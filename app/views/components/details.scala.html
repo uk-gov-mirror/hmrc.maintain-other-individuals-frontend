@@ -14,14 +14,15 @@
  * limitations under the License.
  *@
 
-@(overrideMessage : Option[String] = None, submitClass: Option[String] = None)(implicit messages: Messages)
+@(prefix: String)(implicit messages: Messages)
 
-<div class="section">
- <button id="submit" class="button  @if(submitClass.nonEmpty){@{submitClass.get}}">
- @if(overrideMessage.isEmpty) {
-  @messages("site.continue")
- } else {
-  @messages(overrideMessage.get)
- }
- </button>
-</div>
+<details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+    <span class="govuk-details__summary-text">
+      @messages(prefix)
+    </span>
+    </summary>
+    <div class="govuk-details__text panel-indent">
+        <p>@messages(s"${prefix}.text") <a href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/trusts" target="_blank">@messages(s"${prefix}.text.link")</a>.</p>
+    </div>
+</details>

@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@(overrideMessage : Option[String] = None, submitClass: Option[String] = None)(implicit messages: Messages)
+package models
 
-<div class="section">
- <button id="submit" class="button  @if(submitClass.nonEmpty){@{submitClass.get}}">
- @if(overrideMessage.isEmpty) {
-  @messages("site.continue")
- } else {
-  @messages(overrideMessage.get)
- }
- </button>
-</div>
+import java.time.LocalDate
+
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsPath, Writes}
+
+case class RemoveOtherIndividual(index : Int, endDate: LocalDate)
+
+object RemoveOtherIndividual {
+
+  implicit val writes : Writes[RemoveOtherIndividual] =
+    (
+        (JsPath \ "index").write[Int] and
+        (JsPath \ "endDate").write[LocalDate]
+      ).apply(unlift(RemoveOtherIndividual.unapply))
+
+  def apply(index: Int): RemoveOtherIndividual =  RemoveOtherIndividual(index, LocalDate.now)
+
+}

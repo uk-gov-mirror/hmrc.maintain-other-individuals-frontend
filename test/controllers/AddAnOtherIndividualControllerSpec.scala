@@ -21,7 +21,7 @@ import java.time.LocalDate
 import base.SpecBase
 import connectors.TrustStoreConnector
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
-import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals}
+import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
@@ -63,11 +63,17 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
   lazy val featureNotAvailable : String = controllers.routes.FeatureNotAvailableController.onPageLoad().url
 
   val otherIndividualRows = List(
-    AddRow("First Last", typeLabel = "Other individual", "Change details", Some(featureNotAvailable), "Remove", Some(featureNotAvailable))
+    AddRow("First Last", typeLabel = "Other individual", "Change details", Some(featureNotAvailable), "Remove", Some(controllers.individual.remove.routes.RemoveOtherIndividualController.onPageLoad(0).url))
   )
 
   class FakeService(data: OtherIndividuals) extends TrustService {
     override def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[OtherIndividuals] = Future.successful(data)
+
+    override def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
+      Future.successful(otherIndividual)
+
+    override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+      Future.successful(HttpResponse(OK))
   }
 
   "AddAnOtherIndividual Controller" when {
