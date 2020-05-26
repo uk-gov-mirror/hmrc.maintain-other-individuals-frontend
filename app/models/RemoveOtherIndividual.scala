@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2020 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,21 +12,25 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@import viewmodels.addAnother.AddRow
+package models
 
-@(data: Seq[AddRow], id: String)(implicit messages: Messages)
+import java.time.LocalDate
 
-@if(data.nonEmpty){
+import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsPath, Writes}
 
-<div class="form-group">
- <h2 id="data-list-heading--@id--hidden" class="visually-hidden">@messages("entities.protector") @messages(s"site.$id")</h2>
- <h3 id="data-list-heading--@id" aria-hidden="true">@messages(s"site.$id")</h3>
- <dl id="data-list--@id" class="hmrc-add-to-a-list hmrc-add-to-a-list--short" aria-describedby="data-list-heading--@id--hidden">
-   @for(item <- data) {
-    @components.data_list_row(item)
-  }
- </dl>
-</div>
+case class RemoveOtherIndividual(index : Int, endDate: LocalDate)
+
+object RemoveOtherIndividual {
+
+  implicit val writes : Writes[RemoveOtherIndividual] =
+    (
+        (JsPath \ "index").write[Int] and
+        (JsPath \ "endDate").write[LocalDate]
+      ).apply(unlift(RemoveOtherIndividual.unapply))
+
+  def apply(index: Int): RemoveOtherIndividual =  RemoveOtherIndividual(index, LocalDate.now)
+
 }

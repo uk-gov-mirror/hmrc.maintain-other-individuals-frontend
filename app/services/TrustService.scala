@@ -19,15 +19,22 @@ package services
 import com.google.inject.ImplementedBy
 import connectors.TrustConnector
 import javax.inject.Inject
-import models.OtherIndividuals
-import uk.gov.hmrc.http.HeaderCarrier
+import models.{OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
+import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
+
 
 class TrustServiceImpl @Inject()(connector: TrustConnector) extends TrustService {
 
   override def getOtherIndividuals(utr: String)(implicit hc:HeaderCarrier, ec:ExecutionContext): Future[OtherIndividuals] =
     connector.getOtherIndividuals(utr)
+
+  override def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
+    getOtherIndividuals(utr).map(_.otherIndividuals(index))
+
+  override def removeOtherIndividual(utr: String, protector: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    connector.removeOtherIndividual(utr, protector)
 
 }
 
@@ -36,4 +43,7 @@ trait TrustService {
 
   def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[OtherIndividuals]
 
+  def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual]
+
+  def removeOtherIndividual(utr: String, protector: RemoveOtherIndividual)(implicit hc:HeaderCarrier, ec:ExecutionContext): Future[HttpResponse]
 }
