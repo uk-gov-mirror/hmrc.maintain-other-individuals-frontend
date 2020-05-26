@@ -33,8 +33,8 @@ class TrustServiceImpl @Inject()(connector: TrustConnector) extends TrustService
   override def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
     getOtherIndividuals(utr).map(_.otherIndividuals(index))
 
-  override def removeOtherIndividual(utr: String, protector: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-    connector.removeOtherIndividual(utr, protector)
+  override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    connector.removeOtherIndividual(utr, otherIndividual)
 
 }
 
@@ -45,5 +45,5 @@ trait TrustService {
 
   def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual]
 
-  def removeOtherIndividual(utr: String, protector: RemoveOtherIndividual)(implicit hc:HeaderCarrier, ec:ExecutionContext): Future[HttpResponse]
+  def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc:HeaderCarrier, ec:ExecutionContext): Future[HttpResponse]
 }

@@ -72,7 +72,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
     override def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
       Future.successful(otherIndividual)
 
-    override def removeOtherIndividual(utr: String, protector: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
       Future.successful(HttpResponse(OK))
   }
 
