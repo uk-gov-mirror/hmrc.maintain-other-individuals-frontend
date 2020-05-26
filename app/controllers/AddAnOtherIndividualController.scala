@@ -17,15 +17,16 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.{TrustConnector, TrustStoreConnector}
+import connectors.TrustStoreConnector
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import javax.inject.Inject
-import models.{AddAnOtherIndividual, OtherIndividual}
+import models.AddAnOtherIndividual
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, Messages, MessagesApi, MessagesProvider}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
+import services.TrustService
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import utils.AddAnOtherIndividualViewHelper
 import views.html.{AddAnOtherIndividualView, AddAnOtherIndividualYesNoView, MaxedOutOtherIndividualsView}
@@ -38,14 +39,14 @@ class AddAnOtherIndividualController @Inject()(
                                                 val controllerComponents: MessagesControllerComponents,
                                                 val appConfig: FrontendAppConfig,
                                                 trustStoreConnector: TrustStoreConnector,
-                                                trustConnector: TrustConnector,
+                                                trustService: TrustService,
                                                 addAnotherFormProvider: AddAnOtherIndividualFormProvider,
                                                 yesNoFormProvider: YesNoFormProvider,
                                                 repository: PlaybackRepository,
                                                 addAnotherView: AddAnOtherIndividualView,
                                                 yesNoView: AddAnOtherIndividualYesNoView,
                                                 completeView: MaxedOutOtherIndividualsView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val addAnotherForm : Form[AddAnOtherIndividual] = addAnotherFormProvider()
 
@@ -55,27 +56,27 @@ class AddAnOtherIndividualController @Inject()(
     implicit request =>
 
       for {
-        otherIndividuals <- trustConnector.getOtherIndividuals(request.userAnswers.utr)
+        otherIndividuals <- trustService.getOtherIndividuals(request.userAnswers.utr)
         updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
         _ <- repository.set(updatedAnswers)
       } yield {
-        val otherIndividualRows = new AddAnOtherIndividualViewHelper(otherIndividuals).rows
+        val otherIndividualRows = new AddAnOtherIndividualViewHelper(otherIndividuals.otherIndividuals).rows
 
         otherIndividuals.size match {
           case 0 =>
             Ok(yesNoView(yesNoForm))
-          case x if x < 25 =>
+          case _ if otherIndividuals.isNotMaxedOut =>
             Ok(addAnotherView(
               form = addAnotherForm,
               inProgressOtherIndividuals = otherIndividualRows.inProgress,
               completeOtherIndividuals = otherIndividualRows.complete,
-              heading = addToHeading(otherIndividuals)
+              heading = otherIndividuals.addToHeading
             ))
-          case _ =>
+          case _ if otherIndividuals.isMaxedOut =>
             Ok(completeView(
               inProgressOtherIndividuals = otherIndividualRows.inProgress,
               completeOtherIndividuals = otherIndividualRows.complete,
-              heading = addToHeading(otherIndividuals)
+              heading = otherIndividuals.addToHeading
             ))
         }
       }
@@ -108,18 +109,18 @@ class AddAnOtherIndividualController @Inject()(
   def submitAnother(): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      trustConnector.getOtherIndividuals(request.userAnswers.utr).flatMap { otherIndividuals =>
+      trustService.getOtherIndividuals(request.userAnswers.utr).flatMap { otherIndividuals =>
         addAnotherForm.bindFromRequest().fold(
           (formWithErrors: Form[_]) => {
 
-            val rows = new AddAnOtherIndividualViewHelper(otherIndividuals).rows
+            val rows = new AddAnOtherIndividualViewHelper(otherIndividuals.otherIndividuals).rows
 
             Future.successful(BadRequest(
               addAnotherView(
                 formWithErrors,
                 rows.inProgress,
                 rows.complete,
-                addToHeading(otherIndividuals)
+                otherIndividuals.addToHeading
               )
             ))
           },
@@ -152,14 +153,5 @@ class AddAnOtherIndividualController @Inject()(
       } yield {
         Redirect(appConfig.maintainATrustOverview)
       }
-  }
-
-  private def addToHeading(otherIndividuals: List[OtherIndividual])
-                     (implicit mp: MessagesProvider): String = {
-    otherIndividuals.size match {
-      case 0 => Messages("addAnOtherIndividual.heading")
-      case 1 => Messages("addAnOtherIndividual.singular.heading")
-      case l => Messages("addAnOtherIndividual.count.heading", l)
-    }
   }
 }

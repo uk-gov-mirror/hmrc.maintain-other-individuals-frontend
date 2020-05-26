@@ -18,7 +18,7 @@ package connectors
 
 import config.FrontendAppConfig
 import javax.inject.Inject
-import models.{OtherIndividual, TrustDetails}
+import models.{OtherIndividual, OtherIndividuals, TrustDetails}
 import play.api.libs.json.{JsValue, Json}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse}
 import uk.gov.hmrc.play.bootstrap.http.HttpClient
@@ -29,17 +29,17 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
   private def getTrustDetailsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/trust-details"
 
-  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext):  Future[TrustDetails] = {
+  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[TrustDetails] = {
     http.GET[TrustDetails](getTrustDetailsUrl(utr))
   }
 
   private def getOtherIndividualsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/transformed/other-individuals"
 
-  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[List[OtherIndividual]] = {
-    http.GET[List[OtherIndividual]](getOtherIndividualsUrl(utr))
+  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[OtherIndividuals] = {
+    http.GET[OtherIndividuals](getOtherIndividualsUrl(utr))
   }
 
-  private def addOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/"
+  private def addOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/add/$utr/"
 
   def addOtherIndividual(utr: String, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
     http.POST[JsValue, HttpResponse](addOtherIndividualUrl(utr), Json.toJson(otherIndividual))
