@@ -26,7 +26,7 @@ import views.html.UkAddressView
 
 class UkAddressViewSpec extends UkAddressViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.ukAddress"
+  val messageKeyPrefix = "otherIndividual.ukAddress"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[UkAddress] = new UkAddressFormProvider().apply()

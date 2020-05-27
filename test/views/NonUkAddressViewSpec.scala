@@ -28,7 +28,7 @@ import views.html.NonUkAddressView
 
 class NonUkAddressViewSpec extends NonUkAddressViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.nonUkAddress"
+  val messageKeyPrefix = "otherIndividual.nonUkAddress"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[NonUkAddress] = new NonUkAddressFormProvider().apply()

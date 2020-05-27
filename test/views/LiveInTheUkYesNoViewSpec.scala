@@ -26,7 +26,7 @@ import views.html.LiveInTheUkYesNoView
 
 class LiveInTheUkYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.liveInTheUkYesNo"
+  val messageKeyPrefix = "otherIndividual.liveInTheUkYesNo"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)

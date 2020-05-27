@@ -26,7 +26,7 @@ import views.html.IdCardDetailsYesNoView
 
 class IdCardDetailsYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.idCardDetailsYesNo"
+  val messageKeyPrefix = "otherIndividual.idCardDetailsYesNo"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)

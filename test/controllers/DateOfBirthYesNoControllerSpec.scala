@@ -35,7 +35,7 @@ import scala.concurrent.Future
 class DateOfBirthYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("individualProtector.dateOfBirthYesNo")
+  val form = formProvider.withPrefix("otherIndividual.dateOfBirthYesNo")
 
   lazy val dateOfBirthYesNoRoute = routes.DateOfBirthYesNoController.onPageLoad(NormalMode).url
 

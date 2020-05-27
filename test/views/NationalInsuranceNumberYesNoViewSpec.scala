@@ -26,7 +26,7 @@ import views.html.NationalInsuranceNumberYesNoView
 
 class NationalInsuranceNumberYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.nationalInsuranceNumberYesNo"
+  val messageKeyPrefix = "otherIndividual.nationalInsuranceNumberYesNo"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)

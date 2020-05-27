@@ -40,7 +40,7 @@ class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
 
   private val formProvider = new DateAddedToTrustFormProvider()
   private val date: LocalDate = LocalDate.parse("2019-02-03")
-  private def form: Form[LocalDate] = formProvider.withPrefixAndTrustStartDate("individualProtector.startDate", date)
+  private def form: Form[LocalDate] = formProvider.withPrefixAndTrustStartDate("otherIndividual.startDate", date)
 
   private def onwardRoute = Call("GET", "/foo")
 

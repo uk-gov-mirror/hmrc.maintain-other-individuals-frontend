@@ -40,7 +40,7 @@ class LiveInTheUkYesNoControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("individualProtector.liveInTheUkYesNo")
+  val form = formProvider.withPrefix("otherIndividual.liveInTheUkYesNo")
   val protectorName = "FirstName LastName"
   val name = Name("FirstName", None, "LastName")
 

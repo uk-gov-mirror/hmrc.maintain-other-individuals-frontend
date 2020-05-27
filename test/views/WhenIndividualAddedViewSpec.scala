@@ -27,7 +27,7 @@ import views.html.WhenIndividualAddedView
 
 class WhenIndividualAddedViewSpec extends QuestionViewBehaviours[LocalDate] {
 
-  val messageKeyPrefix = "individualProtector.startDate"
+  val messageKeyPrefix = "otherIndividual.startDate"
   val date: LocalDate = LocalDate.parse("2019-02-03")
   val form: Form[LocalDate] = new DateAddedToTrustFormProvider().withPrefixAndTrustStartDate(messageKeyPrefix, date)
   val view: WhenIndividualAddedView = viewFor[WhenIndividualAddedView](Some(emptyUserAnswers))

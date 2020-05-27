@@ -39,7 +39,7 @@ import views.html.CheckDetailsView
 
 class CheckDetailsViewSpec extends ViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.checkDetails"
+  val messageKeyPrefix = "otherIndividual.checkDetails"
 
   "CheckDetails view" must {
 

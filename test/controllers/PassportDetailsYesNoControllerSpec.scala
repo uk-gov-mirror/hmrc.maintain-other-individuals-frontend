@@ -38,7 +38,7 @@ import scala.concurrent.Future
 class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new YesNoFormProvider()
-  private def form = formProvider.withPrefix("individualProtector.passportDetailsYesNo")
+  private def form = formProvider.withPrefix("otherIndividual.passportDetailsYesNo")
 
   def onwardRoute: Call = Call("GET", "/foo")
   val name: Name = Name("FirstName", None, "LastName")

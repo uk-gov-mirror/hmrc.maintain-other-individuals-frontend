@@ -25,7 +25,7 @@ import views.html.NationalInsuranceNumberView
 
 class NationalInsuranceNumberViewSpec extends QuestionViewBehaviours[String] {
 
-  val messageKeyPrefix = "individualProtector.nationalInsuranceNumber"
+  val messageKeyPrefix = "otherIndividual.nationalInsuranceNumber"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[String] = new NationalInsuranceNumberFormProvider().withPrefix(messageKeyPrefix)

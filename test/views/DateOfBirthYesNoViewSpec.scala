@@ -26,7 +26,7 @@ import views.html.DateOfBirthYesNoView
 
 class DateOfBirthYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "individualProtector.dateOfBirthYesNo"
+  val messageKeyPrefix = "otherIndividual.dateOfBirthYesNo"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)

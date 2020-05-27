@@ -28,7 +28,7 @@ import views.html.PassportDetailsView
 
 class PassportDetailsViewSpec extends QuestionViewBehaviours[Passport] {
 
-  val messageKeyPrefix = "individualProtector.passportDetails"
+  val messageKeyPrefix = "otherIndividual.passportDetails"
   val name: Name = Name("First", Some("Middle"), "Last")
 
   override val form: Form[Passport] = new PassportDetailsFormProvider().withPrefix(messageKeyPrefix)
