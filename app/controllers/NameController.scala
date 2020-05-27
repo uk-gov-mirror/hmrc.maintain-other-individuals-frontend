@@ -20,7 +20,7 @@ import controllers.actions.StandardActionSets
 import forms.NameFormProvider
 import javax.inject.Inject
 import models.{Mode, Name}
-import navigation.Navigator
+import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.NamePage
 import play.api.data.Form
 import play.api.i18n.I18nSupport
@@ -37,7 +37,7 @@ class NameController @Inject()(
                                 formProvider: NameFormProvider,
                                 playbackRepository: PlaybackRepository,
                                 view: NameView,
-                                navigator: Navigator
+                                navigator: OtherIndividualNavigator
                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[Name] = formProvider.withPrefix("otherIndividual.name")

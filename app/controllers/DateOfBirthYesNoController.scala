@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.Navigator
+import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.DateOfBirthYesNoPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class DateOfBirthYesNoController @Inject()(
                                             override val messagesApi: MessagesApi,
                                             playbackRepository: PlaybackRepository,
-                                            navigator: Navigator,
+                                            navigator: OtherIndividualNavigator,
                                             standardActionSets: StandardActionSets,
                                             nameAction: NameRequiredAction,
                                             formProvider: YesNoFormProvider,

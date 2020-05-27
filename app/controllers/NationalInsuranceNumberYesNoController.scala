@@ -20,7 +20,7 @@ import controllers.actions.{NameRequiredAction, StandardActionSets}
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.Navigator
+import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.NationalInsuranceNumberYesNoPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class NationalInsuranceNumberYesNoController @Inject()(
                                                         override val messagesApi: MessagesApi,
                                                         sessionRepository: PlaybackRepository,
-                                                        navigator: Navigator,
+                                                        navigator: OtherIndividualNavigator,
                                                         standardActionSets: StandardActionSets,
                                                         nameAction: NameRequiredAction,
                                                         formProvider: YesNoFormProvider,

@@ -20,7 +20,7 @@ import controllers.actions._
 import forms.NonUkAddressFormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.Navigator
+import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.NonUkAddressPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class NonUkAddressController @Inject()(
                                         override val messagesApi: MessagesApi,
                                         sessionRepository: PlaybackRepository,
-                                        navigator: Navigator,
+                                        navigator: OtherIndividualNavigator,
                                         standardActionSets: StandardActionSets,
                                         nameAction: NameRequiredAction,
                                         formProvider: NonUkAddressFormProvider,
