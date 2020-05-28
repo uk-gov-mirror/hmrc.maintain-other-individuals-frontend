@@ -26,7 +26,7 @@ import views.html.AddressUkYesNoView
 
 class AddressUkYesNoViewSpec extends YesNoViewBehaviours {
 
-  val messageKeyPrefix = "businessProtector.addressUkYesNo"
+  val messageKeyPrefix = "otherIndividual.addressUkYesNo"
   val name = "Name"
 
   val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)

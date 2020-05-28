@@ -41,7 +41,7 @@ class AddressUkYesNoController @Inject()(
                                           view: AddressUkYesNoView
                                           )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider.withPrefix("businessProtector.addressUkYesNo")
+  val form = formProvider.withPrefix("otherIndividual.addressUkYesNo")
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>

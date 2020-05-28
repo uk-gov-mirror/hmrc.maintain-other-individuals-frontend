@@ -16,139 +16,131 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
+  import java.time.{LocalDate, ZoneOffset}
 
-import base.SpecBase
-import forms.DateAddedToTrustFormProvider
-import models.{Name, OtherIndividual, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
-import org.scalatestplus.mockito.MockitoSugar
-import pages.individual.{NamePage, WhenIndividualAddedPage}
-import play.api.data.Form
-import play.api.inject.bind
-import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
-import play.api.test.FakeRequest
-import play.api.test.Helpers._
-import repositories.PlaybackRepository
-import views.html.WhenIndividualAddedView
+  import base.SpecBase
+  import forms.DateAddedToTrustFormProvider
+  import models.{Name, UserAnswers}
+  import org.scalatestplus.mockito.MockitoSugar
+  import pages.individual.{NamePage, WhenIndividualAddedPage}
+  import play.api.data.Form
+  import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
+  import play.api.test.FakeRequest
+  import play.api.test.Helpers._
+  import views.html.WhenIndividualAddedView
 
-import scala.concurrent.Future
+  class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
 
-class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
+    private val formProvider = new DateAddedToTrustFormProvider()
+    private val date: LocalDate = LocalDate.parse("2019-02-03")
+    private def form: Form[LocalDate] = formProvider.withPrefixAndTrustStartDate("otherIndividual.addressUkYesNo", date)
 
-  private val formProvider = new DateAddedToTrustFormProvider()
-  private val date: LocalDate = LocalDate.parse("2019-02-03")
-  private def form: Form[LocalDate] = formProvider.withPrefixAndTrustStartDate("otherIndividual.startDate", date)
+    private def onwardRoute = Call("GET", "/foo")
 
-  private def onwardRoute = Call("GET", "/foo")
+    private val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-  private val validAnswer = LocalDate.now(ZoneOffset.UTC)
+    private lazy val addedDateRoute = routes.WhenIndividualAddedController.onPageLoad().url
 
-  private lazy val startDateRoute = routes.WhenIndividualAddedController.onPageLoad().url
+    private val name = Name("New", None, "Protector")
 
-  private val name = Name("New", None, "individual")
+    override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", date)
+      .set(NamePage, name)
+      .success.value
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", date)
-    .set(NamePage, name)
-    .success.value
+    private def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
+      FakeRequest(GET, addedDateRoute)
 
-  private def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
-    FakeRequest(GET, startDateRoute)
+    private def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
+      FakeRequest(POST, addedDateRoute)
+        .withFormUrlEncodedBody(
+          "value.day"   -> validAnswer.getDayOfMonth.toString,
+          "value.month" -> validAnswer.getMonthValue.toString,
+          "value.year"  -> validAnswer.getYear.toString
+        )
 
-  private def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
-    FakeRequest(POST, startDateRoute)
-      .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
-        "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
-      )
+    "Other Individual added Date Controller" must {
 
-  "Other Individual Start Date Controller" must {
+      "return OK and the correct view for a GET" in {
 
-    "return OK and the correct view for a GET" in {
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        val result = route(application, getRequest()).value
 
-      val result = route(application, getRequest()).value
+        val view = application.injector.instanceOf[WhenIndividualAddedView]
 
-      val view = application.injector.instanceOf[WhenIndividualAddedView]
+        status(result) mustEqual OK
 
-      status(result) mustEqual OK
+        contentAsString(result) mustEqual
+          view(form, name.displayName)(fakeRequest, messages).toString
 
-      contentAsString(result) mustEqual
-        view(form, name.displayName)(fakeRequest, messages).toString
+        application.stop()
+      }
 
-      application.stop()
-    }
+      "populate the view correctly on a GET when the question has previously been answered" in {
 
-    "populate the view correctly on a GET when the question has previously been answered" in {
+        val userAnswers = emptyUserAnswers
+          .set(WhenIndividualAddedPage, validAnswer).success.value
+          .set(NamePage, name).success.value
 
-      val userAnswers = emptyUserAnswers
-        .set(WhenIndividualAddedPage, validAnswer).success.value
-        .set(NamePage, name).success.value
+        val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
+        val view = application.injector.instanceOf[WhenIndividualAddedView]
 
-      val view = application.injector.instanceOf[WhenIndividualAddedView]
+        val result = route(application, getRequest()).value
 
-      val result = route(application, getRequest()).value
+        status(result) mustEqual OK
 
-      status(result) mustEqual OK
+        contentAsString(result) mustEqual
+          view(form.fill(validAnswer), name.displayName)(getRequest(), messages).toString
 
-      contentAsString(result) mustEqual
-        view(form.fill(validAnswer), name.displayName)(getRequest(), messages).toString
+        application.stop()
+      }
 
-      application.stop()
-    }
+      "return a Bad Request and errors when invalid data is submitted" in {
 
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
-    "return a Bad Request and errors when invalid data is submitted" in {
+        val request =
+          FakeRequest(POST, addedDateRoute)
+            .withFormUrlEncodedBody(("value", "invalid value"))
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        val boundForm = form.bind(Map("value" -> "invalid value"))
 
-      val request =
-        FakeRequest(POST, startDateRoute)
-          .withFormUrlEncodedBody(("value", "invalid value"))
+        val view = application.injector.instanceOf[WhenIndividualAddedView]
 
-      val boundForm = form.bind(Map("value" -> "invalid value"))
+        val result = route(application, request).value
 
-      val view = application.injector.instanceOf[WhenIndividualAddedView]
+        status(result) mustEqual BAD_REQUEST
 
-      val result = route(application, request).value
+        contentAsString(result) mustEqual
+          view(boundForm, name.displayName)(fakeRequest, messages).toString
 
-      status(result) mustEqual BAD_REQUEST
+        application.stop()
+      }
 
-      contentAsString(result) mustEqual
-        view(boundForm, name.displayName)(fakeRequest, messages).toString
+      "redirect to Session Expired for a GET if no existing data is found" in {
 
-      application.stop()
-    }
+        val application = applicationBuilder(userAnswers = None).build()
 
-    "redirect to Session Expired for a GET if no existing data is found" in {
+        val result = route(application, getRequest()).value
 
-      val application = applicationBuilder(userAnswers = None).build()
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
 
-      val result = route(application, getRequest()).value
+        application.stop()
+      }
 
-      status(result) mustEqual SEE_OTHER
-      redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
+      "redirect to Session Expired for a POST if no existing data is found" in {
 
-      application.stop()
-    }
+        val application = applicationBuilder(userAnswers = None).build()
 
-    "redirect to Session Expired for a POST if no existing data is found" in {
+        val result = route(application, postRequest()).value
 
-      val application = applicationBuilder(userAnswers = None).build()
+        status(result) mustEqual SEE_OTHER
 
-      val result = route(application, postRequest()).value
+        redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
 
-      status(result) mustEqual SEE_OTHER
-
-      redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
-
-      application.stop()
+        application.stop()
+      }
     }
   }
-}
