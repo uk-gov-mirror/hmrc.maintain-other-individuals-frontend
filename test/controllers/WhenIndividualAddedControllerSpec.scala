@@ -48,7 +48,7 @@ class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
 
   private lazy val startDateRoute = routes.WhenIndividualAddedController.onPageLoad().url
 
-  private val name = Name("New", None, "Protector")
+  private val name = Name("New", None, "individual")
 
   override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", date)
     .set(NamePage, name)
@@ -65,7 +65,7 @@ class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
         "value.year"  -> validAnswer.getYear.toString
       )
 
-  "Individual Protector Start Date Controller" must {
+  "Other Individual Start Date Controller" must {
 
     "return OK and the correct view for a GET" in {
 

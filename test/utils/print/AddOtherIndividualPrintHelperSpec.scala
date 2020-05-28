@@ -20,19 +20,19 @@ import java.time.LocalDate
 
 import base.SpecBase
 import models.{IdCard, Name, NonUkAddress, NormalMode, Passport, UkAddress}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
+import pages.individual._
 import play.twirl.api.Html
 import viewmodels.{AnswerRow, AnswerSection}
 
-class AddIndividualProtectorPrintHelperSpec extends SpecBase {
+class AddOtherIndividualPrintHelperSpec extends SpecBase {
 
   val name: Name = Name("First", Some("Middle"), "Last")
   val ukAddress = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
   val nonUkAddress = NonUkAddress("value 1", "value 2", None, "DE")
 
-  "IndividualProtectorPrintHelper" must {
+  "AddOtherIndividualPrintHelper" must {
 
-    "generate individual protector section for all possible data" in {
+    "generate other individual section for all possible data" in {
 
       val helper = injector.instanceOf[OtherIndividualPrintHelper]
 

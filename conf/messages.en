@@ -203,3 +203,8 @@ otherIndividual.whenIndividualAdded.error.required = The date the protector was 
 otherIndividual.whenIndividualAdded.error.invalid = Enter a real date
 otherIndividual.whenIndividualAdded.error.future = The date the protector was added to the trust must be today or in the past
 otherIndividual.whenIndividualAdded.error.past = The date the protector was added to the trust cannot be before the start date of the trust
+
+otherIndividual.addressUkYesNo.checkYourAnswersLabel = Is {0}’s address in the UK?
+otherIndividual.addressUkYesNo.title = Is the protector’s address in the UK?
+otherIndividual.addressUkYesNo.heading = Is {0}’s address in the UK?
+otherIndividual.addressUkYesNo.error.required = Select yes if the protector’s address is in the UK

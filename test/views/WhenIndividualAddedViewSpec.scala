@@ -27,13 +27,13 @@ import views.html.WhenIndividualAddedView
 
 class WhenIndividualAddedViewSpec extends QuestionViewBehaviours[LocalDate] {
 
-  val messageKeyPrefix = "otherIndividual.startDate"
+  val messageKeyPrefix = "otherIndividual.whenIndividualAdded"
   val date: LocalDate = LocalDate.parse("2019-02-03")
   val form: Form[LocalDate] = new DateAddedToTrustFormProvider().withPrefixAndTrustStartDate(messageKeyPrefix, date)
   val view: WhenIndividualAddedView = viewFor[WhenIndividualAddedView](Some(emptyUserAnswers))
   val name: Name = Name("First", Some("Middle"), "Last")
 
-  "StartDate view" must {
+  "WhenIndividualAdded view" must {
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
       view.apply(form, name.displayName)(fakeRequest, messages)
