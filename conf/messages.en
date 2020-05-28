@@ -85,13 +85,13 @@ otherIndividual.whenRemoved.error.past = The date the other individual was remov
 otherIndividual.addressYesNo.checkYourAnswersLabel = Do you know {0}’s address?
 otherIndividual.addressYesNo.title = Do you know the protector’s address?
 otherIndividual.addressYesNo.heading = Do you know {0}’s address?
-otherIndividual.addressYesNo.error.required = Select yes if you know the protector’s address
+otherIndividual.addressYesNo.error.required = Select yes if you know the individual’s address
 
 otherIndividual.checkDetails.title = Check individual protector details
 otherIndividual.checkDetails.heading = Check individual protector details
 
 otherIndividual.dateOfBirth.checkYourAnswersLabel = What is {0}’s date of birth?
-otherIndividual.dateOfBirth.title = What is the protector’s date of birth?
+otherIndividual.dateOfBirth.title = What is the {0}’s date of birth?
 otherIndividual.dateOfBirth.heading = What is {0}’s date of birth?
 otherIndividual.dateOfBirth.error.required.all = Enter a date of birth
 otherIndividual.dateOfBirth.error.required.two = Date of birth must include a {0} and a {1}
@@ -131,13 +131,17 @@ otherIndividual.idCardDetailsYesNo.heading = Do you know {0}’s ID card details
 otherIndividual.idCardDetailsYesNo.error.required = Select yes if you know the protector’s ID card details
 
 otherIndividual.name.default = the individual
-
-otherIndividual.name.checkYourAnswersLabel = What is the business’s name?
-otherIndividual.name.title = What is the business’s name?
-otherIndividual.name.heading = What is the business’s name?
-otherIndividual.name.error.required = Enter the business’s name
-otherIndividual.name.error.length = Business’s name must be 105 characters or less
-otherIndividual.name.error.invalidFormat = Business’s name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+otherIndividual.name.checkYourAnswersLabel = What is the name of the individual?
+otherIndividual.name.title = What is the name of the individual?
+otherIndividual.name.heading = What is the name of the individual?
+otherIndividual.name.error.firstName.required = Enter your first name
+otherIndividual.name.error.firstName.invalid = Your first name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+otherIndividual.name.error.lastName.required = Enter your last name
+otherIndividual.name.error.lastName.invalid = Your last name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+otherIndividual.name.error.firstName.length = Your first name must be 35 characters or less
+otherIndividual.name.error.middleName.length = Your middle names must be 35 characters or less
+otherIndividual.name.error.middleName.invalid = Your middle names must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+otherIndividual.name.error.lastName.length = Your last name must be 35 characters or less
 
 otherIndividual.nationalInsuranceNumberYesNo.checkYourAnswersLabel = Do you know {0}’s National Insurance number?
 otherIndividual.nationalInsuranceNumberYesNo.title = Do you know the protector’s National Insurance number?
@@ -150,10 +154,6 @@ otherIndividual.nationalInsuranceNumber.heading = What is {0}’s National Insur
 otherIndividual.nationalInsuranceNumber.hint = It is on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
 otherIndividual.nationalInsuranceNumber.error.required = Enter the protector’s National Insurance number
 otherIndividual.nationalInsuranceNumber.error.invalidFormat = Enter the protector’s National Insurance number in the correct format
-
-otherIndividual.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
-otherIndividual.nonUkAddress.title = What is the protector’s address?
-otherIndividual.nonUkAddress.heading = What is {0}’s address?
 
 otherIndividual.passportDetailsYesNo.checkYourAnswersLabel = Do you know {0}’s passport details?
 otherIndividual.passportDetailsYesNo.title = Do you know the protector’s passport details?
@@ -181,25 +181,70 @@ otherIndividual.passportDetails.expiryDate.error.future = Passport expiry date m
 otherIndividual.passportDetails.expiryDate.error.past = Passport expiry date must be after 31 December 1499 and before 01 January 2100
 
 otherIndividual.ukAddress.checkYourAnswersLabel = What is {0}’s address?
-otherIndividual.ukAddress.title = What is the protector’s address?
+otherIndividual.ukAddress.title = What is the individual’s address?
 otherIndividual.ukAddress.heading = What is {0}’s address?
+ukAddress.error.line1.required = Enter address line 1
+ukAddress.error.line2.required = Enter address line 2
+ukAddress.error.postcode.required = Enter a postcode
+ukAddress.error.line1.length = Address line 1 must be 35 characters or less
+ukAddress.error.line2.length = Address line 2 must be 35 characters or less
+ukAddress.error.line3.length = Address line 3 must be 35 characters or less
+ukAddress.error.line4.length = Address line 4 must be 35 characters or less
+ukAddress.error.line1.invalidCharacters = Address line 1 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+ukAddress.error.line2.invalidCharacters = Address line 2 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+ukAddress.error.line3.invalidCharacters = Address line 3 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+ukAddress.error.line4.invalidCharacters = Address line 4 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+ukAddress.error.postcode.invalidCharacters = Enter a real postcode
+site.address.uk.title = What is the address?
+site.address.uk.heading = What is {0}’s address?
+site.address.uk.line1 = Address line 1
+site.address.uk.line2 = Address line 2
+site.address.uk.line3 = Address line 3 (optional)
+site.address.uk.line4 = Address line 4 (optional)
+site.address.uk.postcode = Postcode
+site.address.uk.postcode.hint = For example AB1 1AB
 
 otherIndividual.nonUkAddress.checkYourAnswersLabel = What is {0}’s address?
-otherIndividual.nonUkAddress.title = What is the protector’s address?
+otherIndividual.nonUkAddress.title = What is the individual’s address?
 otherIndividual.nonUkAddress.heading = What is {0}’s address?
+internationalAddress.error.line1.required = Enter address line 1
+internationalAddress.error.line2.required = Enter address line 2
+internationalAddress.error.country.required = Select a country
+internationalAddress.error.line1.length = Address line 1 must be 35 characters or less
+internationalAddress.error.line2.length = Address line 2 must be 35 characters or less
+internationalAddress.error.line3.length = Address line 3 must be 35 characters or less
+internationalAddress.error.line1.invalidCharacters = Address line 1 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+internationalAddress.error.line2.invalidCharacters = Address line 2 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+internationalAddress.error.line3.invalidCharacters = Address line 3 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
+site.address.international.title = What is the address?
+site.address.international.heading = What is {0}’s address?
+site.address.international.line1 = Address line 1
+site.address.international.line2 = Address line 2
+site.address.international.line3 = Address line 3 (optional)
+site.address.international.country = Country
+site.address.international.country.select = Select a country
 
-otherIndividual.whenIndividualAdded.checkYourAnswersLabel = When was {0} added as a protector?
-otherIndividual.whenIndividualAdded.title = When was the protector added to the trust?
-otherIndividual.whenIndividualAdded.heading = When was {0} added as a protector?
+otherIndividual.whenIndividualAdded.checkYourAnswersLabel = When was {0} added as a individual?
+otherIndividual.whenIndividualAdded.title = When was the individual added to the trust?
+otherIndividual.whenIndividualAdded.heading = When was {0} added as a individual?
 otherIndividual.whenIndividualAdded.hint = Check the trust deed or the power of appointment document. For example, 31 3 1980
-otherIndividual.whenIndividualAdded.error.required.all = Enter the date the protector was added to the trust
-otherIndividual.whenIndividualAdded.error.required.two = The date the protector was added to the trust must include a {0} and a {1}
-otherIndividual.whenIndividualAdded.error.required = The date the protector was added to the trust must include a {0}
+otherIndividual.whenIndividualAdded.error.required.all = Enter the date the individual was added to the trust
+otherIndividual.whenIndividualAdded.error.required.two = The date the individual was added to the trust must include a {0} and a {1}
+otherIndividual.whenIndividualAdded.error.required = The date the individual was added to the trust must include a {0}
 otherIndividual.whenIndividualAdded.error.invalid = Enter a real date
-otherIndividual.whenIndividualAdded.error.future = The date the protector was added to the trust must be today or in the past
-otherIndividual.whenIndividualAdded.error.past = The date the protector was added to the trust cannot be before the start date of the trust
+otherIndividual.whenIndividualAdded.error.future = The date the individual was added to the trust must be today or in the past
+otherIndividual.whenIndividualAdded.error.past = The date the individual was added to the trust cannot be before the start date of the trust
 
-individualProtector.liveInTheUkYesNo.checkYourAnswersLabel = Does {0} live in the UK?
-individualProtector.liveInTheUkYesNo.title = Does the protector live in the UK?
-individualProtector.liveInTheUkYesNo.heading = Does {0} live in the UK?
-individualProtector.liveInTheUkYesNo.error.required = Select yes if the protector lives in the UK
+otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel = Does {0} live in the UK?
+otherIndividual.liveInTheUkYesNo.title = Does the individual live in the UK?
+otherIndividual.liveInTheUkYesNo.heading = Does {0} live in the UK?
+otherIndividual.liveInTheUkYesNo.error.required = Select yes if the individual lives in the UK
+
+otherIndividual.interrupt.page.title = Information you need to add other individuals
+otherIndividual.interrupt.page.heading = Information you need to add other individuals
+otherIndividual.interrupt.page.subheading = For any other individuals, such as family members, friends or third parties, who are involved in the trust, you need their:
+otherIndividual.interrupt.page.b1 = National Insurance number
+otherIndividual.interrupt.page.b2 = Passport and address
+otherIndividual.interrupt.page.b3 = ID card and address
+otherIndividual.interrupt.page.b4 = address
+
