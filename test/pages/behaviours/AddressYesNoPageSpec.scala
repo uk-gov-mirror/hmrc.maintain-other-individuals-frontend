@@ -19,7 +19,7 @@ package pages.behaviours
 import java.time.LocalDate
 
 import models.{NonUkAddress, UkAddress, UserAnswers}
-import pages.individual.{AddressUkYesNoPage, AddressYesNoPage, NonUkAddressPage, UkAddressPage}
+import pages.individual.{AddressYesNoPage, LiveInTheUkYesNoPage, NonUkAddressPage, UkAddressPage}
 
 
 class AddressYesNoPageSpec extends PageBehaviours {
@@ -35,7 +35,7 @@ class AddressYesNoPageSpec extends PageBehaviours {
     "implement cleanup logic when NO selected" in {
       val userAnswers = UserAnswers("id", "utr", LocalDate.now)
         .set(UkAddressPage, UkAddress("line1", "line2", None, None, "postcode"))
-        .flatMap(_.set(AddressUkYesNoPage, false))
+        .flatMap(_.set(LiveInTheUkYesNoPage, false))
 
       userAnswers.get.get(UkAddressPage) mustNot be(defined)
     }
@@ -43,7 +43,7 @@ class AddressYesNoPageSpec extends PageBehaviours {
     "implement cleanup logic when YES selected" in {
       val userAnswers = UserAnswers("id", "utr", LocalDate.now)
         .set(NonUkAddressPage, NonUkAddress("line1", "line2", None,"country"))
-        .flatMap(_.set(AddressUkYesNoPage, true))
+        .flatMap(_.set(LiveInTheUkYesNoPage, true))
 
       userAnswers.get.get(NonUkAddressPage) mustNot be(defined)
     }

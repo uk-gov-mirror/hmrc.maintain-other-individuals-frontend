@@ -41,7 +41,7 @@ class WhenIndividualAddedController @Inject()(
                                        view: DateOfBirthView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider.withPrefix("otherIndividual.dateOfBirth")
+  val form = formProvider.withPrefix("otherIndividual.whenIndividualAdded")
 
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
