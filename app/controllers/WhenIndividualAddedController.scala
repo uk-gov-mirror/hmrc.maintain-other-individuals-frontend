@@ -17,16 +17,16 @@
 package controllers
 
 import controllers.actions.{NameRequiredAction, StandardActionSets}
-import forms.DateOfBirthFormProvider
+import forms.{DateOfBirthFormProvider, WhenIndividualAddedFormProvider}
 import javax.inject.Inject
 import models.Mode
 import navigation.{Navigator, OtherIndividualNavigator}
-import pages.individual.DateOfBirthPage
+import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.DateOfBirthView
+import views.html.{DateOfBirthView, WhenIndividualAddedView}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,9 +36,9 @@ class WhenIndividualAddedController @Inject()(
                                        navigator: OtherIndividualNavigator,
                                        standardActionSets: StandardActionSets,
                                        nameAction: NameRequiredAction,
-                                       formProvider: DateOfBirthFormProvider,
+                                       formProvider: WhenIndividualAddedFormProvider,
                                        val controllerComponents: MessagesControllerComponents,
-                                       view: DateOfBirthView
+                                       view: WhenIndividualAddedView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider.withPrefix("otherIndividual.whenIndividualAdded")
@@ -47,12 +47,12 @@ class WhenIndividualAddedController @Inject()(
   def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(DateOfBirthPage) match {
+      val preparedForm = request.userAnswers.get(WhenIndividualAddedPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, request.otherIndividual, mode))
+      Ok(view(preparedForm, request.otherIndividual))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
@@ -60,12 +60,12 @@ class WhenIndividualAddedController @Inject()(
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, request.otherIndividual, mode))),
+          Future.successful(BadRequest(view(formWithErrors, request.otherIndividual))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(DateOfBirthPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenIndividualAddedPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(DateOfBirthPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, mode, updatedAnswers))
       )
   }
 }
