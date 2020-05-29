@@ -19,6 +19,7 @@ package controllers
 import config.FrontendAppConfig
 import connectors.TrustConnector
 import controllers.actions._
+import handlers.ErrorHandler
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -39,7 +40,8 @@ class CheckDetailsController @Inject()(
                                         val appConfig: FrontendAppConfig,
                                         printHelper: OtherIndividualPrintHelper,
                                         mapper: OtherIndividualMapper,
-                                        nameAction: NameRequiredAction
+                                        nameAction: NameRequiredAction,
+                                        errorHandler: ErrorHandler
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
@@ -54,7 +56,7 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers) match {
         case None =>
-          Future.successful(InternalServerError)
+          Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request.request)))
         case Some(protector) =>
           connector.addOtherIndividual(request.userAnswers.utr, protector).map(_ =>
             Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
