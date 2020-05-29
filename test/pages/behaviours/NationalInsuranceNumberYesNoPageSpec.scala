@@ -20,32 +20,39 @@ import models.{IdCard, NonUkAddress, Passport, UkAddress, UserAnswers}
 import pages.individual._
 
 
-class AddressYesNoPageSpec extends PageBehaviours {
+class NationalInsuranceNumberYesNoPageSpec extends PageBehaviours {
 
-  "AddressYesNoPage" must {
+  "NationalInsuranceNumberYesNoPage" must {
 
-    beRetrievable[Boolean](AddressYesNoPage)
+    beRetrievable[Boolean](NationalInsuranceNumberYesNoPage)
 
-    beSettable[Boolean](AddressYesNoPage)
+    beSettable[Boolean](NationalInsuranceNumberYesNoPage)
 
-    beRemovable[Boolean](AddressYesNoPage)
+    beRemovable[Boolean](NationalInsuranceNumberYesNoPage)
 
     "implement cleanup logic when NO selected" in {
       val userAnswers = UserAnswers("id", "utr", LocalDate.now)
-        .set(AddressYesNoPage, false)
-        .flatMap(_.set(LiveInTheUkYesNoPage, false))
-        .flatMap(_.set(UkAddressPage, UkAddress("line1", "line2", None, None, "postcode"))
-        .flatMap(_.set(NonUkAddressPage, NonUkAddress("", "", None, "")))
+        .set(NationalInsuranceNumberYesNoPage, false)
+
+
+      userAnswers.get.get(UkAddressPage) mustNot be(defined)
+    }
+
+    "implement cleanup logic when YES selected" in {
+      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
+        .set(NationalInsuranceNumberPage, "AA12345A")
+        .flatMap(UkAddressPage, UkAddress("line1", "line2", None, None, "postcode"))
+        .flatMap(_.set(NonUkAddressPage, NonUkAddress("line1", "line2", None, "Germany")))
         .flatMap(_.set(PassportDetailsYesNoPage, true))
-        .flatMap(_.set(PassportDetailsPage, Passport("", "", "")))
+        .flatMap(_.set(PassportDetailsPage, Passport("GB", "1234567", LocalDate.now)))
         .flatMap(_.set(IdCardDetailsYesNoPage, true ))
-        .flatMap(_.set(IdCardDetailsPage, IdCard("", "", "")))
+        .flatMap(_.set(IdCardDetailsPage, IdCard("Germany", "1234567", LocalDate.now)))
+
 
       userAnswers.get.get(UkAddressPage) mustNot be(defined)
       userAnswers.get.get(NonUkAddressPage) mustNot be(defined)
       userAnswers.get.get(PassportDetailsPage) mustNot be(defined)
       userAnswers.get.get(IdCardDetailsPage) mustNot be(defined)
-
     }
   }
 }
