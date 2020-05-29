@@ -20,7 +20,7 @@ import controllers.actions.{NameRequiredAction, StandardActionSets}
 import forms.YesNoFormProvider
 import javax.inject.Inject
 import models.Mode
-import navigation.OtherIndividualNavigator
+import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.AddressYesNoPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AddressYesNoController @Inject()(
                                         override val messagesApi: MessagesApi,
                                         sessionRepository: PlaybackRepository,
-                                        navigator: OtherIndividualNavigator,
+                                        navigator: Navigator,
                                         standardActionSets: StandardActionSets,
                                         nameAction: NameRequiredAction,
                                         formProvider: YesNoFormProvider,

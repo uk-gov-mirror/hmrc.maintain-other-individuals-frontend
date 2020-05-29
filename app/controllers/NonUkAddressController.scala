@@ -34,7 +34,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class NonUkAddressController @Inject()(
                                         override val messagesApi: MessagesApi,
                                         sessionRepository: PlaybackRepository,
-                                        navigator: OtherIndividualNavigator,
+                                        navigator: Navigator,
                                         standardActionSets: StandardActionSets,
                                         nameAction: NameRequiredAction,
                                         formProvider: NonUkAddressFormProvider,

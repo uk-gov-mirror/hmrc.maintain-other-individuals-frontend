@@ -37,7 +37,7 @@ class NameController @Inject()(
                                 formProvider: NameFormProvider,
                                 playbackRepository: PlaybackRepository,
                                 view: NameView,
-                                navigator: OtherIndividualNavigator
+                                navigator: Navigator
                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form: Form[Name] = formProvider.withPrefix("otherIndividual.name")

@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class LiveInTheUkYesNoController @Inject()(
                                             override val messagesApi: MessagesApi,
                                             playbackRepository: PlaybackRepository,
-                                            navigator: OtherIndividualNavigator,
+                                            navigator: Navigator,
                                             standardActionSets: StandardActionSets,
                                             nameAction: NameRequiredAction,
                                             formProvider: YesNoFormProvider,

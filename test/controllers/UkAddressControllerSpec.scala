@@ -88,6 +88,24 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       application.stop()
     }
 
+    "redirect to the next page when valid data is submitted  is submitted" in {
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      val request =
+        FakeRequest(POST, ukAddressControllerRoute)
+          .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"),("postcode", "NE1 1ZZ"))
+
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+
+      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+
+      application.stop()
+    }
+
     "return a Bad Request and errors when invalid data is submitted" in {
 
       val userAnswers = emptyUserAnswers.set(NamePage, protectorName).success.value

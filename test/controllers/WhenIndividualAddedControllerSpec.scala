@@ -120,12 +120,38 @@ package controllers
 
       "redirect to Session Expired for a GET if no existing data is found" in {
 
+
         val application = applicationBuilder(userAnswers = None).build()
 
         val result = route(application, getRequest()).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
+
+        application.stop()
+      }
+
+      "redirect to the next page when valid data is submitted" in {
+
+        val userAnswers = emptyUserAnswers
+          .set(WhenIndividualAddedPage, validAnswer).success.value
+          .set(NamePage, name).success.value
+
+        val application =
+          applicationBuilder(userAnswers = Some(userAnswers)).build()
+
+        val request =
+          FakeRequest(POST, addedDateRoute)
+            .withFormUrlEncodedBody(
+              "value.day"   -> validAnswer.getDayOfMonth.toString,
+              "value.month" -> validAnswer.getMonthValue.toString,
+              "value.year"  -> validAnswer.getYear.toString
+            )
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+
+        redirectLocation(result).value mustEqual routes.CheckDetailsController.onPageLoad().url
 
         application.stop()
       }
