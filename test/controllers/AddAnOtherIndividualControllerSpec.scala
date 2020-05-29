@@ -21,7 +21,7 @@ import java.time.LocalDate
 import base.SpecBase
 import connectors.TrustStoreConnector
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
-import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
+import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, NormalMode, OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
@@ -283,7 +283,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual featureNotAvailable
+        redirectLocation(result).value mustEqual controllers.routes.NameController.onPageLoad(NormalMode).url
 
         application.stop()
       }

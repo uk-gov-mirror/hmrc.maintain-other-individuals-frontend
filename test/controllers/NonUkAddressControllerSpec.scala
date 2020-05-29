@@ -20,7 +20,9 @@ import java.time.LocalDate
 
 import base.SpecBase
 import forms.NonUkAddressFormProvider
+import play.api.inject.bind
 import models.{Name, NonUkAddress, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, NonUkAddressPage}
 import play.api.mvc.Call
@@ -124,7 +126,9 @@ class NonUkAddressControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, nonUkAddressRoute)
@@ -134,7 +138,7 @@ class NonUkAddressControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }

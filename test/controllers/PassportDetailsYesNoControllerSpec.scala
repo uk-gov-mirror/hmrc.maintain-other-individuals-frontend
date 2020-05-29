@@ -20,20 +20,15 @@ import java.time.LocalDate
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, NormalMode, OtherIndividual, UserAnswers}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import models.{Name, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, PassportDetailsYesNoPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.PassportDetailsYesNoView
-
-import scala.concurrent.Future
 
 class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
@@ -125,7 +120,9 @@ class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, passportDetailsYesNoRoute)
@@ -135,7 +132,7 @@ class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }

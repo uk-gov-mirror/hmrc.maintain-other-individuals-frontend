@@ -16,9 +16,11 @@
 
 package controllers
 
+import java.time.LocalDate
+
 import base.SpecBase
 import forms.UkAddressFormProvider
-import models.{Name, NormalMode, OtherIndividual, UkAddress}
+import models.{Name, NormalMode, OtherIndividual, UkAddress, UserAnswers}
 import navigation.Navigator
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -90,8 +92,13 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted  is submitted" in {
 
+      val userAnswers = emptyUserAnswers
+        .set(NamePage, protectorName).success.value
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(userAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, ukAddressControllerRoute)
@@ -101,7 +108,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }
