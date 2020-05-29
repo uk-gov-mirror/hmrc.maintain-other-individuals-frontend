@@ -20,20 +20,15 @@ import java.time.{LocalDate, ZoneOffset}
 
 import base.SpecBase
 import forms.DateOfBirthFormProvider
-import models.{Name, NormalMode, OtherIndividual}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import models.{Name, NormalMode}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthPage, NamePage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.DateOfBirthView
-
-import scala.concurrent.Future
 
 class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
@@ -67,7 +62,10 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
     "return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(userAnswersWithName)).build()
+      val application =
+        applicationBuilder(userAnswers = Some(userAnswersWithName))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val result = route(application, getRequest()).value
 
@@ -104,7 +102,9 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, dateOfBirthRoute)
@@ -118,14 +118,16 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }
 
     "return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(userAnswersWithName)).build()
+      val application = applicationBuilder(userAnswers = Some(userAnswersWithName))
+        .overrides(bind[Navigator].toInstance(fakeNavigator))
+        .build()
 
       val request =
         FakeRequest(POST, dateOfBirthRoute)

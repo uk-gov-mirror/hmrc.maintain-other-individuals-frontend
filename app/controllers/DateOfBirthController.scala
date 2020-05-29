@@ -43,7 +43,6 @@ class DateOfBirthController @Inject()(
 
   val form = formProvider.withPrefix("otherIndividual.dateOfBirth")
 
-
   def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
 
