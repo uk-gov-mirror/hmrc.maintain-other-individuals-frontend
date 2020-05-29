@@ -83,12 +83,12 @@ otherIndividual.whenRemoved.error.future = The date the other individual was rem
 otherIndividual.whenRemoved.error.past = The date the other individual was removed must be on or after the date they were added
 
 otherIndividual.addressYesNo.checkYourAnswersLabel = Do you know {0}’s address?
-otherIndividual.addressYesNo.title = Do you know the protector’s address?
+otherIndividual.addressYesNo.title = Do you know the individual’s address?
 otherIndividual.addressYesNo.heading = Do you know {0}’s address?
 otherIndividual.addressYesNo.error.required = Select yes if you know the individual’s address
 
-otherIndividual.checkDetails.title = Check individual protector details
-otherIndividual.checkDetails.heading = Check individual protector details
+otherIndividual.checkDetails.title = Check individual individual details
+otherIndividual.checkDetails.heading = Check individual individual details
 
 otherIndividual.dateOfBirth.checkYourAnswersLabel = What is {0}’s date of birth?
 otherIndividual.dateOfBirth.title = What is the {0}’s date of birth?
@@ -101,20 +101,20 @@ otherIndividual.dateOfBirth.error.future = Date of birth must be today or in the
 otherIndividual.dateOfBirth.error.past = Date of birth must be after 31 December 1499
 
 otherIndividual.dateOfBirthYesNo.checkYourAnswersLabel = Do you know {0}’s date of birth?
-otherIndividual.dateOfBirthYesNo.title = Do you know the protector’s date of birth?
+otherIndividual.dateOfBirthYesNo.title = Do you know the individual’s date of birth?
 otherIndividual.dateOfBirthYesNo.heading = Do you know {0}’s date of birth?
-otherIndividual.dateOfBirthYesNo.error.required = Select yes if you know the protector’s date of birth
+otherIndividual.dateOfBirthYesNo.error.required = Select yes if you know the individual’s date of birth
 
 otherIndividual.idCardDetails.checkYourAnswersLabel = What are {0}’s ID card details?
-otherIndividual.idCardDetails.title = What are the protector’s ID card details?
+otherIndividual.idCardDetails.title = What are the individual’s ID card details?
 otherIndividual.idCardDetails.heading = What are {0}’s ID card details?
 otherIndividual.idCardDetails.country = ID card country of issue
-otherIndividual.idCardDetails.country.error.required = Enter the protector’s ID card country of issue
-otherIndividual.idCardDetails.country.error.length = The protector’s ID card country must be 100 characters or less
+otherIndividual.idCardDetails.country.error.required = Enter the individual’s ID card country of issue
+otherIndividual.idCardDetails.country.error.length = The individual’s ID card country must be 100 characters or less
 otherIndividual.idCardDetails.number = ID card number
 otherIndividual.idCardDetails.number.hint = For example, 502135326
-otherIndividual.idCardDetails.number.error.required = Enter the protector’s ID card number
-otherIndividual.idCardDetails.number.error.length = The protector’s ID card number must be 30 characters or less
+otherIndividual.idCardDetails.number.error.required = Enter the individual’s ID card number
+otherIndividual.idCardDetails.number.error.length = The individual’s ID card number must be 30 characters or less
 otherIndividual.idCardDetails.number.error.invalid = ID card number can only include letters and numbers
 otherIndividual.idCardDetails.expiryDate = Expiry date
 otherIndividual.idCardDetails.expiryDate.hint = Expiry date can be in the past. For example, 31 3 1980
@@ -126,14 +126,17 @@ otherIndividual.idCardDetails.expiryDate.error.future = ID card expiry date must
 otherIndividual.idCardDetails.expiryDate.error.past = ID card
 
 otherIndividual.idCardDetailsYesNo.checkYourAnswersLabel = Do you know {0}’s ID card details?
-otherIndividual.idCardDetailsYesNo.title = Do you know the protector’s ID card details?
+otherIndividual.idCardDetailsYesNo.title = Do you know the individual’s ID card details?
 otherIndividual.idCardDetailsYesNo.heading = Do you know {0}’s ID card details?
-otherIndividual.idCardDetailsYesNo.error.required = Select yes if you know the protector’s ID card details
+otherIndividual.idCardDetailsYesNo.error.required = Select yes if you know the individual’s ID card details
 
 otherIndividual.name.default = the individual
 otherIndividual.name.checkYourAnswersLabel = What is the name of the individual?
 otherIndividual.name.title = What is the name of the individual?
 otherIndividual.name.heading = What is the name of the individual?
+otherIndividual.name.firstName = First name
+otherIndividual.name.middleName = Middle names (optional)
+otherIndividual.name.lastName = Last name
 otherIndividual.name.error.firstName.required = Enter your first name
 otherIndividual.name.error.firstName.invalid = Your first name must only include letters a to z, numbers 0 to 9, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
 otherIndividual.name.error.lastName.required = Enter your last name
@@ -144,32 +147,32 @@ otherIndividual.name.error.middleName.invalid = Your middle names must only incl
 otherIndividual.name.error.lastName.length = Your last name must be 35 characters or less
 
 otherIndividual.nationalInsuranceNumberYesNo.checkYourAnswersLabel = Do you know {0}’s National Insurance number?
-otherIndividual.nationalInsuranceNumberYesNo.title = Do you know the protector’s National Insurance number?
+otherIndividual.nationalInsuranceNumberYesNo.title = Do you know the individual’s National Insurance number?
 otherIndividual.nationalInsuranceNumberYesNo.heading = Do you know {0}’s National Insurance number?
-otherIndividual.nationalInsuranceNumberYesNo.error.required = Select yes if you know the protector’s National Insurance number
+otherIndividual.nationalInsuranceNumberYesNo.error.required = Select yes if you know the individual’s National Insurance number
 
 otherIndividual.nationalInsuranceNumber.checkYourAnswersLabel = What is {0}’s National Insurance number?
-otherIndividual.nationalInsuranceNumber.title = What is the protector’s National Insurance number?
+otherIndividual.nationalInsuranceNumber.title = What is the individual’s National Insurance number?
 otherIndividual.nationalInsuranceNumber.heading = What is {0}’s National Insurance number?
 otherIndividual.nationalInsuranceNumber.hint = It is on their National Insurance card, benefit letter, payslip or P60. For example, ‘QQ 12 34 56 C’.
-otherIndividual.nationalInsuranceNumber.error.required = Enter the protector’s National Insurance number
-otherIndividual.nationalInsuranceNumber.error.invalidFormat = Enter the protector’s National Insurance number in the correct format
+otherIndividual.nationalInsuranceNumber.error.required = Enter the individual’s National Insurance number
+otherIndividual.nationalInsuranceNumber.error.invalidFormat = Enter the individual’s National Insurance number in the correct format
 
 otherIndividual.passportDetailsYesNo.checkYourAnswersLabel = Do you know {0}’s passport details?
-otherIndividual.passportDetailsYesNo.title = Do you know the protector’s passport details?
+otherIndividual.passportDetailsYesNo.title = Do you know the individual’s passport details?
 otherIndividual.passportDetailsYesNo.heading = Do you know {0}’s passport details?
-otherIndividual.passportDetailsYesNo.error.required = Select yes if you know the protector’s passport details
+otherIndividual.passportDetailsYesNo.error.required = Select yes if you know the individual’s passport details
 
 otherIndividual.passportDetails.checkYourAnswersLabel = What are {0}’s passport details?
-otherIndividual.passportDetails.title = What are the protector’s passport details?
+otherIndividual.passportDetails.title = What are the individual’s passport details?
 otherIndividual.passportDetails.heading = What are {0}’s passport details?
 otherIndividual.passportDetails.country = Passport country of issue
-otherIndividual.passportDetails.country.error.required = Enter the protector’s passport country of issue
-otherIndividual.passportDetails.country.error.length = The protector’s passport country must be 100 characters or less
+otherIndividual.passportDetails.country.error.required = Enter the individual’s passport country of issue
+otherIndividual.passportDetails.country.error.length = The individual’s passport country must be 100 characters or less
 otherIndividual.passportDetails.number = Passport number
 otherIndividual.passportDetails.number.hint = For example, 502135326
-otherIndividual.passportDetails.number.error.required = Enter the protector’s passport number
-otherIndividual.passportDetails.number.error.length = The protector’s passport number must be 30 characters or less
+otherIndividual.passportDetails.number.error.required = Enter the individual’s passport number
+otherIndividual.passportDetails.number.error.length = The individual’s passport number must be 30 characters or less
 otherIndividual.passportDetails.number.error.invalid = Passport number can only include letters and numbers
 otherIndividual.passportDetails.expiryDate = Expiry date
 otherIndividual.passportDetails.expiryDate.hint = Expiry date can be in the past. For example, 31 3 1980
@@ -216,13 +219,11 @@ internationalAddress.error.line3.length = Address line 3 must be 35 characters o
 internationalAddress.error.line1.invalidCharacters = Address line 1 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
 internationalAddress.error.line2.invalidCharacters = Address line 2 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
 internationalAddress.error.line3.invalidCharacters = Address line 3 must only include letters a to z, numbers, ampersands (&), apostrophes, commas, forward slashes, full stops, hyphens, round brackets and spaces
-site.address.international.title = What is the address?
-site.address.international.heading = What is {0}’s address?
-site.address.international.line1 = Address line 1
-site.address.international.line2 = Address line 2
-site.address.international.line3 = Address line 3 (optional)
-site.address.international.country = Country
-site.address.international.country.select = Select a country
+site.address.nonUk.line1 = Address line 1
+site.address.nonUk.line2 = Address line 2
+site.address.nonUk.line3 = Address line 3 (optional)
+site.address.nonUk.country = Country
+site.address.nonUk.country.select = Select a country
 
 otherIndividual.whenIndividualAdded.checkYourAnswersLabel = When was {0} added as a individual?
 otherIndividual.whenIndividualAdded.title = When was the individual added to the trust?
@@ -242,7 +243,8 @@ otherIndividual.liveInTheUkYesNo.error.required = Select yes if the individual l
 
 otherIndividual.interrupt.page.title = Information you need to add other individuals
 otherIndividual.interrupt.page.heading = Information you need to add other individuals
-otherIndividual.interrupt.page.subheading = For any other individuals, such as family members, friends or third parties, who are involved in the trust, you need their:
+otherIndividual.interrupt.page.subheading = Other individuals
+otherIndividual.interrupt.page.h2 = For any other individuals, such as family members, friends or third parties, who are involved in the trust, you need their:
 otherIndividual.interrupt.page.b1 = National Insurance number
 otherIndividual.interrupt.page.b2 = Passport and address
 otherIndividual.interrupt.page.b3 = ID card and address

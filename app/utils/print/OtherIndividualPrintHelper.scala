@@ -45,7 +45,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", controllers.routes.PassportDetailsController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", controllers.routes.IdCardDetailsYesNoController.onPageLoad(NormalMode).url),
       bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", controllers.routes.IdCardDetailsController.onPageLoad(NormalMode).url),
-      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.startDate", controllers.routes.WhenIndividualAddedController.onPageLoad().url)
+      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", controllers.routes.WhenIndividualAddedController.onPageLoad().url)
     ).flatten
 
     val amend: Seq[AnswerRow] = Seq(

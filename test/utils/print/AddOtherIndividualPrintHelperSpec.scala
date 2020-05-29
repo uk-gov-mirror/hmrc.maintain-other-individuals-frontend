@@ -69,7 +69,7 @@ class AddOtherIndividualPrintHelperSpec extends SpecBase {
           AnswerRow(label = Html(messages("otherIndividual.passportDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = controllers.routes.PassportDetailsController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("otherIndividual.idCardDetailsYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = controllers.routes.IdCardDetailsYesNoController.onPageLoad(NormalMode).url),
           AnswerRow(label = Html(messages("otherIndividual.idCardDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = controllers.routes.IdCardDetailsController.onPageLoad(NormalMode).url),
-          AnswerRow(label = Html(messages("otherIndividual.startDate.checkYourAnswersLabel", name.displayName)), answer = Html("1 January 2020"), changeUrl = controllers.routes.WhenIndividualAddedController.onPageLoad().url)
+          AnswerRow(label = Html(messages("otherIndividual.whenIndividualAdded.checkYourAnswersLabel", name.displayName)), answer = Html("1 January 2020"), changeUrl = controllers.routes.WhenIndividualAddedController.onPageLoad().url)
         )
       )
     }

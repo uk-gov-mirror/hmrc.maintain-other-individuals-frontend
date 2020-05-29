@@ -27,8 +27,8 @@ class NonUkAddressFormProviderSpec extends StringFieldBehaviours {
   ".line1" must {
 
     val fieldName = "line1"
-    val requiredKey = "nonUkAddress.error.line1.required"
-    val lengthKey = "nonUkAddress.error.line1.length"
+    val requiredKey = "internationalAddress.error.line1.required"
+    val lengthKey = "internationalAddress.error.line1.length"
     val maxLength = 35
 
     behave like fieldThatBindsValidData(
@@ -60,8 +60,8 @@ class NonUkAddressFormProviderSpec extends StringFieldBehaviours {
   ".line2" must {
 
     val fieldName = "line2"
-    val requiredKey = "nonUkAddress.error.line2.required"
-    val lengthKey = "nonUkAddress.error.line2.length"
+    val requiredKey = "internationalAddress.error.line2.required"
+    val lengthKey = "internationalAddress.error.line2.length"
     val maxLength = 35
 
     behave like fieldThatBindsValidData(
@@ -93,7 +93,7 @@ class NonUkAddressFormProviderSpec extends StringFieldBehaviours {
   ".line3" must {
 
     val fieldName = "line3"
-    val lengthKey = "nonUkAddress.error.line3.length"
+    val lengthKey = "internationalAddress.error.line3.length"
     val maxLength = 35
 
     behave like fieldWithMaxLength(
@@ -114,8 +114,8 @@ class NonUkAddressFormProviderSpec extends StringFieldBehaviours {
   ".country" must {
 
     val fieldName = "country"
-    val requiredKey = "nonUkAddress.error.country.required"
-    val lengthKey = "nonUkAddress.error.country.length"
+    val requiredKey = "internationalAddress.error.country.required"
+    val lengthKey = "internationalAddress.error.country.length"
     val maxLength = 35
 
     behave like fieldWithMaxLength(
