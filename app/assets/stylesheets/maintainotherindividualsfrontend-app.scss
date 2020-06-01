@@ -1,19 +1,28 @@
+@import 'mixins/spacing';
+@import 'mixins/clearfix';
+
+@import 'partials/palette';
+@import 'colours/palette';
+
 @import 'partials/_variables';
 @import 'partials/_base';
-
-@import 'partials/_template';
-@import 'partials/_page';
-
 @import 'partials/_forms';
 @import 'partials/_typography';
-
 @import 'partials/_utilities';
-
 @import 'partials/_shame';
-
-// WCGA 2.1
-@import 'partials/_palette';
+@import 'partials/heading';
+@import 'patterns/tag';
+@import 'conditionals';
 @import 'partials/_focus';
+@import 'patterns/add-to-a-list';
+@import 'patterns/symbol-input';
+
+@import 'partials/task-list';
+@import 'partials/_modal';
+@import 'patterns/check-your-answers';
+
+@import 'location-autocomplete.min';
+
 
 .govuk-caption-xl {
   font-family: "nta", Arial, sans-serif;
@@ -45,4 +54,8 @@
     font-size: 18pt;
     line-height: 1.15;
   }
+}
+
+.clearfix {
+  @include govuk-clearfix;
 }
