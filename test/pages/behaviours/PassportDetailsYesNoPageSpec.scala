@@ -48,6 +48,9 @@ class PassportDetailsYesNoPageSpec extends PageBehaviours {
         .flatMap(_.set(IdCardDetailsPage, IdCard("Germany", "1234567", LocalDate.now)))
 
       userAnswers.get.get(NonUkAddressPage) mustNot be(defined)
+      userAnswers.get.get(UkAddressPage) mustNot be(defined)
+      userAnswers.get.get(PassportDetailsPage) mustNot be(defined)
+      userAnswers.get.get(IdCardDetailsPage) mustNot be(defined)
     }
   }
 }
