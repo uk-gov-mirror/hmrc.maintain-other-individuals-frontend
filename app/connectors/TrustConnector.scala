@@ -45,6 +45,12 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
     http.POST[JsValue, HttpResponse](addOtherIndividualUrl(utr), Json.toJson(otherIndividual))
   }
 
+  private def amendOtherIndividualUrl(utr: String, index: Int) = s"${config.trustsUrl}/trusts/other-individuals/amend/$utr/$index"
+
+  def amendOtherIndividual(utr: String, index: Int, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+    http.POST[JsValue, HttpResponse](amendOtherIndividualUrl(utr, index), Json.toJson(otherIndividual))
+  }
+
   private def removeOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/$utr/remove"
 
   def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {

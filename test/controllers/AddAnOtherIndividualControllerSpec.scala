@@ -60,19 +60,25 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
   private val otherIndividuals = OtherIndividuals(List(otherIndividual))
 
-  lazy val featureNotAvailable : String = controllers.routes.FeatureNotAvailableController.onPageLoad().url
-
   val otherIndividualRows = List(
-    AddRow("First Last", typeLabel = "Other individual", "Change details", Some(featureNotAvailable), "Remove", Some(controllers.individual.remove.routes.RemoveOtherIndividualController.onPageLoad(0).url))
-  )
+    AddRow(
+      "First Last",
+      typeLabel = "Other individual",
+      "Change details",
+      Some(controllers.individual.amend.routes.CheckDetailsController.extractAndRender(0).url),
+      "Remove",
+      Some(controllers.individual.remove.routes.RemoveOtherIndividualController.onPageLoad(0).url)
+    ))
 
   class FakeService(data: OtherIndividuals) extends TrustService {
     override def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[OtherIndividuals] = Future.successful(data)
 
-    override def getOtherIndividual(utr: String, index: Int)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
+    override def getOtherIndividual(utr: String, index: Int)
+                                   (implicit hc: HeaderCarrier, ex: ExecutionContext): Future[OtherIndividual] =
       Future.successful(otherIndividual)
 
-    override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)
+                                      (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
       Future.successful(HttpResponse(OK))
   }
 

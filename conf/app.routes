@@ -84,6 +84,10 @@ POST       /individual-added                                controllers.WhenIndi
 GET         /check-details                                  controllers.CheckDetailsController.onPageLoad()
 POST        /check-details                                  controllers.CheckDetailsController.onSubmit()
 
+GET        /:index/check-details                            controllers.individual.amend.CheckDetailsController.extractAndRender(index: Int)
+GET        /:index/updated-details                          controllers.individual.amend.CheckDetailsController.renderFromUserAnswers(index: Int)
+POST       /:index/check-details                            controllers.individual.amend.CheckDetailsController.onSubmit(index: Int)
+
 GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
 
 GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
