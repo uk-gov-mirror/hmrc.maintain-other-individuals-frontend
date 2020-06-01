@@ -41,7 +41,7 @@ package controllers
 
     private lazy val addedDateRoute = routes.WhenIndividualAddedController.onPageLoad().url
 
-    private val name = Name("New", None, "Protector")
+    private val name = Name("New", None, "Individual")
 
     override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", date)
       .set(NamePage, name)

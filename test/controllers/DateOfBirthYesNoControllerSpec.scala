@@ -39,12 +39,12 @@ class DateOfBirthYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val dateOfBirthYesNoRoute = routes.DateOfBirthYesNoController.onPageLoad(NormalMode).url
 
-  val name = Name("New", None, "Protector")
+  val name = Name("New", None, "Individual")
 
   override val emptyUserAnswers = super.emptyUserAnswers
     .set(NamePage, name).success.value
 
-  "Individual Protector DateOfBirthYesNoPage Controller" must {
+  "Other Individual DateOfBirthYesNoPage Controller" must {
 
     "return OK and the correct view for a GET" in {
 

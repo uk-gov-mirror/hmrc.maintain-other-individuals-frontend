@@ -17,9 +17,9 @@
 package controllers
 
 import controllers.actions.{NameRequiredAction, StandardActionSets}
-import forms.{DateOfBirthFormProvider, WhenIndividualAddedFormProvider}
+import forms.{DateAddedToTrustFormProvider, DateOfBirthFormProvider}
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, NormalMode}
 import navigation.{Navigator, OtherIndividualNavigator}
 import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -31,21 +31,21 @@ import views.html.{DateOfBirthView, WhenIndividualAddedView}
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhenIndividualAddedController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: PlaybackRepository,
-                                       navigator: Navigator,
-                                       standardActionSets: StandardActionSets,
-                                       nameAction: NameRequiredAction,
-                                       formProvider: WhenIndividualAddedFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: WhenIndividualAddedView
+                                               override val messagesApi: MessagesApi,
+                                               sessionRepository: PlaybackRepository,
+                                               navigator: Navigator,
+                                               standardActionSets: StandardActionSets,
+                                               nameAction: NameRequiredAction,
+                                               formProvider: DateAddedToTrustFormProvider,
+                                               val controllerComponents: MessagesControllerComponents,
+                                               view: WhenIndividualAddedView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider.withPrefix("otherIndividual.whenIndividualAdded")
 
-
-  def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
+  def onPageLoad(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
+
+      val form = formProvider.withPrefixAndTrustStartDate("otherIndividual.whenIndividualAdded", request.userAnswers.whenTrustSetup)
 
       val preparedForm = request.userAnswers.get(WhenIndividualAddedPage) match {
         case None => form
@@ -55,8 +55,10 @@ class WhenIndividualAddedController @Inject()(
       Ok(view(preparedForm, request.otherIndividual))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
+  def onSubmit(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
     implicit request =>
+
+      val form = formProvider.withPrefixAndTrustStartDate("otherIndividual.whenIndividualAdded", request.userAnswers.whenTrustSetup)
 
       form.bindFromRequest().fold(
         formWithErrors =>
@@ -65,7 +67,7 @@ class WhenIndividualAddedController @Inject()(
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenIndividualAddedPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, NormalMode, updatedAnswers))
       )
   }
 }

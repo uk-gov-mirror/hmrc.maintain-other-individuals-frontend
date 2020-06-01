@@ -41,7 +41,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
   val form = new UkAddressFormProvider()()
 
-  val protectorName = Name("FirstName", None, "LastName")
+  val individualName = Name("FirstName", None, "LastName")
   val validAnswer = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
 
   lazy val ukAddressControllerRoute = routes.UkAddressController.onPageLoad(NormalMode).url
@@ -50,7 +50,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "return OK and the correct view for a GET" in {
 
-      val userAnswers = emptyUserAnswers.set(NamePage, protectorName).success.value
+      val userAnswers = emptyUserAnswers.set(NamePage, individualName).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -63,7 +63,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, protectorName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(form, individualName.displayName, NormalMode)(fakeRequest, messages).toString
 
       application.stop()
     }
@@ -71,7 +71,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
     "populate the view correctly on a GET when the question has previously been answered" in {
 
       val userAnswers = emptyUserAnswers
-        .set(NamePage, protectorName).success.value
+        .set(NamePage, individualName).success.value
         .set(UkAddressPage, validAnswer).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
@@ -85,7 +85,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(validAnswer), protectorName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(form.fill(validAnswer), individualName.displayName, NormalMode)(fakeRequest, messages).toString
 
       application.stop()
     }
@@ -93,7 +93,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val userAnswers = emptyUserAnswers
-        .set(NamePage, protectorName).success.value
+        .set(NamePage, individualName).success.value
 
       val application =
         applicationBuilder(userAnswers = Some(userAnswers))
@@ -115,7 +115,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "return a Bad Request and errors when invalid data is submitted" in {
 
-      val userAnswers = emptyUserAnswers.set(NamePage, protectorName).success.value
+      val userAnswers = emptyUserAnswers.set(NamePage, individualName).success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
@@ -132,7 +132,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, protectorName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(boundForm, individualName.displayName, NormalMode)(fakeRequest, messages).toString
 
       application.stop()
     }

@@ -78,8 +78,8 @@ POST       /non-uk-address                                  controllers.NonUkAdd
 GET        /change-non-uk-address                           controllers.NonUkAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /change-non-uk-address                           controllers.NonUkAddressController.onSubmit(mode: Mode = CheckMode)
 
-GET        /individual-added                                controllers.WhenIndividualAddedController.onPageLoad(mode: Mode = NormalMode)
-POST       /individual-added                                controllers.WhenIndividualAddedController.onSubmit(mode: Mode = NormalMode)
+GET        /when-added                                      controllers.WhenIndividualAddedController.onPageLoad()
+POST       /when-added                                      controllers.WhenIndividualAddedController.onSubmit()
 
 GET         /check-details                                  controllers.CheckDetailsController.onPageLoad()
 POST        /check-details                                  controllers.CheckDetailsController.onSubmit()
@@ -88,14 +88,14 @@ GET        /:index/check-details                            controllers.individu
 GET        /:index/updated-details                          controllers.individual.amend.CheckDetailsController.renderFromUserAnswers(index: Int)
 POST       /:index/check-details                            controllers.individual.amend.CheckDetailsController.onSubmit(index: Int)
 
-GET        /assets/*file                                controllers.Assets.versioned(path="/public", file: Asset)
+GET        /assets/*file                                    controllers.Assets.versioned(path="/public", file: Asset)
 
-GET        /language/:lang                              controllers.LanguageSwitchController.switchToLanguage(lang: String)
+GET        /language/:lang                                  controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
-GET        /this-service-has-been-reset                 controllers.SessionExpiredController.onPageLoad
+GET        /this-service-has-been-reset                     controllers.SessionExpiredController.onPageLoad
 
-GET        /feature-not-available                       controllers.FeatureNotAvailableController.onPageLoad()
+GET        /feature-not-available                           controllers.FeatureNotAvailableController.onPageLoad()
 
-GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad
+GET        /unauthorised                                    controllers.UnauthorisedController.onPageLoad
 
-GET        /:utr                                        controllers.IndexController.onPageLoad(utr: String)
+GET        /:utr                                            controllers.IndexController.onPageLoad(utr: String)
