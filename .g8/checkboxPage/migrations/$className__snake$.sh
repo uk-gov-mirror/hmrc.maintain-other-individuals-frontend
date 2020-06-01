@@ -22,7 +22,7 @@ echo "$className;format="decap"$.checkYourAnswersLabel = $title$" >> ../conf/mes
 echo "$className;format="decap"$.error.required = Select $className;format="decap"$" >> ../conf/messages.en
 
 echo "Adding to UserAnswersEntryGenerators"
-awk ’/trait UserAnswersEntryGenerators/ {\
+awk '/trait UserAnswersEntryGenerators/ {\
     print;\
     print "";\
     print "  implicit lazy val arbitrary$className$UserAnswersEntry: Arbitrary[($className$Page.type, JsValue)] =";\
@@ -32,34 +32,34 @@ awk ’/trait UserAnswersEntryGenerators/ {\
     print "        value <- arbitrary[$className$].map(Json.toJson(_))";\
     print "      } yield (page, value)";\
     print "    }";\
-    next }1’ ../test/generators/UserAnswersEntryGenerators.scala > tmp && mv tmp ../test/generators/UserAnswersEntryGenerators.scala
+    next }1' ../test/generators/UserAnswersEntryGenerators.scala > tmp && mv tmp ../test/generators/UserAnswersEntryGenerators.scala
 
 echo "Adding to PageGenerators"
-awk ’/trait PageGenerators/ {\
+awk '/trait PageGenerators/ {\
     print;\
     print "";\
     print "  implicit lazy val arbitrary$className$Page: Arbitrary[$className$Page.type] =";\
     print "    Arbitrary($className$Page)";\
-    next }1’ ../test/generators/PageGenerators.scala > tmp && mv tmp ../test/generators/PageGenerators.scala
+    next }1' ../test/generators/PageGenerators.scala > tmp && mv tmp ../test/generators/PageGenerators.scala
 
 echo "Adding to ModelGenerators"
-awk ’/trait ModelGenerators/ {\
+awk '/trait ModelGenerators/ {\
     print;\
     print "";\
     print "  implicit lazy val arbitrary$className$: Arbitrary[$className$] =";\
     print "    Arbitrary {";\
     print "      Gen.oneOf($className$.values.toSeq)";\
     print "    }";\
-    next }1’ ../test/generators/ModelGenerators.scala > tmp && mv tmp ../test/generators/ModelGenerators.scala
+    next }1' ../test/generators/ModelGenerators.scala > tmp && mv tmp ../test/generators/ModelGenerators.scala
 
 echo "Adding to UserAnswersGenerator"
-awk ’/val generators/ {\
+awk '/val generators/ {\
     print;\
     print "    arbitrary[($className$Page.type, JsValue)] ::";\
-    next }1’ ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
+    next }1' ../test/generators/UserAnswersGenerator.scala > tmp && mv tmp ../test/generators/UserAnswersGenerator.scala
 
 echo "Adding helper method to CheckYourAnswersHelper"
-awk ’/class/ {\
+awk '/class/ {\
      print;\
      print "";\
      print "  def $className;format="decap"$: Option[AnswerRow] = userAnswers.get($className$Page) map {";\
@@ -70,6 +70,6 @@ awk ’/class/ {\
      print "        routes.$className$Controller.onPageLoad(CheckMode).url";\
      print "      )"
      print "  }";\
-     next }1’ ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
+     next }1' ../app/utils/CheckYourAnswersHelper.scala > tmp && mv tmp ../app/utils/CheckYourAnswersHelper.scala
 
 echo "Migration $className;format="snake"$ completed"

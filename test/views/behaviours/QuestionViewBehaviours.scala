@@ -64,7 +64,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
 
       for (field <- fields) {
 
-        s"rendered with an error with field ’$field’" must {
+        s"rendered with an error with field '$field'" must {
 
           "show an error summary" in {
 
@@ -72,7 +72,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
             assertRenderedById(doc, "error-summary-heading")
           }
 
-          s"show an error associated with the field ’$field’" in {
+          s"show an error associated with the field '$field'" in {
 
             val doc = asDocument(createView(form.withError(FormError(field, "error"))))
             val inputField = doc.getElementById(field)
@@ -81,7 +81,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
             }
 
 
-            doc.select(s"label[for=’$field’]").size() mustBe 1
+            doc.select(s"label[for='$field']").size() mustBe 1
           }
         }
       }
@@ -136,7 +136,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
 
       for (field <- textFields) {
 
-        s"rendered with an error with field ’$field’" must {
+        s"rendered with an error with field '$field'" must {
 
           "show an error summary" in {
 
@@ -144,14 +144,14 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
             assertRenderedById(doc, "error-summary-heading")
           }
 
-          s"show an error in the label for field ’$field’" in {
+          s"show an error in the label for field '$field'" in {
 
             val doc = asDocument(createView(form.withError(FormError(field._1, "error"))))
             val errorSpan = doc.getElementsByClass("error-message").first
             errorSpan.parent.getElementsByClass("form-label").attr("for") mustBe field._1
           }
 
-          s"contains a label and optional hint text for the field ’$field’" in {
+          s"contains a label and optional hint text for the field '$field'" in {
             val doc = asDocument(createView(form))
             val fieldName = field._1
             val fieldHint = field._2 map (k => messages(k))

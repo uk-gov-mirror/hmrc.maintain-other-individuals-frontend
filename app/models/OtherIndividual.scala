@@ -31,10 +31,10 @@ final case class OtherIndividual(name: Name,
 object OtherIndividual {
 
   implicit val reads: Reads[OtherIndividual] =
-    ((__ \ ’name).read[Name] and
-      (__ \ ’dateOfBirth).readNullable[LocalDate] and
-      __.lazyRead(readNullableAtSubPath[IndividualIdentification](__ \ ’identification)) and
-      __.lazyRead(readNullableAtSubPath[Address](__ \ ’identification \ ’address)) and
+    ((__ \ 'name).read[Name] and
+      (__ \ 'dateOfBirth).readNullable[LocalDate] and
+      __.lazyRead(readNullableAtSubPath[IndividualIdentification](__ \ 'identification)) and
+      __.lazyRead(readNullableAtSubPath[Address](__ \ 'identification \ 'address)) and
       (__ \ "entityStart").read[LocalDate] and
       (__ \ "provisional").readWithDefault(false)).tupled.map{
 
@@ -44,10 +44,10 @@ object OtherIndividual {
     }
 
   implicit val writes: Writes[OtherIndividual] =
-    ((__ \ ’name).write[Name] and
-      (__ \ ’dateOfBirth).writeNullable[LocalDate] and
-      (__ \ ’identification).writeNullable[IndividualIdentification] and
-      (__ \ ’identification \ ’address).writeNullable[Address] and
+    ((__ \ 'name).write[Name] and
+      (__ \ 'dateOfBirth).writeNullable[LocalDate] and
+      (__ \ 'identification).writeNullable[IndividualIdentification] and
+      (__ \ 'identification \ 'address).writeNullable[Address] and
       (__ \ "entityStart").write[LocalDate] and
       (__ \ "provisional").write[Boolean]
       ).apply(unlift(OtherIndividual.unapply))

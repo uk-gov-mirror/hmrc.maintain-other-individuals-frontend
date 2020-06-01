@@ -700,7 +700,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Cote d’Ivoire"
+      "en-GB": "Cote d'Ivoire"
     }
   },
   "territory:CK": {
@@ -4578,7 +4578,7 @@
       "en-GB": "Al itihaad al islamiya"
     }
   },
-  "nym:Al-’Iraq": {
+  "nym:Al-'Iraq": {
     "edges": {
       "from": [
         "country:IQ"
@@ -4592,7 +4592,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-’Iraq"
+      "en-GB": "Al-'Iraq"
     }
   },
   "nym:Al-Baḥrayn": {
@@ -4629,7 +4629,7 @@
       "en-GB": "Al-Iraq"
     }
   },
-  "nym:Al-Jazā’ir": {
+  "nym:Al-Jazā'ir": {
     "edges": {
       "from": [
         "country:DZ"
@@ -4643,7 +4643,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-Jazā’ir"
+      "en-GB": "Al-Jazā'ir"
     }
   },
   "nym:Al-Mamlaka Al-‘Arabiyyah as Sa‘ūdiyyah": {
@@ -4714,7 +4714,7 @@
       "en-GB": "Al-maɣréb"
     }
   },
-  "nym:Al-’Imārat Al-‘Arabiyyah Al-Muttaḥidah": {
+  "nym:Al-'Imārat Al-‘Arabiyyah Al-Muttaḥidah": {
     "edges": {
       "from": [
         "country:AE"
@@ -4728,10 +4728,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-’Imārat Al-‘Arabiyyah Al-Muttaḥidah"
+      "en-GB": "Al-'Imārat Al-‘Arabiyyah Al-Muttaḥidah"
     }
   },
-  "nym:Al-’Urdun": {
+  "nym:Al-'Urdun": {
     "edges": {
       "from": [
         "country:JO"
@@ -4745,7 +4745,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-’Urdun"
+      "en-GB": "Al-'Urdun"
     }
   },
   "nym:Aland": {
@@ -4799,7 +4799,7 @@
       "en-GB": "Ameica"
     }
   },
-  "nym:Amelika-hui-pu-’ia": {
+  "nym:Amelika-hui-pu-'ia": {
     "edges": {
       "from": [
         "country:US"
@@ -4813,7 +4813,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Amelika-hui-pu-’ia"
+      "en-GB": "Amelika-hui-pu-'ia"
     }
   },
   "nym:Amerca": {
@@ -7417,7 +7417,7 @@
       "en-GB": "Costa Rico"
     }
   },
-  "nym:Cote D’Ivoire": {
+  "nym:Cote D'Ivoire": {
     "edges": {
       "from": [
         "country:CI"
@@ -7431,7 +7431,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Cote D’Ivoire"
+      "en-GB": "Cote D'Ivoire"
     }
   },
   "nym:Cote dIvoire": {
@@ -7757,7 +7757,7 @@
       "en-GB": "Dawlat ul-Kuwayt"
     }
   },
-  "nym:Democratic People’s Republic of Koread": {
+  "nym:Democratic People's Republic of Koread": {
     "edges": {
       "from": [
         "country:KP"
@@ -7771,7 +7771,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Democratic People’s Republic of Koread"
+      "en-GB": "Democratic People's Republic of Koread"
     }
   },
   "nym:Democratic Republic of Sao Tome and Principe": {
@@ -10868,7 +10868,7 @@
       "en-GB": "Itlay"
     }
   },
-  "nym:Ityop’ia": {
+  "nym:Ityop'ia": {
     "edges": {
       "from": [
         "country:ET"
@@ -10882,7 +10882,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Ityop’ia"
+      "en-GB": "Ityop'ia"
     }
   },
   "nym:JE": {
@@ -12228,7 +12228,7 @@
       "en-GB": "Lao"
     }
   },
-  "nym:Lao People’s Democratic Republic": {
+  "nym:Lao People's Democratic Republic": {
     "edges": {
       "from": [
         "country:LA"
@@ -12242,7 +12242,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Lao People’s Democratic Republic"
+      "en-GB": "Lao People's Democratic Republic"
     }
   },
   "nym:Las Malvinas": {
@@ -14268,7 +14268,7 @@
       "en-GB": "Nyasaland"
     }
   },
-  "nym:O’zbekstan": {
+  "nym:O'zbekstan": {
     "edges": {
       "from": [
         "country:UZ"
@@ -14282,7 +14282,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "O’zbekstan"
+      "en-GB": "O'zbekstan"
     }
   },
   "nym:OM": {
@@ -14404,7 +14404,7 @@
       "en-GB": "O‘zbekiston"
     }
   },
-  "nym:O’zbekstan": {
+  "nym:O'zbekstan": {
     "edges": {
       "from": [
         "country:UZ"
@@ -14418,7 +14418,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "O’zbekstan"
+      "en-GB": "O'zbekstan"
     }
   },
   "nym:PA": {
@@ -14795,7 +14795,7 @@
       "en-GB": "Pelew"
     }
   },
-  "nym:People’s Democratic Republic of Algeriaalgerie": {
+  "nym:People's Democratic Republic of Algeriaalgerie": {
     "edges": {
       "from": [
         "country:DZ"
@@ -14809,10 +14809,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "People’s Democratic Republic of Algeriaalgerie"
+      "en-GB": "People's Democratic Republic of Algeriaalgerie"
     }
   },
-  "nym:People’s Republic of Bangladesh": {
+  "nym:People's Republic of Bangladesh": {
     "edges": {
       "from": [
         "country:BD"
@@ -14826,10 +14826,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "People’s Republic of Bangladesh"
+      "en-GB": "People's Republic of Bangladesh"
     }
   },
-  "nym:People’s Republic of China": {
+  "nym:People's Republic of China": {
     "edges": {
       "from": [
         "country:CN"
@@ -14843,7 +14843,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "People’s Republic of China"
+      "en-GB": "People's Republic of China"
     }
   },
   "nym:Peoples Republic": {
@@ -15764,7 +15764,7 @@
       "en-GB": "Republic of Costa Rica"
     }
   },
-  "nym:Republic of Cote D’Ivoire": {
+  "nym:Republic of Cote D'Ivoire": {
     "edges": {
       "from": [
         "country:CI"
@@ -15778,7 +15778,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Republic of Cote D’Ivoire"
+      "en-GB": "Republic of Cote D'Ivoire"
     }
   },
   "nym:Republic of Croatia": {
@@ -17923,7 +17923,7 @@
       "en-GB": "Saint-Pierre et Miquelon"
     }
   },
-  "nym:Sak’art’velo": {
+  "nym:Sak'art'velo": {
     "edges": {
       "from": [
         "country:GE"
@@ -17937,7 +17937,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Sak’art’velo"
+      "en-GB": "Sak'art'velo"
     }
   },
   "nym:Sakartvelo": {
@@ -18331,7 +18331,7 @@
       "en-GB": "Socialist Federal Republic of Yugoslavia"
     }
   },
-  "nym:Socialist People’s Libyan Arab": {
+  "nym:Socialist People's Libyan Arab": {
     "edges": {
       "from": [
         "country:LY"
@@ -18345,7 +18345,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Socialist People’s Libyan Arab"
+      "en-GB": "Socialist People's Libyan Arab"
     }
   },
   "nym:Socialist Republic of Vietnam": {
@@ -19691,7 +19691,7 @@
       "en-GB": "The Czech Republic"
     }
   },
-  "nym:The Democratic People’s Republic of Korea": {
+  "nym:The Democratic People's Republic of Korea": {
     "edges": {
       "from": [
         "country:KP"
@@ -19705,7 +19705,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The Democratic People’s Republic of Korea"
+      "en-GB": "The Democratic People's Republic of Korea"
     }
   },
   "nym:The Democratic Republic of Sao Tome and Principe": {
@@ -20371,7 +20371,7 @@
       "en-GB": "The Kyrgyz Republic"
     }
   },
-  "nym:The Lao People’s Democratic Republic": {
+  "nym:The Lao People's Democratic Republic": {
     "edges": {
       "from": [
         "country:LA"
@@ -20385,7 +20385,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The Lao People’s Democratic Republic"
+      "en-GB": "The Lao People's Democratic Republic"
     }
   },
   "nym:The Lebanese Republic": {
@@ -20439,7 +20439,7 @@
       "en-GB": "The Oriental Republic of Uruguay"
     }
   },
-  "nym:The People’s Democratic Republic of Algeria": {
+  "nym:The People's Democratic Republic of Algeria": {
     "edges": {
       "from": [
         "country:DZ"
@@ -20453,10 +20453,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The People’s Democratic Republic of Algeria"
+      "en-GB": "The People's Democratic Republic of Algeria"
     }
   },
-  "nym:The People’s Republic of Bangladesh": {
+  "nym:The People's Republic of Bangladesh": {
     "edges": {
       "from": [
         "country:BD"
@@ -20470,10 +20470,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The People’s Republic of Bangladesh"
+      "en-GB": "The People's Republic of Bangladesh"
     }
   },
-  "nym:The People’s Republic of China": {
+  "nym:The People's Republic of China": {
     "edges": {
       "from": [
         "country:CN"
@@ -20487,7 +20487,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The People’s Republic of China"
+      "en-GB": "The People's Republic of China"
     }
   },
   "nym:The Plurinational State of Bolivia": {
@@ -20847,7 +20847,7 @@
       "en-GB": "The Republic of Costa Rica"
     }
   },
-  "nym:The Republic of Cote D’Ivoire": {
+  "nym:The Republic of Cote D'Ivoire": {
     "edges": {
       "from": [
         "country:CI"
@@ -20861,7 +20861,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "The Republic of Cote D’Ivoire"
+      "en-GB": "The Republic of Cote D'Ivoire"
     }
   },
   "nym:The Republic of Croatia": {
@@ -22428,7 +22428,7 @@
       "en-GB": "The Virgin Islands"
     }
   },
-  "nym:Timor Lorosa’e": {
+  "nym:Timor Lorosa'e": {
     "edges": {
       "from": [
         "country:TL"
@@ -22442,7 +22442,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Timor Lorosa’e"
+      "en-GB": "Timor Lorosa'e"
     }
   },
   "nym:Timor-Leste": {
@@ -24196,7 +24196,7 @@
       "en-GB": "Yaltopya"
     }
   },
-  "nym:Yisra’el": {
+  "nym:Yisra'el": {
     "edges": {
       "from": [
         "country:IL"
@@ -24210,7 +24210,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Yisra’el"
+      "en-GB": "Yisra'el"
     }
   },
   "nym:Yisrael": {

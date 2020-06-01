@@ -27,7 +27,7 @@
     title = s"${errorPrefix(form)} ${messages("otherIndividual.whenIndividualAdded.title", name)}"
 ) {
 
-    @formHelper(action = WhenIndividualAddedController.onSubmit(), ’autoComplete -> "off") {
+    @formHelper(action = WhenIndividualAddedController.onSubmit(), 'autoComplete -> "off") {
 
         @components.back_link()
 

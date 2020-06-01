@@ -33,7 +33,7 @@ class NameFormProviderSpec extends StringFieldBehaviours with OptionalFieldBehav
     val fieldName = "firstName"
     val requiredKey = s"$messageKeyPrefix.error.firstName.required"
     val lengthKey = s"$messageKeyPrefix.error.firstName.length"
-    val regex = "^[A-Za-z0-9 ,.()/&’-]*$"
+    val regex = "^[A-Za-z0-9 ,.()/&'-]*$"
 
     behave like fieldThatBindsValidData(
       form,
@@ -66,7 +66,7 @@ class NameFormProviderSpec extends StringFieldBehaviours with OptionalFieldBehav
     val fieldName = "middleName"
     val lengthKey = s"$messageKeyPrefix.error.middleName.length"
     val maxLength = 35
-    val regex = "^[A-Za-z0-9 ,.()/&’-]*$"
+    val regex = "^[A-Za-z0-9 ,.()/&'-]*$"
 
 
     behave like fieldWithMaxLength(
@@ -87,7 +87,7 @@ class NameFormProviderSpec extends StringFieldBehaviours with OptionalFieldBehav
     val fieldName = "lastName"
     val requiredKey = s"$messageKeyPrefix.error.lastName.required"
     val lengthKey = s"$messageKeyPrefix.error.lastName.length"
-    val regex = "^[A-Za-z0-9 ,.()/&’-]*$"
+    val regex = "^[A-Za-z0-9 ,.()/&'-]*$"
 
     behave like fieldThatBindsValidData(
       form,

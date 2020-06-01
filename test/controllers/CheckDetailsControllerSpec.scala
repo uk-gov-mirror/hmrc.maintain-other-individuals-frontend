@@ -78,7 +78,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
         view(answerSection)(fakeRequest, messages).toString
     }
 
-    "redirect to the ’add a individual’s page when submitted" in {
+    "redirect to the 'add a individual's page when submitted" in {
 
       val mockTrustConnector = mock[TrustConnector]
 

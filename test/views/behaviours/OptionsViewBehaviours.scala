@@ -42,9 +42,9 @@ trait OptionsViewBehaviours extends ViewBehaviours {
 
       for (option <- options) {
 
-        s"rendered with a value of ’${option.value}’" must {
+        s"rendered with a value of '${option.value}'" must {
 
-          s"have the ’${option.value}’ radio button selected" in {
+          s"have the '${option.value}' radio button selected" in {
 
             val doc = asDocument(createView(form.bind(Map("value" -> s"${option.value}"))))
 

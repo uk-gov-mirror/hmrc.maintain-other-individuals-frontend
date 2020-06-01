@@ -41,9 +41,9 @@ class $className$ViewSpec extends ViewBehaviours {
 
     for (option <- $className$.options) {
 
-      s"rendered with a value of ’\${option.value}’" must {
+      s"rendered with a value of '\${option.value}'" must {
 
-        s"have the ’\${option.value}’ radio button selected" in {
+        s"have the '\${option.value}' radio button selected" in {
 
           val doc = asDocument(applyView(form.bind(Map("value" -> s"\${option.value}"))))
 
