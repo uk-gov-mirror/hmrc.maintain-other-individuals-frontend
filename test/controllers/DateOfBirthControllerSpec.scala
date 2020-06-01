@@ -38,7 +38,7 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val validAnswer = LocalDate.now(ZoneOffset.UTC)
-  val protectorName = "FirstName LastName"
+  val individualName = "FirstName LastName"
   val name = Name("FirstName", None, "LastName")
   val index: Int = 0
 
