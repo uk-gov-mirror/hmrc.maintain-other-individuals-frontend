@@ -27,7 +27,7 @@
     title = s"${errorPrefix(form)} ${messages("otherIndividual.whenRemoved.title", name)}"
 ) {
 
-    @formHelper(action = WhenRemovedController.onSubmit(index), 'autoComplete -> "off") {
+    @formHelper(action = WhenRemovedController.onSubmit(index), ’autoComplete -> "off") {
 
         @components.back_link()
 

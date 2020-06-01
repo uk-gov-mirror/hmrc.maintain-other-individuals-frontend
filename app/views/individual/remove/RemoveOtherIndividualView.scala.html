@@ -27,7 +27,7 @@
     title = s"${errorPrefix(form)} ${messages("removeOtherIndividual.title")}"
 ) {
 
-    @formHelper(action = RemoveOtherIndividualController.onSubmit(index), 'autoComplete -> "off") {
+    @formHelper(action = RemoveOtherIndividualController.onSubmit(index), ’autoComplete -> "off") {
 
         @components.back_link()
 

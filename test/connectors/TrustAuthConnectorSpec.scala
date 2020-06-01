@@ -61,7 +61,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
   "TrustAuthConnector" - {
     "authorisedForUtr" - {
 
-      "returns 'Allowed' when" - {
+      "returns ’Allowed’ when" - {
         "service returns with no redirect url" in {
 
           wiremock(authorisedUrlFor(utr), allowedResponse)
@@ -71,7 +71,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
           }
         }
       }
-      "returns 'Denied' when" - {
+      "returns ’Denied’ when" - {
         "service returns a redirect url" in {
 
           wiremock(authorisedUrlFor(utr), redirectResponse("redirect-url"))
@@ -81,7 +81,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
           }
         }
       }
-      "returns 'Internal server error' when" - {
+      "returns ’Internal server error’ when" - {
         "service returns something not OK" in {
 
           wiremock(authorisedUrlFor(utr), aResponse().withStatus(Status.INTERNAL_SERVER_ERROR))
@@ -94,7 +94,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
     }
     "authorised" - {
 
-      "returns 'Agent Allowed' when" - {
+      "returns ’Agent Allowed’ when" - {
         "service returns with agent authorised response" in {
 
           wiremock(authorisedUrl, allowedAgentResponse)
@@ -105,7 +105,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
         }
       }
 
-      "returns 'Denied' when" - {
+      "returns ’Denied’ when" - {
         "service returns a redirect url" in {
 
           wiremock(authorisedUrl, redirectResponse("redirect-url"))
@@ -115,7 +115,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with MustMatchers with WireMo
           }
         }
       }
-      "returns 'Internal server error' when" - {
+      "returns ’Internal server error’ when" - {
         "service returns something not OK" in {
 
           wiremock(authorisedUrl, aResponse().withStatus(Status.INTERNAL_SERVER_ERROR))

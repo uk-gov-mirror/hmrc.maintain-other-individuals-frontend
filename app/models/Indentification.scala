@@ -24,7 +24,7 @@ sealed trait IndividualIdentification
 
 object IndividualIdentification {
   implicit val reads: Reads[IndividualIdentification] =
-    (__ \ 'passport).read[CombinedPassportOrIdCard].widen[IndividualIdentification] orElse
+    (__ \ ’passport).read[CombinedPassportOrIdCard].widen[IndividualIdentification] orElse
       __.read[NationalInsuranceNumber].widen[IndividualIdentification]
 
   implicit val writes: Writes[IndividualIdentification] = Writes {

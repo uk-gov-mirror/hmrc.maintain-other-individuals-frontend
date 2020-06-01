@@ -73,7 +73,7 @@ trait UkAddressViewBehaviours extends ViewBehaviours {
 
       for (field <- fields) {
 
-        s"rendered with an error with field '$field'" must {
+        s"rendered with an error with field ’$field’" must {
 
           "show an error summary" in {
 
@@ -81,7 +81,7 @@ trait UkAddressViewBehaviours extends ViewBehaviours {
             assertRenderedById(doc, "error-summary-heading")
           }
 
-          s"show an error in the label for field '$field'" in {
+          s"show an error in the label for field ’$field’" in {
 
             val doc = asDocument(createView(form.withError(FormError(field._1, "error"))))
             val errorSpan = doc.getElementsByClass("error-message").first
@@ -91,7 +91,7 @@ trait UkAddressViewBehaviours extends ViewBehaviours {
       }
 
       for (field <- fields) {
-        s"contains a label and optional hint text for the field '$field'" in {
+        s"contains a label and optional hint text for the field ’$field’" in {
           val doc = asDocument(createView(form))
           val fieldName = field._1
           val fieldHint = field._2 map (k => messages(k))

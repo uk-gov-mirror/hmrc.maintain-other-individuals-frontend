@@ -22,10 +22,10 @@ import wolfendale.scalacheck.regexp.RegexpGen
 
 class NationalInsuranceNumberFormProviderSpec extends StringFieldBehaviours {
 
-  val requiredKey = "individualProtector.nationalInsuranceNumber.error.required"
-  val invalidFormatKey = "individualProtector.nationalInsuranceNumber.error.invalidFormat"
+  val requiredKey = "otherIndividual.nationalInsuranceNumber.error.required"
+  val invalidFormatKey = "otherIndividual.nationalInsuranceNumber.error.invalidFormat"
 
-  val form = new NationalInsuranceNumberFormProvider().withPrefix("individualProtector.nationalInsuranceNumber")
+  val form = new NationalInsuranceNumberFormProvider().withPrefix("otherIndividual.nationalInsuranceNumber")
 
   ".value" must {
 

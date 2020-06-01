@@ -91,7 +91,7 @@ class SessionIdFilterSpec extends WordSpec with MustMatchers with OptionValues  
 
   "session id filter" must {
 
-    "add a sessionId if one doesn't already exist" in {
+    "add a sessionId if one doesn’t already exist" in {
 
       val result = route(app, FakeRequest(GET, "/test")).value
 
@@ -103,7 +103,7 @@ class SessionIdFilterSpec extends WordSpec with MustMatchers with OptionValues  
       session(result).data.get(SessionKeys.sessionId) mustBe defined
     }
 
-    "not override a sessionId if one doesn't already exist" in {
+    "not override a sessionId if one doesn’t already exist" in {
 
       val result = route(app, FakeRequest(GET, "/test").withSession(SessionKeys.sessionId -> "foo")).value
 

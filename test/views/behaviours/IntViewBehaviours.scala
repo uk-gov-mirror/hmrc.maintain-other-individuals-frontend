@@ -47,7 +47,7 @@ trait IntViewBehaviours extends QuestionViewBehaviours[Int] {
 
       "rendered with a valid form" must {
 
-        "include the form's value in the value input" in {
+        "include the form’s value in the value input" in {
 
           val doc = asDocument(createView(form.fill(number)))
           doc.getElementById("value").attr("value") mustBe number.toString

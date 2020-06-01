@@ -61,7 +61,7 @@ class IdentifierActionSpec extends SpecBase {
 
   "invoking an AuthenticatedIdentifier" when {
 
-    "an Agent user hasn't enrolled an Agent Services Account" must {
+    "an Agent user hasn’t enrolled an Agent Services Account" must {
 
       "redirect the user to the create agent services page" in {
 
@@ -137,7 +137,7 @@ class IdentifierActionSpec extends SpecBase {
       }
     }
 
-    "the user hasn't logged in" must {
+    "the user hasn’t logged in" must {
       "redirect the user to log in " in {
 
         val application = applicationBuilder(userAnswers = None).build()
@@ -155,7 +155,7 @@ class IdentifierActionSpec extends SpecBase {
       }
     }
 
-    "the user's session has expired" must {
+    "the user’s session has expired" must {
       "redirect the user to log in " in {
 
         val application = applicationBuilder(userAnswers = None).build()
@@ -173,7 +173,7 @@ class IdentifierActionSpec extends SpecBase {
       }
     }
 
-    "the user doesn't have sufficient enrolments" must {
+    "the user doesn’t have sufficient enrolments" must {
       "redirect the user to the unauthorised page" in {
 
         val application = applicationBuilder(userAnswers = None).build()
@@ -191,7 +191,7 @@ class IdentifierActionSpec extends SpecBase {
       }
     }
 
-    "the user doesn't have sufficient confidence level" must {
+    "the user doesn’t have sufficient confidence level" must {
       "redirect the user to the unauthorised page" in {
 
         val application = applicationBuilder(userAnswers = None).build()

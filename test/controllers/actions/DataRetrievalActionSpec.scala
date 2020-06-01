@@ -39,7 +39,7 @@ class DataRetrievalActionSpec extends SpecBase with ScalaFutures {
 
     "there is no data in the cache" must {
 
-      "set userAnswers to 'None' in the request" in {
+      "set userAnswers to ’None’ in the request" in {
 
         val playbackRepository = mock[PlaybackRepository]
         when(playbackRepository.get("id")) thenReturn Future(None)
