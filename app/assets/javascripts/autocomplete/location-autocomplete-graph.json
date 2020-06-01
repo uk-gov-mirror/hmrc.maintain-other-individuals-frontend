@@ -4730,7 +4730,7 @@
       "en-GB": "Al-maɣréb"
     }
   },
-  "nym:Al-'Imārat Al-‘Arabiyyah Al-Muttaḥidah": {
+  "nym:Al-’Imārat Al-‘Arabiyyah Al-Muttaḥidah": {
     "edges": {
       "from": [
         "country:AE"
@@ -4744,10 +4744,10 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-'Imārat Al-‘Arabiyyah Al-Muttaḥidah"
+      "en-GB": "Al-’Imārat Al-‘Arabiyyah Al-Muttaḥidah"
     }
   },
-  "nym:Al-'Urdun": {
+  "nym:Al-’Urdun": {
     "edges": {
       "from": [
         "country:JO"
@@ -4761,7 +4761,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "Al-'Urdun"
+      "en-GB": "Al-’Urdun"
     }
   },
   "nym:Aland": {
@@ -14420,7 +14420,7 @@
       "en-GB": "O‘zbekiston"
     }
   },
-  "nym:O'zbekstan": {
+  "nym:O’zbekstan": {
     "edges": {
       "from": [
         "country:UZ"
@@ -14434,7 +14434,7 @@
     },
     "names": {
       "cy": false,
-      "en-GB": "O'zbekstan"
+      "en-GB": "O’zbekstan"
     }
   },
   "nym:PA": {
