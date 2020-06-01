@@ -20,11 +20,11 @@ import javax.inject.Inject
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.{InteruptPageView, UnauthorisedView}
+import views.html.InterruptPageView
 
 class InterruptPageController @Inject()(
                                         val controllerComponents: MessagesControllerComponents,
-                                        view: InteruptPageView
+                                        view: InterruptPageView
                                       ) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad: Action[AnyContent] = Action { implicit request =>
