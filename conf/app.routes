@@ -11,6 +11,8 @@ POST       /:index/remove                                    controllers.individ
 GET        /:index/when-removed                             controllers.individual.remove.WhenRemovedController.onPageLoad(index: Int)
 POST       /:index/when-removed                             controllers.individual.remove.WhenRemovedController.onSubmit(index: Int)
 
+GET        /information-you-need                            controllers.InterruptPageController.onPageLoad()
+
 GET        /name                                            controllers.NameController.onPageLoad(mode: Mode = NormalMode)
 POST       /name                                            controllers.NameController.onSubmit(mode: Mode = NormalMode)
 GET        /change-name                                     controllers.NameController.onPageLoad(mode: Mode = CheckMode)

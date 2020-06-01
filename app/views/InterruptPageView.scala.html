@@ -24,17 +24,17 @@
     title = messages("otherIndividual.interrupt.page.title")
     ) {
 
-@components.back_link()
+    @components.back_link()
 
-<span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
-@components.heading("otherIndividual.interrupt.page.heading", headingSize = "heading-large govuk-fieldset__heading")
+    <span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
+    @components.heading("otherIndividual.interrupt.page.heading", headingSize = "heading-large govuk-fieldset__heading")
 
-<p>@messages("otherIndividual.interrupt.page.h2")</p>
+    <p>@messages("otherIndividual.interrupt.page.h2")</p>
 
-<p>@messages("otherIndividual.interrupt.page.b1")</p>
-<p>@messages("otherIndividual.interrupt.page.b2")</p>
-<p>@messages("otherIndividual.interrupt.page.b3")</p>
-<p>@messages("otherIndividual.interrupt.page.b4")</p>
+    <p>@messages("otherIndividual.interrupt.page.b1")</p>
+    <p>@messages("otherIndividual.interrupt.page.b2")</p>
+    <p>@messages("otherIndividual.interrupt.page.b3")</p>
+    <p>@messages("otherIndividual.interrupt.page.b4")</p>
 
-@components.submit_button()
+    @components.button_link(messages("site.continue"), controllers.routes.NameController.onPageLoad(NormalMode).url)
 }

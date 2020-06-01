@@ -166,7 +166,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         application.stop()
       }
 
-      "redirect to feature unavailable when the user answers yes" in {
+      "redirect to interrupt page when the user answers yes" in {
 
         val fakeService = new FakeService(OtherIndividuals(Nil))
 
@@ -184,7 +184,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual featureNotAvailable
+        redirectLocation(result).value mustEqual controllers.routes.InterruptPageController.onPageLoad().url
 
         application.stop()
       }
@@ -265,7 +265,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         application.stop()
       }
 
-      "redirect to feature unavailable when the user answers yes now" in {
+      "redirect to name page when the user answers yes now" in {
 
         val fakeService = new FakeService(otherIndividuals)
 

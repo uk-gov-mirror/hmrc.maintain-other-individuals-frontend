@@ -94,7 +94,7 @@ class AddAnOtherIndividualController @Inject()(
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
               _ <- repository.set(updatedAnswers)
-            } yield Redirect(controllers.routes.FeatureNotAvailableController.onPageLoad())
+            } yield Redirect(controllers.routes.InterruptPageController.onPageLoad())
           } else {
             for {
               _ <- trustStoreConnector.setTaskComplete(request.userAnswers.utr)
