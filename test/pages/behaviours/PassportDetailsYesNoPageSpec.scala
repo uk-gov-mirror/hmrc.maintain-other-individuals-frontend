@@ -16,6 +16,8 @@
 
 package pages.behaviours
 
+import java.time.LocalDate
+
 import models.{IdCard, NonUkAddress, Passport, UkAddress, UserAnswers}
 import pages.individual._
 
@@ -31,25 +33,20 @@ class PassportDetailsYesNoPageSpec extends PageBehaviours {
     beRemovable[Boolean](PassportDetailsYesNoPage)
 
     "implement cleanup logic when NO selected" in {
-      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
-        .set(UkAddressPage, UkAddress("line1", "line2", None, None, "postcode"))
+      val userAnswers = emptyUserAnswers
+        .set(PassportDetailsPage, Passport("GB", "1234567", LocalDate.now))
         .flatMap(_.set(PassportDetailsYesNoPage, false))
-        .flatMap(_.set(PassportDetailsYesNoPage, true))
-        .flatMap(_.set(PassportDetailsPage, Passport("GB", "1234567", LocalDate.now)))
 
-      userAnswers.get.get(UkAddressPage) mustNot be(defined)
+      userAnswers.get.get(PassportDetailsPage) mustNot be(defined)
     }
 
     "implement cleanup logic when YES selected" in {
       val userAnswers = UserAnswers("id", "utr", LocalDate.now)
-        .set(NonUkAddressPage, NonUkAddress("line1", "line2", None,"country"))
-        .flatMap(_.set(PassportDetailsYesNoPage, true))
-        .flatMap(_.set(IdCardDetailsYesNoPage, true ))
+        .set(IdCardDetailsYesNoPage, true )
         .flatMap(_.set(IdCardDetailsPage, IdCard("Germany", "1234567", LocalDate.now)))
+        .flatMap(_.set(PassportDetailsYesNoPage, true))
 
-      userAnswers.get.get(NonUkAddressPage) mustNot be(defined)
-      userAnswers.get.get(UkAddressPage) mustNot be(defined)
-      userAnswers.get.get(PassportDetailsPage) mustNot be(defined)
+      userAnswers.get.get(IdCardDetailsYesNoPage) mustNot be(defined)
       userAnswers.get.get(IdCardDetailsPage) mustNot be(defined)
     }
   }

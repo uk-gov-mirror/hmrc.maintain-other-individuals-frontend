@@ -16,11 +16,11 @@
 
 package pages.behaviours
 
-import models.{NonUkAddress, UkAddress, UserAnswers}
+import models.{NonUkAddress, UkAddress}
 import pages.individual.{LiveInTheUkYesNoPage, NonUkAddressPage, UkAddressPage}
 
 
-class LiveInTheUkPageSpec extends PageBehaviours {
+class LiveInTheUkYesNoPageSpec extends PageBehaviours {
 
   "LiveInTheUkYesNoPage" must {
 
@@ -32,7 +32,7 @@ class LiveInTheUkPageSpec extends PageBehaviours {
 
 
     "implement cleanup logic when NO selected" in {
-      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
+      val userAnswers = emptyUserAnswers
         .set(UkAddressPage, UkAddress("line1", "line2", None, None, "postcode"))
         .flatMap(_.set(LiveInTheUkYesNoPage, false))
 
@@ -40,7 +40,7 @@ class LiveInTheUkPageSpec extends PageBehaviours {
     }
 
     "implement cleanup logic when YES selected" in {
-      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
+      val userAnswers = emptyUserAnswers
         .set(NonUkAddressPage, NonUkAddress("line1", "line2", None,"country"))
         .flatMap(_.set(LiveInTheUkYesNoPage, true))
 

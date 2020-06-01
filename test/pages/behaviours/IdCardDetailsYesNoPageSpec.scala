@@ -16,11 +16,13 @@
 
 package pages.behaviours
 
-import models.{IdCard, UserAnswers}
+import java.time.LocalDate
+
+import models.IdCard
 import pages.individual.{IdCardDetailsPage, IdCardDetailsYesNoPage}
 
 
-class IdCardYesNoPageSpec extends PageBehaviours {
+class IdCardDetailsYesNoPageSpec extends PageBehaviours {
 
   "IdCardDetailsYesNoPage" must {
 
@@ -31,7 +33,7 @@ class IdCardYesNoPageSpec extends PageBehaviours {
     beRemovable[Boolean](IdCardDetailsYesNoPage)
 
     "implement cleanup logic when NO selected" in {
-      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
+      val userAnswers = emptyUserAnswers
         .set(IdCardDetailsPage, IdCard("GB", "12345678", LocalDate.now))
         .flatMap(_.set(IdCardDetailsYesNoPage, false))
 
