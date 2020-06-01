@@ -57,13 +57,13 @@ addAnOtherIndividual.additional-content = Do you want to add a new individual?
 addAnOtherIndividual.add-them-now = Yes, I want to add them now
 addAnOtherIndividual.add-them-later = No, not now
 addAnOtherIndividual.no-complete = No, all of the individuals are up to date
-addAnOtherIndividual.error.required = Select yes if you want to add another new individual
+addAnOtherIndividual.error.required = Select yes if you want to add another individual
 addAnOtherIndividual.maxedOut = You cannot enter another individual as you have entered a maximum of 25.
 addAnOtherIndividual.maxedOut.paragraph = Check the individuals you have added. If you have further individuals to add, write to HMRC with their details.
 
-addAnOtherIndividualYesNo.title = Do you want to add another new individual?
-addAnOtherIndividualYesNo.heading = Do you want to add another new individual?
-addAnOtherIndividualYesNo.error.required = Select yes if you want to add another new individual
+addAnOtherIndividualYesNo.title = Do you want to add another individual?
+addAnOtherIndividualYesNo.heading = Do you want to add another individual?
+addAnOtherIndividualYesNo.error.required = Select yes if you want to add another individual
 
 entities.otherIndividuals = Other individuals
 entities.otherIndividual = Other individual
