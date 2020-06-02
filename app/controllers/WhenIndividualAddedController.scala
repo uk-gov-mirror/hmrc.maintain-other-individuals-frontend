@@ -16,17 +16,20 @@
 
 package controllers
 
+import java.time.LocalDate
+
 import controllers.actions.{NameRequiredAction, StandardActionSets}
-import forms.{DateAddedToTrustFormProvider, DateOfBirthFormProvider}
+import forms.DateAddedToTrustFormProvider
 import javax.inject.Inject
-import models.{Mode, NormalMode}
-import navigation.{Navigator, OtherIndividualNavigator}
+import models.NormalMode
+import models.requests.OtherIndividualNameRequest
+import navigation.Navigator
 import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
-import views.html.{DateOfBirthView, WhenIndividualAddedView}
+import views.html.WhenIndividualAddedView
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -45,7 +48,7 @@ class WhenIndividualAddedController @Inject()(
   def onPageLoad(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
 
-      val form = formProvider.withPrefixAndTrustStartDate("otherIndividual.whenIndividualAdded", request.userAnswers.whenTrustSetup)
+      val form = formProvider.withConfig("otherIndividual.whenIndividualAdded", minDate)
 
       val preparedForm = request.userAnswers.get(WhenIndividualAddedPage) match {
         case None => form
@@ -58,7 +61,7 @@ class WhenIndividualAddedController @Inject()(
   def onSubmit(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
     implicit request =>
 
-      val form = formProvider.withPrefixAndTrustStartDate("otherIndividual.whenIndividualAdded", request.userAnswers.whenTrustSetup)
+      val form = formProvider.withConfig("otherIndividual.whenIndividualAdded", minDate)
 
       form.bindFromRequest().fold(
         formWithErrors =>
@@ -69,5 +72,13 @@ class WhenIndividualAddedController @Inject()(
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, NormalMode, updatedAnswers))
       )
+  }
+
+  private def minDate(implicit request: OtherIndividualNameRequest[AnyContent]): LocalDate = {
+    val startDate = request.userAnswers.whenTrustSetup
+    request.userAnswers.get(DateOfBirthPage) match {
+      case Some(dob) if dob.isAfter(startDate) => dob
+      case _ => startDate
+    }
   }
 }

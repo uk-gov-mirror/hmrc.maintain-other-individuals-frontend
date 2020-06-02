@@ -92,6 +92,8 @@ GET        /this-service-has-been-reset                     controllers.SessionE
 
 GET        /feature-not-available                           controllers.FeatureNotAvailableController.onPageLoad()
 
+GET        /logout                                          controllers.LogoutController.logout()
+
 GET        /unauthorised                                    controllers.UnauthorisedController.onPageLoad
 
 GET        /:utr                                            controllers.IndexController.onPageLoad(utr: String)

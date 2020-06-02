@@ -33,31 +33,30 @@ $(document).ready(function() {
         window.history.back();
     })
 
+    // =========================
+    // GOV.UK country lookup
+    // https://alphagov.github.io/accessible-autocomplete/#progressive-enhancement
+    // =========================
+    // auto complete country lookup, progressive enhancement
+    // using version 2.0.2
+    // need to invoke new enhanceSelectElement()
+    // =====
 
-   // =========================
-   // GOV.UK country lookup
-   // https://alphagov.github.io/accessible-autocomplete/#progressive-enhancement
-   // =========================
-   // auto complete country lookup, progressive enhancement
-   // using version 2.0.2
-   // need to invoke new enhanceSelectElement()
-   // =====
-
-   if(document.querySelectorAll('select[data-non-uk-countries]').length > 0) {
-      accessibleAutocomplete.enhanceSelectElement({
-           selectElement: document.querySelector("select[data-non-uk-countries]"),
-           minLength:2,
-           defaultValue: ''
-       });
-   }
+    if(document.querySelectorAll('select[data-non-uk-countries]').length > 0) {
+        accessibleAutocomplete.enhanceSelectElement({
+            selectElement: document.querySelector("select[data-non-uk-countries]"),
+            minLength:2,
+            defaultValue: ''
+        });
+    }
 
     if(document.querySelectorAll('select[data-all-countries]').length > 0) {
-          accessibleAutocomplete.enhanceSelectElement({
-               selectElement: document.querySelector("select[data-all-countries]"),
-               minLength:2,
-               defaultValue: ''
-           });
-       }
+        accessibleAutocomplete.enhanceSelectElement({
+            selectElement: document.querySelector("select[data-all-countries]"),
+            minLength:2,
+            defaultValue: ''
+        });
+    }
 
     // Assign aria-labbledby to the dynamically created country input
     if ($(".autocomplete-wrapper .error-message").length) $(".autocomplete__wrapper #value").attr('aria-labelledby', 'error-message-input');
