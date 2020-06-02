@@ -22,7 +22,7 @@ import base.SpecBase
 import models.{IdCard, Name, NationalInsuranceNumber, NonUkAddress, Passport, UkAddress}
 import pages.individual.{AddressYesNoPage, DateOfBirthPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
 
-class AddIndividualProtectorMapperSpec extends SpecBase {
+class AddOtherIndividualMapperSpec extends SpecBase {
 
   private val name = Name("First", None, "Last")
   private val dateOfBirth = LocalDate.parse("2010-02-03")
@@ -30,7 +30,7 @@ class AddIndividualProtectorMapperSpec extends SpecBase {
   private val ukAddress = UkAddress("line1", "line2", Some("line3"), Some("line4"), "POSTCODE")
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), "country")
 
-  "IndividualProtectorMapper" must {
+  "otherIndividual mapper" must {
 
     "generate class of individual model with nino and income discretion" in {
 

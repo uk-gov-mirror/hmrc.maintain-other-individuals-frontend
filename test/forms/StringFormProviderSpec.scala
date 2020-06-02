@@ -22,7 +22,7 @@ import wolfendale.scalacheck.regexp.RegexpGen
 
 class StringFormProviderSpec extends StringFieldBehaviours {
 
-  val prefix = "businessProtector.name"
+  val prefix = "otherIndividual.name"
 
   val requiredKey = s"$prefix.error.required"
   val lengthKey = s"$prefix.error.length"

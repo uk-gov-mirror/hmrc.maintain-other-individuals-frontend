@@ -45,6 +45,7 @@
     @head(
       linkElem = None,
       headScripts = None)
+    <script src='@routes.Assets.versioned("javascripts/gtm.js")'></script>
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/maintainotherindividualsfrontend-app.css")' />
 }
@@ -78,7 +79,14 @@
 }
 
 @footerTop = {}
-@footerLinks = {}
+@footerLinks = {
+    @footer_links(
+        additionalLinks = None,
+        euExitLinks = None,
+        accessibilityFooterUrl = Some(appConfig.accessibilityLinkUrl)
+    )
+}
+
 
 @serviceInfoBlock = {
     @serviceInfo(
@@ -115,4 +123,4 @@
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title), bodyClasses)(headContent, bodyEnd, insideHeader, afterHeader, footerTop, Some(footer_links()), true)(content)
+@hmrcGovUkTemplate(Some(title), bodyClasses)(headContent, bodyEnd, insideHeader, afterHeader, footerTop, Some(footerLinks), true)(content)

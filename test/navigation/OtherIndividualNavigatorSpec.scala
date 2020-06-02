@@ -25,7 +25,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
   val navigator = new OtherIndividualNavigator
 
-  "Individual protector navigator" when {
+  "Other Individual navigator" when {
 
     "Name page -> Do you know date of birth page" in {
       navigator.nextPage(NamePage, NormalMode, emptyUserAnswers)

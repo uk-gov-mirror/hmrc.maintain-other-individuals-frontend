@@ -23,7 +23,7 @@ import play.api.data.FormError
 
 class DateOfBirthFormProviderSpec extends DateBehaviours {
 
-  val form = new DateOfBirthFormProvider().withPrefix("individualProtector.dateOfBirth")
+  val form = new DateOfBirthFormProvider().withPrefix("otherIndividual.dateOfBirth")
 
   private val min = LocalDate.of(1500, 1, 1)
   private val max = LocalDate.now(ZoneOffset.UTC)
@@ -37,16 +37,16 @@ class DateOfBirthFormProviderSpec extends DateBehaviours {
 
     behave like dateField(form, "value", validData)
 
-    behave like mandatoryDateField(form, "value", "individualProtector.dateOfBirth.error.required.all")
+    behave like mandatoryDateField(form, "value", "otherIndividual.dateOfBirth.error.required.all")
 
     behave like dateFieldWithMax(form, "value",
       max = max,
-      FormError("value", "individualProtector.dateOfBirth.error.future", List("day", "month", "year"))
+      FormError("value", "otherIndividual.dateOfBirth.error.future", List("day", "month", "year"))
     )
 
     behave like dateFieldWithMin(form, "value",
       min = min,
-      FormError("value", "individualProtector.dateOfBirth.error.past", List("day", "month", "year"))
+      FormError("value", "otherIndividual.dateOfBirth.error.past", List("day", "month", "year"))
     )
 
   }

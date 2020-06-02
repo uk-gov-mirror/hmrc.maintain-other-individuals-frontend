@@ -48,7 +48,7 @@ class TrustsStoreConnectorSpec extends SpecBase
           |  "trustees": true,
           |  "beneficiaries": false,
           |  "settlors": false,
-          |  "protectors": false,
+          |  "otherIndividual": false,
           |  "other": false
           |}
           |""".stripMargin)

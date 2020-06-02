@@ -204,7 +204,7 @@ button:active,
   color: #00703c;
 }
 
-// #b10e1e to #d4351c
+// #d4351c to #d4351c
 .button--alert,
 .button--alert:visited,
 .button--alert.disabled:hover,
@@ -237,6 +237,11 @@ button:active,
 .error-summary .error-summary-list .button--link-style {
   color: #d4351c;
 }
+
+.form-control.field-error {
+  border: 4px solid #d4351c;
+}
+
 .email-form-errors .error-notification,
 .attorneyBanner--client-request-rejected,
 .business-tax .content__body .flag.flag--urgent,
@@ -244,8 +249,7 @@ button:active,
   border-left-color: #d4351c;
 }
 .business-tax .alert--failure,
-.form-control-error,
-textarea.form-control-error,
+input.form-control-error[type="text"], textarea.form-control-error,
 .error-summary {
   border-color: #d4351c;
 }
