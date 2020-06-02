@@ -9,12 +9,12 @@ lazy val appName: String = "maintain-other-individuals-frontend"
 lazy val root = (project in file("."))
   .enablePlugins(PlayScala, SbtAutoBuildPlugin, SbtDistributablesPlugin, SbtArtifactory)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
-  .settings(DefaultBuildSettings.scalaSettings: _*)
-  .settings(DefaultBuildSettings.defaultSettings(): _*)
-  .settings(SbtDistributablesPlugin.publishingSettings: _*)
-  .settings(inConfig(Test)(testSettings): _*)
-  .settings(majorVersion := 0)
   .settings(
+    DefaultBuildSettings.scalaSettings,
+    DefaultBuildSettings.defaultSettings(),
+    SbtDistributablesPlugin.publishingSettings,
+    inConfig(Test)(testSettings),
+    majorVersion := 0,
     name := appName,
     RoutesKeys.routesImport += "models._",
     TwirlKeys.templateImports ++= Seq(
@@ -35,6 +35,7 @@ lazy val root = (project in file("."))
     ScoverageKeys.coverageHighlighting := true,
     scalacOptions ++= Seq("-feature"),
     libraryDependencies ++= AppDependencies(),
+    dependencyOverrides ++= AppDependencies.overrides,
     retrieveManaged := true,
     evictionWarningOptions in update :=
       EvictionWarningOptions.default.withWarnScalaVersionEviction(false),
@@ -45,7 +46,11 @@ lazy val root = (project in file("."))
     // concatenate js
     Concat.groups := Seq(
       "javascripts/maintainotherindividualsfrontend-app.js" ->
-        group(Seq("javascripts/show-hide-content.js", "javascripts/maintainotherindividualsfrontend.js"))
+        group(Seq(
+          "javascripts/show-hide-content.js",
+          "javascripts/maintainotherindividualsfrontend.js",
+          "javascripts/autocomplete/location-autocomplete.min.js"
+        ))
     ),
     // prevent removal of unused code which generates warning errors due to use of third-party libs
     uglifyCompressOptions := Seq("unused=false", "dead_code=false"),
@@ -62,5 +67,3 @@ lazy val testSettings: Seq[Def.Setting[_]] = Seq(
     "-Dconfig.resource=test.application.conf"
   )
 )
-
-dependencyOverrides ++= AppDependencies.overrides
