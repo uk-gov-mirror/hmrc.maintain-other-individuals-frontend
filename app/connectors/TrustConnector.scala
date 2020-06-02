@@ -29,31 +29,26 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
   private def getTrustDetailsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/trust-details"
 
-  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[TrustDetails] = {
+  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[TrustDetails] =
     http.GET[TrustDetails](getTrustDetailsUrl(utr))
-  }
 
   private def getOtherIndividualsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/transformed/other-individuals"
 
-  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[OtherIndividuals] = {
+  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[OtherIndividuals] =
     http.GET[OtherIndividuals](getOtherIndividualsUrl(utr))
-  }
 
   private def addOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/add/$utr"
 
-  def addOtherIndividual(utr: String, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  def addOtherIndividual(utr: String, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
     http.POST[JsValue, HttpResponse](addOtherIndividualUrl(utr), Json.toJson(otherIndividual))
-  }
 
   private def amendOtherIndividualUrl(utr: String, index: Int) = s"${config.trustsUrl}/trusts/other-individuals/amend/$utr/$index"
 
-  def amendOtherIndividual(utr: String, index: Int, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  def amendOtherIndividual(utr: String, index: Int, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
     http.POST[JsValue, HttpResponse](amendOtherIndividualUrl(utr, index), Json.toJson(otherIndividual))
-  }
 
   private def removeOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/$utr/remove"
 
-  def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] = {
+  def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
     http.PUT[JsValue, HttpResponse](removeOtherIndividualUrl(utr), Json.toJson(otherIndividual))
-  }
 }
