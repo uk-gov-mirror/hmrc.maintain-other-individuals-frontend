@@ -41,6 +41,8 @@ site.inprogress = In Progress
 site.complete = Completed
 site.date.hint = For example, 31 3 1980
 
+address.country.select = Select a country
+
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
