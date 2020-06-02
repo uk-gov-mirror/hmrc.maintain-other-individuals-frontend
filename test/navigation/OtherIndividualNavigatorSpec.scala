@@ -25,6 +25,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
   val navigator = new OtherIndividualNavigator
 
+  val index = 0
+
+  val answersWithIndex = emptyUserAnswers
+    .set(IndexPage, index)
+    .success.value
+
   "Individual protector navigator" when {
 
     "Name page -> Do you know date of birth page" in {
@@ -157,6 +163,38 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
       navigator.nextPage(IdCardDetailsYesNoPage, NormalMode, answers)
         .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
     }
+
+    "NINO page -> Check Details page" in {
+      navigator.nextPage(NationalInsuranceNumberPage, CheckMode, answersWithIndex)
+        .mustBe(controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index))
+    }
+
+    "ID card details page -> Check Details page" in {
+      navigator.nextPage(IdCardDetailsPage, CheckMode, answersWithIndex)
+        .mustBe(controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index))
+    }
+
+    "Passport details page -> Check Details page" in {
+      navigator.nextPage(PassportDetailsPage, CheckMode, answersWithIndex)
+        .mustBe(controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index))
+    }
+
+    "Do you know address page -> No -> Check Details page" in {
+      val answers = answersWithIndex
+        .set(AddressYesNoPage, false).success.value
+
+      navigator.nextPage(AddressYesNoPage, CheckMode, answers)
+        .mustBe(controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index))
+    }
+
+    "Do you know ID page -> No -> Check Details page" in {
+      val answers = answersWithIndex
+        .set(IdCardDetailsYesNoPage, false).success.value
+
+      navigator.nextPage(IdCardDetailsYesNoPage, CheckMode, answers)
+        .mustBe(controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index))
+    }
+
   }
 
 }
