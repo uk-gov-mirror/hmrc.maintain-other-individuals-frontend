@@ -61,8 +61,8 @@ addAnOtherIndividual.error.required = Select yes if you want to add another indi
 addAnOtherIndividual.maxedOut = You cannot enter another individual as you have entered a maximum of 25.
 addAnOtherIndividual.maxedOut.paragraph = Check the individuals you have added. If you have further individuals to add, write to HMRC with their details.
 
-addAnOtherIndividualYesNo.title = Do you want to add another individual?
-addAnOtherIndividualYesNo.heading = Do you want to add another individual?
+addAnOtherIndividualYesNo.title = Does the trust have any other individuals associated with the trust?
+addAnOtherIndividualYesNo.heading = Does the trust have any other individuals associated with the trust?
 addAnOtherIndividualYesNo.error.required = Select yes if you want to add another individual
 
 entities.otherIndividuals = Other individuals
