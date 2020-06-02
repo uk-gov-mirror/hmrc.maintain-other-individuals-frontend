@@ -76,8 +76,8 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
   def checkDetailsRoute(answers: UserAnswers): Call = {
     answers.get(IndexPage) match {
       case None => controllers.routes.SessionExpiredController.onPageLoad()
-      case _ =>
-        controllers.routes.FeatureNotAvailableController.onPageLoad()
+      case Some(x) =>
+        controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(x)
     }
   }
 
