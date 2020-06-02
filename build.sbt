@@ -13,6 +13,7 @@ lazy val root = (project in file("."))
     DefaultBuildSettings.scalaSettings,
     DefaultBuildSettings.defaultSettings(),
     SbtDistributablesPlugin.publishingSettings,
+    scalaVersion := "2.12.10",
     inConfig(Test)(testSettings),
     majorVersion := 0,
     name := appName,
@@ -33,7 +34,8 @@ lazy val root = (project in file("."))
     ScoverageKeys.coverageMinimum := 70,
     ScoverageKeys.coverageFailOnMinimum := true,
     ScoverageKeys.coverageHighlighting := true,
-    scalacOptions ++= Seq("-feature"),
+    scalacOptions += "-feature",
+    scalacOptions += "-P:silencer:pathFilters=views;routes",
     libraryDependencies ++= AppDependencies(),
     dependencyOverrides ++= AppDependencies.overrides,
     retrieveManaged := true,
@@ -49,7 +51,7 @@ lazy val root = (project in file("."))
         group(Seq(
           "javascripts/show-hide-content.js",
           "javascripts/maintainotherindividualsfrontend.js",
-          "javascripts/autocomplete/location-autocomplete.min.js"
+          "javascripts/autocomplete/location-`autocomplete.min.js"
         ))
     ),
     // prevent removal of unused code which generates warning errors due to use of third-party libs
