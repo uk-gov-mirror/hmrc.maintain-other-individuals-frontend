@@ -13,16 +13,16 @@ p.lede {
 }
 /*replicate font-xsmall due to ".content p" rule*/
 p.font-xsmall{
-font-family:"nta",Arial,sans-serif;
-font-size:16px;
-line-height:1.25;
-font-weight:300;
-text-transform:none
+  font-family:"nta",Arial,sans-serif;
+  font-size:16px;
+  line-height:1.25;
+  font-weight:300;
+  text-transform:none
 }
 @media (max-width: 640px){
-p.font-xsmall{
-  font-size:14px;
-  line-height:1.14286
+  p.font-xsmall{
+    font-size:14px;
+    line-height:1.14286
   }
 }
 
@@ -37,8 +37,8 @@ p.font-xsmall{
 }
 
 .bullet-list {
-    padding-left: 20px;
-    list-style-type: disc;
+  padding-left: 20px;
+  list-style-type: disc;
 }
 
 .govuk-caption-xl {

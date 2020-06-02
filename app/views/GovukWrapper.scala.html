@@ -45,11 +45,18 @@
     @head(
       linkElem = None,
       headScripts = None)
+    <script src='@routes.Assets.versioned("javascripts/gtm.js")'></script>
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/maintainotherindividualsfrontend-app.css")' />
 }
 
-@headerNavLinks = {}
+@headerNavLinks = {
+<li>
+    <a id="logOut" href="@controllers.routes.LogoutController.logout" data-target="link - click:@title:@Messages("site.sign_out")">
+    @Messages("site.sign_out")
+    </a>
+</li>
+}
 
 @insideHeader = {
     @header_nav(
@@ -72,7 +79,14 @@
 }
 
 @footerTop = {}
-@footerLinks = {}
+@footerLinks = {
+    @footer_links(
+        additionalLinks = None,
+        euExitLinks = None,
+        accessibilityFooterUrl = Some(appConfig.accessibilityLinkUrl)
+    )
+}
+
 
 @serviceInfoBlock = {
     @serviceInfo(
@@ -109,4 +123,4 @@
       sidebar = sidebar)
 }
 
-@hmrcGovUkTemplate(Some(title), bodyClasses)(headContent, bodyEnd, insideHeader, afterHeader, footerTop, Some(footer_links()), true)(content)
+@hmrcGovUkTemplate(Some(title), bodyClasses)(headContent, bodyEnd, insideHeader, afterHeader, footerTop, Some(footerLinks), true)(content)

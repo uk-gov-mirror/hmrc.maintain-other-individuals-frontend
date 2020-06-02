@@ -22,7 +22,7 @@ import wolfendale.scalacheck.regexp.RegexpGen
 
 class NameFormProviderSpec extends StringFieldBehaviours with OptionalFieldBehaviours {
 
-  val messageKeyPrefix = "individualProtector.name"
+  val messageKeyPrefix = "otherIndividual.name"
   val form = new NameFormProvider().withPrefix(messageKeyPrefix)
 
   val maxLength = 35
