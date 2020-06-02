@@ -237,6 +237,11 @@ button:active,
 .error-summary .error-summary-list .button--link-style {
   color: #d4351c;
 }
+
+.form-control.field-error {
+  border: 4px solid #d4351c;
+}
+
 .email-form-errors .error-notification,
 .attorneyBanner--client-request-rejected,
 .business-tax .content__body .flag.flag--urgent,
@@ -244,8 +249,7 @@ button:active,
   border-left-color: #d4351c;
 }
 .business-tax .alert--failure,
-.form-control-error,
-textarea.form-control-error,
+input.form-control-error[type="text"], textarea.form-control-error,
 .error-summary {
   border-color: #d4351c;
 }
