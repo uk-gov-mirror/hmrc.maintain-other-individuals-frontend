@@ -26,7 +26,7 @@ class DateAddedToTrustFormProviderSpec extends DateBehaviours {
   private val min = LocalDate.of(1500, 1, 1)
   private val max = LocalDate.now(ZoneOffset.UTC)
 
-  val form = new DateAddedToTrustFormProvider().withPrefixAndTrustStartDate("individualProtector.startDate", min)
+  val form = new DateAddedToTrustFormProvider().withConfig("individualProtector.startDate", min)
 
   ".value" should {
 

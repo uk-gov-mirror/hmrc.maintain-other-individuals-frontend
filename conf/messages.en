@@ -234,7 +234,7 @@ otherIndividual.whenIndividualAdded.error.required.two = The date the individual
 otherIndividual.whenIndividualAdded.error.required = The date the individual was added to the trust must include a {0}
 otherIndividual.whenIndividualAdded.error.invalid = Enter a real date
 otherIndividual.whenIndividualAdded.error.future = The date the individual was added to the trust must be today or in the past
-otherIndividual.whenIndividualAdded.error.past = The date the individual was added to the trust cannot be before the start date of the trust
+otherIndividual.whenIndividualAdded.error.past = The date the individual was added to the trust cannot be before the start date of the trust or their date of birth
 
 otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel = Does {0} live in the UK?
 otherIndividual.liveInTheUkYesNo.title = Does the individual live in the UK?
