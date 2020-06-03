@@ -3,6 +3,13 @@ import sbt._
 object AppDependencies {
   import play.core.PlayVersion
 
+  val silencerVersion = "1.6.0"
+  // Use the silencer plugin to suppress warnings from unused imports in compiled twirl templates
+  val unusedRoutesImportSilencer = Seq(
+    compilerPlugin("com.github.ghik" % "silencer-plugin" % silencerVersion cross CrossVersion.full),
+    "com.github.ghik" % "silencer-lib" % silencerVersion % Provided cross CrossVersion.full
+  )
+
   val compile: Seq[ModuleID] = Seq(
     play.sbt.PlayImport.ws,
     "org.reactivemongo" %% "play2-reactivemongo"            % "0.18.8-play26",
@@ -29,7 +36,7 @@ object AppDependencies {
     "com.github.tomakehurst"      % "wiremock-standalone"     % "2.25.1"
   ).map(_ % Test)
 
-  def apply(): Seq[ModuleID] = compile ++ test
+  def apply(): Seq[ModuleID] = compile ++ unusedRoutesImportSilencer ++ test
 
   val akkaVersion = "2.5.23"
   val akkaHttpVersion = "10.0.15"

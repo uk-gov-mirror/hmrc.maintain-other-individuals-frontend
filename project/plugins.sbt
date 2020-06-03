@@ -1,4 +1,7 @@
-resolvers += Resolver.url("HMRC Sbt Plugin Releases", url("https://dl.bintray.com/hmrc/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
+resolvers ++= Seq(
+  Resolver.url("HMRC Sbt Plugin Releases", url("https://dl.bintray.com/hmrc/sbt-plugin-releases"))(Resolver.ivyStylePatterns),
+  Resolver.bintrayIvyRepo("hmrc", "sbt-plugin-releases")
+)
 
 resolvers += "HMRC Releases" at "https://dl.bintray.com/hmrc/releases"
 

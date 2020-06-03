@@ -26,7 +26,6 @@ import org.scalatest.concurrent.ScalaFutures
 import repositories.PlaybackRepository
 import uk.gov.hmrc.auth.core.Enrolments
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 class DataRetrievalActionSpec extends SpecBase with ScalaFutures {
@@ -42,7 +41,7 @@ class DataRetrievalActionSpec extends SpecBase with ScalaFutures {
       "set userAnswers to 'None' in the request" in {
 
         val playbackRepository = mock[PlaybackRepository]
-        when(playbackRepository.get("id")) thenReturn Future(None)
+        when(playbackRepository.get("id")) thenReturn Future.successful(None)
         val action = new Harness(playbackRepository)
 
         val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, OrganisationUser("id", Enrolments(Set()))))
@@ -58,7 +57,7 @@ class DataRetrievalActionSpec extends SpecBase with ScalaFutures {
       "build a userAnswers object and add it to the request" in {
 
         val playbackRepository = mock[PlaybackRepository]
-        when(playbackRepository.get("id")) thenReturn Future(Some(new UserAnswers("id", "UTRUTRUTR", LocalDate.now())))
+        when(playbackRepository.get("id")) thenReturn Future.successful(Some(new UserAnswers("id", "UTRUTRUTR", LocalDate.now())))
         val action = new Harness(playbackRepository)
 
         val futureResult = action.callTransform(new IdentifierRequest(fakeRequest, OrganisationUser("id", Enrolments(Set()))))
