@@ -40,6 +40,7 @@ site.sign_out = Sign out
 site.inprogress = In Progress
 site.complete = Completed
 site.date.hint = For example, 31 3 1980
+site.error = Error:
 
 address.country.select = Select a country
 
