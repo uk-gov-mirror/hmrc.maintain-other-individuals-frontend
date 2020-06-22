@@ -20,7 +20,9 @@
 @import 'patterns/check-your-answers';
 
 @import 'colours/palette';
-@import 'partials/palette';
+
+// WCGA 2.1 https://design-system.service.gov.uk/styles/colour/
+@import 'govuk-colours-override';
 
 .push-text-top--3 {
   padding-top: govuk-spacing(3);
@@ -153,10 +155,15 @@
 }
 
 #value__listbox, #country__listbox {
-  width: 100%;
-  @include media(tablet) {
-    width: 49.4%;
-  }
+    @media (min-width: 641px) {
+      width: calc(75% - 4px;)
+    }
+}
+
+#country {
+    @media (min-width: 641px) {
+      width:75%;
+    }
 }
 
 .autocomplete__wrapper span {
