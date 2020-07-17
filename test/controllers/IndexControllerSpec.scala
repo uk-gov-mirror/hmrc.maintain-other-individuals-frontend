@@ -20,7 +20,7 @@ import java.time.LocalDate
 
 import base.SpecBase
 import connectors.TrustConnector
-import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
+import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails, UtrSession}
 import org.mockito.Matchers.any
 import org.mockito.Mockito._
 import play.api.inject.bind
@@ -36,6 +36,8 @@ class IndexControllerSpec extends SpecBase {
     "redirect to task list when there are other individuals" in {
 
       val mockTrustConnector = mock[TrustConnector]
+
+      when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
       when(mockTrustConnector.getTrustDetails(any())(any(), any()))
         .thenReturn(Future.successful(TrustDetails(startDate = LocalDate.parse("2019-06-01"))))
