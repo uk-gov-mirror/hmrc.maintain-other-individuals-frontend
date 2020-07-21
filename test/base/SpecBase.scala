@@ -35,7 +35,7 @@ import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
 import play.api.mvc.BodyParsers
 import play.api.test.FakeRequest
-import repositories.PlaybackRepository
+import repositories.{ActiveSessionRepository, PlaybackRepository}
 import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolment, Enrolments}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -67,6 +67,8 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
 
   when(playbackRepository.set(any())).thenReturn(Future.successful(true))
 
+  val mockSessionRepository : ActiveSessionRepository = mock[ActiveSessionRepository]
+
   protected def applicationBuilder(userAnswers: Option[models.UserAnswers] = None,
                                    affinityGroup: AffinityGroup = AffinityGroup.Organisation,
                                    enrolments: Enrolments = Enrolments(Set.empty[Enrolment])
@@ -77,7 +79,8 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
         bind[PlaybackIdentifierAction].toInstance(new FakePlaybackIdentifierAction()),
         bind[DataRetrievalAction].toInstance(new FakeDataRetrievalAction(userAnswers)),
         bind[DataRequiredAction].to[DataRequiredActionImpl],
-        bind[PlaybackRepository].toInstance(playbackRepository)
+        bind[PlaybackRepository].toInstance(playbackRepository),
+        bind[ActiveSessionRepository].toInstance(mockSessionRepository)
       )
 }
 
