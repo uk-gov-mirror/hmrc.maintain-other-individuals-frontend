@@ -42,6 +42,11 @@ site.complete = Completed
 site.date.hint = For example, 31 3 1980
 site.error = Error:
 
+#timeout dialog
+timeout.title=Your application will time out soon
+timeout.message=We will reset your application if you do not respond in
+timeout.keep-alive-button=Continue application
+
 address.country.select = Select a country
 
 unauthorised.title = You can’t access this service with this account
