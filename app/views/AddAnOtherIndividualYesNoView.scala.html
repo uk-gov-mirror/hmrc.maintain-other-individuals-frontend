@@ -24,7 +24,7 @@
 @(form: Form[_])(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)} ${messages("addAnOtherIndividualYesNo.title")}"
+    title = s"${errorPrefix(form)}${messages("addAnOtherIndividualYesNo.title")}"
     ) {
 
     @formHelper(action = AddAnOtherIndividualController.submitOne(), 'autoComplete -> "off") {
