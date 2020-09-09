@@ -61,7 +61,7 @@ class NationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, individualName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(form, individualName.displayName, NormalMode)(request, messages).toString
 
       application.stop()
     }
@@ -83,7 +83,7 @@ class NationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill("answer"), individualName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(form.fill("answer"), individualName.displayName, NormalMode)(request, messages).toString
 
       application.stop()
     }
@@ -108,7 +108,7 @@ class NationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, individualName.displayName, NormalMode)(fakeRequest, messages).toString
+        view(boundForm, individualName.displayName, NormalMode)(request, messages).toString
 
       application.stop()
     }
