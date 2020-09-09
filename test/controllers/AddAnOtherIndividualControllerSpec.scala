@@ -141,7 +141,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         contentAsString(result) mustEqual
           view(
             addOtherIndividualYesNoForm
-          )(fakeRequest, messages).toString
+          )(request, messages).toString
 
         application.stop()
       }
@@ -221,7 +221,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
             Nil,
             otherIndividualRows,
             "Add another individual"
-          )(fakeRequest, messages).toString
+          )(request, messages).toString
 
         application.stop()
       }
@@ -322,7 +322,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
             otherIndividualRows.inProgress,
             otherIndividualRows.complete,
             "The trust has 2 individuals"
-          )(fakeRequest, messages).toString
+          )(request, messages).toString
 
         application.stop()
       }
@@ -357,7 +357,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
             otherIndividualRows.inProgress,
             otherIndividualRows.complete,
             otherIndividuals.addToHeading
-          )(fakeRequest, messages).toString
+          )(request, messages).toString
         content must include("You cannot enter another individual as you have entered a maximum of 25.")
         content must include("If you have further individuals to add, write to HMRC with their details.")
 
