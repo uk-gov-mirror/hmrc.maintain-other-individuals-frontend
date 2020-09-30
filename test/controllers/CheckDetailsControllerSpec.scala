@@ -25,14 +25,13 @@ import org.mockito.Matchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, WhenIndividualAddedPage}
+import pages.individual._
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.auth.core.AffinityGroup.Agent
 import uk.gov.hmrc.http.HttpResponse
-import utils.countryOptions.CountryOptions
-import utils.print.{AnswerRowConverter, OtherIndividualPrintHelper}
+import utils.print.OtherIndividualPrintHelper
 import views.html.CheckDetailsView
 
 import scala.concurrent.Future
@@ -59,8 +58,6 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
   "CheckDetails Controller" must {
 
     "return OK and the correct view for a GET" in {
-
-      val bound = new AnswerRowConverter().bind(userAnswers, name.displayName, mock[CountryOptions])
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 

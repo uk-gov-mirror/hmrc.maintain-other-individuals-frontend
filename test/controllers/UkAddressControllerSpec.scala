@@ -16,24 +16,17 @@
 
 package controllers
 
-import java.time.LocalDate
-
 import base.SpecBase
 import forms.UkAddressFormProvider
-import models.{Name, NormalMode, OtherIndividual, UkAddress, UserAnswers}
+import models.{Name, NormalMode, UkAddress}
 import navigation.Navigator
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, UkAddressPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.UkAddressView
-
-import scala.concurrent.Future
 
 class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 

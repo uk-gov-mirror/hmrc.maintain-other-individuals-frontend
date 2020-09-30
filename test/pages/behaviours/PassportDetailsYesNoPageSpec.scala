@@ -18,7 +18,7 @@ package pages.behaviours
 
 import java.time.LocalDate
 
-import models.{IdCard, NonUkAddress, Passport, UkAddress, UserAnswers}
+import models.{IdCard, Passport, UserAnswers}
 import pages.individual._
 
 

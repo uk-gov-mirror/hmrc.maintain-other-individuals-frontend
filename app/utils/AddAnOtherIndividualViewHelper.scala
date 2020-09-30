@@ -16,7 +16,7 @@
 
 package utils
 
-import models.{CheckMode, OtherIndividual}
+import models.OtherIndividual
 import play.api.i18n.Messages
 import viewmodels.addAnother.{AddRow, AddToRows}
 

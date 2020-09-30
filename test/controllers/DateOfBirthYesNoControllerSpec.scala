@@ -18,19 +18,14 @@ package controllers
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, NormalMode, OtherIndividual}
+import models.{Name, NormalMode}
 import navigation.Navigator
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthYesNoPage, NamePage}
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.DateOfBirthYesNoView
-
-import scala.concurrent.Future
 
 class DateOfBirthYesNoControllerSpec extends SpecBase with MockitoSugar {
 
