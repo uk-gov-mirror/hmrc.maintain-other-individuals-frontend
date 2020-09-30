@@ -18,20 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.NationalInsuranceNumberFormProvider
-import models.{Name, NormalMode, OtherIndividual}
-import navigation.{FakeNavigator, Navigator}
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import models.{Name, NormalMode}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, NationalInsuranceNumberPage}
-import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.NationalInsuranceNumberView
-
-import scala.concurrent.Future
 
 class NationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
 

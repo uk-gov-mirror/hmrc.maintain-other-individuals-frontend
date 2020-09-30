@@ -20,7 +20,7 @@ import controllers.actions.StandardActionSets
 import forms.NameFormProvider
 import javax.inject.Inject
 import models.{Mode, Name}
-import navigation.{Navigator, OtherIndividualNavigator}
+import navigation.Navigator
 import pages.individual.NamePage
 import play.api.data.Form
 import play.api.i18n.I18nSupport

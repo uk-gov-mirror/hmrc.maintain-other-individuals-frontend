@@ -20,19 +20,14 @@ import java.time.LocalDate
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, NormalMode, OtherIndividual, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
-import org.mockito.Matchers.any
-import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, NationalInsuranceNumberYesNoPage}
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import repositories.PlaybackRepository
 import views.html.NationalInsuranceNumberYesNoView
-
-import scala.concurrent.Future
 
 class NationalInsuranceNumberYesNoControllerSpec extends SpecBase with MockitoSugar {
 

@@ -24,7 +24,7 @@ package controllers
   import org.scalatestplus.mockito.MockitoSugar
   import pages.individual.{DateOfBirthPage, NamePage, WhenIndividualAddedPage}
   import play.api.data.Form
-  import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
+  import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded}
   import play.api.test.FakeRequest
   import play.api.test.Helpers._
   import views.html.WhenIndividualAddedView
