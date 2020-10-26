@@ -21,6 +21,7 @@ import connectors.TrustConnector
 import controllers.actions._
 import handlers.ErrorHandler
 import javax.inject.Inject
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
@@ -44,6 +45,8 @@ class CheckDetailsController @Inject()(
                                         errorHandler: ErrorHandler
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
+  private val logger = Logger(getClass)
+
   def onPageLoad(): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
     implicit request =>
 
@@ -56,6 +59,8 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers) match {
         case None =>
+          logger.error(s"[Check Details Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+            s" unable to map user answers to OtherIndividual due to errors")
           Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request.request)))
         case Some(otherIndividual) =>
           connector.addOtherIndividual(request.userAnswers.utr, otherIndividual).map(_ =>

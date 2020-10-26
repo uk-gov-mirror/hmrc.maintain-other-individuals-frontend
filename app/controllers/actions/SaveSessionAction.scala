@@ -19,8 +19,10 @@ package controllers.actions
 import com.google.inject.{ImplementedBy, Inject}
 import models.UtrSession
 import models.requests.IdentifierRequest
+import play.api.Logger
 import play.api.mvc.{ActionFilter, Result}
 import repositories.ActiveSessionRepository
+import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -28,9 +30,16 @@ class SaveActiveSessionImpl @Inject()(utr: String,
                                       activeSessionRepository: ActiveSessionRepository
                                      )(override implicit val executionContext: ExecutionContext) extends SaveSessionAction {
 
+  private val logger = Logger(getClass)
+
   override protected def filter[A](request: IdentifierRequest[A]): Future[Option[Result]] = {
+
+    val hc = HeaderCarrierConverter.fromHeadersAndSessionAndRequest(request.headers, Some(request.session), Some(request))
+
     val session = UtrSession(request.user.internalId, utr)
+
     activeSessionRepository.set(session) map { _ =>
+      logger.info(s"[Session][UTR: $utr][Session ID: ${utils.Session.id(hc)}] user is starting to maintain other individuals")
       None
     }
   }
