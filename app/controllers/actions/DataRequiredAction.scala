@@ -19,8 +19,10 @@ package controllers.actions
 import controllers.routes
 import javax.inject.Inject
 import models.requests.{DataRequest, OptionalDataRequest}
+import play.api.Logger
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
+import uk.gov.hmrc.play.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -29,10 +31,16 @@ trait DataRequiredAction extends ActionRefiner[OptionalDataRequest, DataRequest]
 
 class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionContext) extends DataRequiredAction {
 
+  private val logger = Logger(getClass)
+
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, DataRequest[A]]] = {
+
+    val hc = HeaderCarrierConverter.fromHeadersAndSessionAndRequest(request.headers, Some(request.session), Some(request))
 
     request.userAnswers match {
       case None =>
+        logger.warn(s"[Session][UTR: ${request.userAnswers.map(_.utr).getOrElse("No UTR")}][Session ID: ${utils.Session.id(hc)}]" +
+          s" no user answers found for this session, informing user session has expired")
         Future.successful(Left(Redirect(routes.SessionExpiredController.onPageLoad())))
       case Some(data) =>
         Future.successful(Right(DataRequest(request.request, data, request.user)))

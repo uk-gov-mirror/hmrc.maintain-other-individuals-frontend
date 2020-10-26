@@ -18,9 +18,11 @@ package controllers.individual.remove
 
 import controllers.actions.StandardActionSets
 import forms.YesNoFormProvider
+import handlers.ErrorHandler
 import javax.inject.Inject
 import models.RemoveOtherIndividual
 import pages.individual.RemoveYesNoPage
+import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -28,6 +30,7 @@ import repositories.PlaybackRepository
 import services.TrustService
 import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
 import views.html.individual.remove.RemoveOtherIndividualView
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class RemoveOtherIndividualController @Inject()(
@@ -37,12 +40,15 @@ class RemoveOtherIndividualController @Inject()(
                                                      trustService: TrustService,
                                                      formProvider: YesNoFormProvider,
                                                      val controllerComponents: MessagesControllerComponents,
-                                                     view: RemoveOtherIndividualView
+                                                     view: RemoveOtherIndividualView,
+                                                     errorHandler: ErrorHandler
                                                   )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   private val messagesPrefix: String = "removeOtherIndividual"
 
   private val form = formProvider.withPrefix(messagesPrefix)
+
+  private val logger = Logger(getClass)
 
   def onPageLoad(index: Int): Action[AnyContent] = standardActionSets.identifiedUserWithData.async {
     implicit request =>
@@ -55,6 +61,11 @@ class RemoveOtherIndividualController @Inject()(
       trustService.getOtherIndividual(request.userAnswers.utr, index).map {
         otherIndividual =>
           Ok(view(preparedForm, index, otherIndividual.name.displayName))
+      } recoverWith {
+        case _ =>
+          logger.error(s"[Remove Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+            s" no other individual found in trusts service to remove")
+          Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
 
   }
@@ -87,6 +98,11 @@ class RemoveOtherIndividualController @Inject()(
                     Redirect(controllers.individual.remove.routes.WhenRemovedController.onPageLoad(index).url)
                   }
                 }
+            } recoverWith {
+              case _ =>
+                logger.error(s"[Remove Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+                  s" no other individual found in trusts service to remove")
+                Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
             }
           } else {
             Future.successful(Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad().url))

@@ -23,6 +23,7 @@ import extractors.OtherIndividualExtractor
 import handlers.ErrorHandler
 import javax.inject.Inject
 import models.UserAnswers
+import play.api.Logger
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import repositories.PlaybackRepository
@@ -51,6 +52,8 @@ class CheckDetailsController @Inject()(
                                         errorHandler: ErrorHandler
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
+  private val logger = Logger(getClass)
+
   private def render(userAnswers: UserAnswers,
                      index: Int,
                      name: String)
@@ -69,6 +72,11 @@ class CheckDetailsController @Inject()(
             extractedF <- Future.fromTry(extractedAnswers)
             _ <- playbackRepository.set(extractedF)
           } yield render(extractedF, index, individual.name.displayName)
+      } recoverWith {
+        case _ =>
+          logger.error(s"[Amend Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+            s" no other individual found in trusts service to maintain")
+          Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
   }
 
@@ -85,6 +93,10 @@ class CheckDetailsController @Inject()(
           connector.amendOtherIndividual(request.userAnswers.utr, index, individual).map(_ =>
             Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
           )
-      } getOrElse Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
+      } getOrElse {
+        logger.error(s"[Amend Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+          s" unable to submit amended other individual due to problems mapping user answers")
+        Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
+      }
   }
 }

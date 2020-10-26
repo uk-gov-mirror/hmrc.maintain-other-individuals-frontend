@@ -20,7 +20,6 @@ import java.time.LocalDateTime
 
 import javax.inject.{Inject, Singleton}
 import models.{MongoDateTimeFormats, UserAnswers}
-import org.slf4j.LoggerFactory
 import play.api.Configuration
 import play.api.libs.json._
 import reactivemongo.api.WriteConcern
@@ -36,8 +35,6 @@ class PlaybackRepositoryImpl @Inject()(
                                         mongo: MongoDriver,
                                         config: Configuration
                                       )(implicit ec: ExecutionContext) extends PlaybackRepository {
-
-  private val logger = LoggerFactory.getLogger("application." + this.getClass.getCanonicalName)
 
   private val collectionName: String = "user-answers"
 
@@ -61,7 +58,6 @@ class PlaybackRepositoryImpl @Inject()(
   )
 
   private lazy val ensureIndexes = {
-    logger.info("Ensuring collection indexes")
     for {
       collection              <- mongo.api.database.map(_.collection[JSONCollection](collectionName))
       createdLastUpdatedIndex <- collection.indexesManager.ensure(lastUpdatedIndex)
@@ -70,8 +66,6 @@ class PlaybackRepositoryImpl @Inject()(
   }
 
   override def get(internalId: String, utr: String): Future[Option[UserAnswers]] = {
-
-    logger.debug(s"PlaybackRepository getting user answers for $internalId")
 
     val selector = Json.obj(
       "internalId" -> internalId,
@@ -119,8 +113,6 @@ class PlaybackRepositoryImpl @Inject()(
   }
 
   override def resetCache(internalId: String, utr: String): Future[Option[JsObject]] = {
-
-    logger.debug(s"PlaybackRepository resetting cache for $internalId")
 
     val selector = Json.obj(
       "internalId" -> internalId,

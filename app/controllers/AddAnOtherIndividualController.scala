@@ -20,8 +20,10 @@ import config.FrontendAppConfig
 import connectors.TrustStoreConnector
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
+import handlers.ErrorHandler
 import javax.inject.Inject
 import models.{AddAnOtherIndividual, NormalMode}
+import play.api.Logger
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -45,17 +47,20 @@ class AddAnOtherIndividualController @Inject()(
                                                 repository: PlaybackRepository,
                                                 addAnotherView: AddAnOtherIndividualView,
                                                 yesNoView: AddAnOtherIndividualYesNoView,
-                                                completeView: MaxedOutOtherIndividualsView
+                                                completeView: MaxedOutOtherIndividualsView,
+                                                errorHandler: ErrorHandler
                                               )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val addAnotherForm : Form[AddAnOtherIndividual] = addAnotherFormProvider()
 
   val yesNoForm: Form[Boolean] = yesNoFormProvider.withPrefix("addAnOtherIndividualYesNo")
 
+  private val logger = Logger(getClass)
+
   def onPageLoad(): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      for {
+      (for {
         otherIndividuals <- trustService.getOtherIndividuals(request.userAnswers.utr)
         updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
         _ <- repository.set(updatedAnswers)
@@ -79,6 +84,11 @@ class AddAnOtherIndividualController @Inject()(
               heading = otherIndividuals.addToHeading
             ))
         }
+      }) recoverWith {
+        case _ =>
+          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+            s" error in getting other individuals from trusts to show user on add to page")
+          Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
   }
 
@@ -142,6 +152,11 @@ class AddAnOtherIndividualController @Inject()(
               }
           }
         )
+      } recoverWith {
+        case _ =>
+          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+            s" error in getting other individuals from trusts, cannot add another")
+          Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
   }
 

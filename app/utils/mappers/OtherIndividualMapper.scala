@@ -19,14 +19,14 @@ package utils.mappers
 import java.time.LocalDate
 
 import models.{Address, IdCard, IndividualIdentification, Name, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
-import org.slf4j.LoggerFactory
 import pages.individual._
-import play.api.libs.json.{JsError, JsSuccess, Reads}
+import play.api.Logger
 import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsError, JsSuccess, Reads}
 
 class OtherIndividualMapper {
 
-  private val logger = LoggerFactory.getLogger("application." + this.getClass.getCanonicalName)
+  private val logger = Logger(getClass)
 
   def apply(answers: UserAnswers): Option[OtherIndividual] = {
     val readFromUserAnswers: Reads[OtherIndividual] =
@@ -43,7 +43,7 @@ class OtherIndividualMapper {
       case JsSuccess(value, _) =>
         Some(value)
       case JsError(errors) =>
-        logger.error(s"Failed to rehydrate other individual from UserAnswers due to $errors")
+        logger.error(s"[Mapper][UTR: ${answers.utr}] Failed to rehydrate OtherIndividual from UserAnswers due to ${JsError.toJson(errors)}")
         None
     }
   }
