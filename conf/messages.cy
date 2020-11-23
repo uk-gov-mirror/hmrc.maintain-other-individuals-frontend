@@ -42,6 +42,8 @@ site.inprogress=Ar y gweill
 site.complete=Wedi cwblhau
 site.date.hint=Er enghraifft, 31 3 1980
 site.error=Gwall:
+site.cannotRemove=Peidiwch â thynnu
+site.cannotRemove-hidden=Peidiwch â thynnu {0}
 
 #timeout dialog
 timeout.title=Bydd eich cais yn dod i ben cyn hir
