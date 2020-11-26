@@ -18,7 +18,6 @@ package models
 
 import java.time.{LocalDate, LocalDateTime}
 
-import play.api.Logger
 import play.api.libs.json._
 import queries.{Gettable, Settable}
 
