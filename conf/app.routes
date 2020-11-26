@@ -2,6 +2,7 @@
 
 GET        /add                                              controllers.AddAnOtherIndividualController.onPageLoad()
 POST       /add                                              controllers.AddAnOtherIndividualController.submitOne()
+GET        /add-another                                      controllers.AddAnOtherIndividualController.onPageLoad()
 POST       /add-another                                      controllers.AddAnOtherIndividualController.submitAnother()
 POST       /complete                                         controllers.AddAnOtherIndividualController.submitComplete()
 
