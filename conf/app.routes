@@ -1,13 +1,13 @@
 # microservice specific routes
 
-GET        /add                                              controllers.AddAnOtherIndividualController.onPageLoad()
-POST       /add                                              controllers.AddAnOtherIndividualController.submitOne()
-GET        /add-another                                      controllers.AddAnOtherIndividualController.onPageLoad()
-POST       /add-another                                      controllers.AddAnOtherIndividualController.submitAnother()
-POST       /complete                                         controllers.AddAnOtherIndividualController.submitComplete()
+GET        /add                                             controllers.AddAnOtherIndividualController.onPageLoad()
+POST       /add                                             controllers.AddAnOtherIndividualController.submitOne()
+GET        /add-another                                     controllers.AddAnOtherIndividualController.onPageLoad()
+POST       /add-another                                     controllers.AddAnOtherIndividualController.submitAnother()
+POST       /complete                                        controllers.AddAnOtherIndividualController.submitComplete()
 
-GET        /:index/remove                                    controllers.individual.remove.RemoveOtherIndividualController.onPageLoad(index: Int)
-POST       /:index/remove                                    controllers.individual.remove.RemoveOtherIndividualController.onSubmit(index: Int)
+GET        /:index/remove                                   controllers.individual.remove.RemoveOtherIndividualController.onPageLoad(index: Int)
+POST       /:index/remove                                   controllers.individual.remove.RemoveOtherIndividualController.onSubmit(index: Int)
 
 GET        /:index/when-removed                             controllers.individual.remove.WhenRemovedController.onPageLoad(index: Int)
 POST       /:index/when-removed                             controllers.individual.remove.WhenRemovedController.onSubmit(index: Int)
@@ -71,11 +71,17 @@ POST       /has-id-card                                     controllers.individu
 GET        /id-card                                         controllers.individual.add.IdCardDetailsController.onPageLoad()
 POST       /id-card                                         controllers.individual.add.IdCardDetailsController.onSubmit()
 
+GET        /change-has-passport-or-id-card                  controllers.individual.amend.PassportOrIdCardDetailsYesNoController.onPageLoad()
+POST       /change-has-passport-or-id-card                  controllers.individual.amend.PassportOrIdCardDetailsYesNoController.onSubmit()
+
+GET        /change-passport-or-id-card                      controllers.individual.amend.PassportOrIdCardDetailsController.onPageLoad()
+POST       /change-passport-or-id-card                      controllers.individual.amend.PassportOrIdCardDetailsController.onSubmit()
+
 GET        /when-added                                      controllers.individual.add.WhenIndividualAddedController.onPageLoad()
 POST       /when-added                                      controllers.individual.add.WhenIndividualAddedController.onSubmit()
 
-GET        /check-details                                  controllers.individual.add.CheckDetailsController.onPageLoad()
-POST       /check-details                                  controllers.individual.add.CheckDetailsController.onSubmit()
+GET        /check-details                                   controllers.individual.add.CheckDetailsController.onPageLoad()
+POST       /check-details                                   controllers.individual.add.CheckDetailsController.onSubmit()
 
 GET        /:index/check-details                            controllers.individual.amend.CheckDetailsController.extractAndRender(index: Int)
 GET        /:index/updated-details                          controllers.individual.amend.CheckDetailsController.renderFromUserAnswers(index: Int)
@@ -93,8 +99,8 @@ GET        /logout                                          controllers.LogoutCo
 
 GET        /unauthorised                                    controllers.UnauthorisedController.onPageLoad
 
-GET        /keep-alive                                  controllers.SessionTimeoutController.keepAlive
+GET        /keep-alive                                      controllers.SessionTimeoutController.keepAlive
 
-GET        /timeout                                     controllers.SessionTimeoutController.timeout
+GET        /timeout                                         controllers.SessionTimeoutController.timeout
 
 GET        /:utr                                            controllers.IndexController.onPageLoad(utr: String)
