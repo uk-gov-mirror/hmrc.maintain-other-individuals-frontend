@@ -17,6 +17,7 @@
 package navigation
 
 import controllers.individual.add.{routes => addRts}
+import controllers.individual.amend.{routes => amendRts}
 import controllers.individual.{routes => rts}
 import javax.inject.Inject
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
@@ -29,12 +30,12 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
     routes(mode)(page)(userAnswers)
 
-  private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
-    case NamePage => rts.DateOfBirthYesNoController.onPageLoad(mode)
-    case DateOfBirthPage => rts.NationalInsuranceNumberYesNoController.onPageLoad(mode)
-    case UkAddressPage => addRts.PassportDetailsYesNoController.onPageLoad()
-    case NonUkAddressPage => addRts.PassportDetailsYesNoController.onPageLoad()
-    case WhenIndividualAddedPage => addRts.CheckDetailsController.onPageLoad()
+  private def simpleNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
+    case NamePage => _ => rts.DateOfBirthYesNoController.onPageLoad(mode)
+    case DateOfBirthPage => _ => rts.NationalInsuranceNumberYesNoController.onPageLoad(mode)
+    case PassportDetailsPage | IdCardDetailsPage => _ => addRts.WhenIndividualAddedController.onPageLoad()
+    case PassportOrIdCardDetailsPage => ua => checkDetailsRoute(ua)
+    case StartDatePage => _ => addRts.CheckDetailsController.onPageLoad()
   }
 
   private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
@@ -46,25 +47,29 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
       yesNoNav(ua, LiveInTheUkYesNoPage, rts.UkAddressController.onPageLoad(mode), rts.NonUkAddressController.onPageLoad(mode))
     case PassportDetailsYesNoPage => ua =>
       yesNoNav(ua, PassportDetailsYesNoPage, addRts.PassportDetailsController.onPageLoad(), addRts.IdCardDetailsYesNoController.onPageLoad())
+    case IdCardDetailsYesNoPage => ua =>
+      yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(), addRts.WhenIndividualAddedController.onPageLoad())
+    case PassportOrIdCardDetailsYesNoPage => ua =>
+      yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(), checkDetailsRoute(ua))
   }
 
   private def navigationWithCheck(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
     mode match {
       case NormalMode => {
-        case NationalInsuranceNumberPage | PassportDetailsPage | IdCardDetailsPage  => _ =>
+        case NationalInsuranceNumberPage  => _ =>
           addRts.WhenIndividualAddedController.onPageLoad()
         case AddressYesNoPage => ua =>
           yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), addRts.WhenIndividualAddedController.onPageLoad())
-        case IdCardDetailsYesNoPage => ua =>
-          yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(), addRts.WhenIndividualAddedController.onPageLoad())
+        case UkAddressPage | NonUkAddressPage => _ =>
+          addRts.PassportDetailsYesNoController.onPageLoad()
       }
       case CheckMode => {
         case NationalInsuranceNumberPage | PassportDetailsPage | IdCardDetailsPage => ua =>
           checkDetailsRoute(ua)
         case AddressYesNoPage => ua =>
           yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), checkDetailsRoute(ua))
-        case IdCardDetailsYesNoPage => ua =>
-          yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(), checkDetailsRoute(ua))
+        case UkAddressPage | NonUkAddressPage => _ =>
+          amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad()
       }
     }
   }
@@ -79,8 +84,8 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
   }
 
   def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
-    simpleNavigation(mode) andThen (c => (_: UserAnswers) => c) orElse
-      yesNoNavigation(mode)  orElse
+    simpleNavigation(mode) orElse
+      yesNoNavigation(mode) orElse
       navigationWithCheck(mode)
 
 }
