@@ -166,7 +166,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
       }
 
       "Start date page -> Check details" in {
-        navigator.nextPage(StartDatePage, mode, emptyUserAnswers)
+        navigator.nextPage(WhenIndividualAddedPage, mode, emptyUserAnswers)
           .mustBe(addRts.CheckDetailsController.onPageLoad())
       }
     }

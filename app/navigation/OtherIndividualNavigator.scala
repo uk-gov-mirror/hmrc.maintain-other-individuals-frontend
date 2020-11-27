@@ -35,7 +35,7 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case DateOfBirthPage => _ => rts.NationalInsuranceNumberYesNoController.onPageLoad(mode)
     case PassportDetailsPage | IdCardDetailsPage => _ => addRts.WhenIndividualAddedController.onPageLoad()
     case PassportOrIdCardDetailsPage => ua => checkDetailsRoute(ua)
-    case StartDatePage => _ => addRts.CheckDetailsController.onPageLoad()
+    case WhenIndividualAddedPage => _ => addRts.CheckDetailsController.onPageLoad()
   }
 
   private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {

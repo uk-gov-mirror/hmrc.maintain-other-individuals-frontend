@@ -20,7 +20,7 @@ import java.time.LocalDate
 
 import base.SpecBase
 import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, NonUkAddress, Passport, UkAddress}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, StartDatePage, UkAddressPage, WhenIndividualAddedPage}
+import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
 
 class OtherIndividualMapperSpec extends SpecBase {
 
@@ -179,7 +179,7 @@ class OtherIndividualMapperSpec extends SpecBase {
       .set(UkAddressPage, ukAddress).success.value
       .set(PassportOrIdCardDetailsYesNoPage, true).success.value
       .set(PassportOrIdCardDetailsPage, passportOrIdCard).success.value
-      .set(StartDatePage, startDate).success.value
+      .set(WhenIndividualAddedPage, startDate).success.value
 
     val result = mapper(userAnswers).get
 
