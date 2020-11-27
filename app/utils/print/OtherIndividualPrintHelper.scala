@@ -17,51 +17,53 @@
 package utils.print
 
 import com.google.inject.Inject
+import controllers.individual.add.{routes => addRts}
+import controllers.individual.{routes => rts}
 import models.{CheckMode, NormalMode, UserAnswers}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
+import pages.individual._
 import play.api.i18n.Messages
 import utils.countryOptions.CountryOptions
 import viewmodels.{AnswerRow, AnswerSection}
 
 class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
                                            countryOptions: CountryOptions
-                                            ) {
+                                          ) {
 
-  def apply(userAnswers: UserAnswers, provisional: Boolean, otherIndividualName: String)(implicit messages: Messages) = {
+  def apply(userAnswers: UserAnswers, provisional: Boolean, otherIndividualName: String)(implicit messages: Messages): AnswerSection = {
 
     val bound = answerRowConverter.bind(userAnswers, otherIndividualName, countryOptions)
 
-    val add: Seq[AnswerRow] = Seq(
-      bound.nameQuestion(NamePage, "otherIndividual.name", controllers.routes.NameController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", controllers.routes.DateOfBirthYesNoController.onPageLoad(NormalMode).url),
-      bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", controllers.routes.DateOfBirthController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url),
-      bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", controllers.routes.NationalInsuranceNumberController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", controllers.routes.AddressYesNoController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", controllers.routes.LiveInTheUkYesNoController.onPageLoad(NormalMode).url),
-      bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", controllers.routes.UkAddressController.onPageLoad(NormalMode).url),
-      bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress",controllers.routes.NonUkAddressController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", controllers.routes.PassportDetailsYesNoController.onPageLoad(NormalMode).url),
-      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", controllers.routes.PassportDetailsController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", controllers.routes.IdCardDetailsYesNoController.onPageLoad(NormalMode).url),
-      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", controllers.routes.IdCardDetailsController.onPageLoad(NormalMode).url),
-      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", controllers.routes.WhenIndividualAddedController.onPageLoad().url)
+    lazy val add: Seq[AnswerRow] = Seq(
+      bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(NormalMode).url),
+      bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", rts.DateOfBirthController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", rts.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url),
+      bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", rts.NationalInsuranceNumberController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", rts.AddressYesNoController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(NormalMode).url),
+      bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
+      bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress",rts.NonUkAddressController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", addRts.PassportDetailsYesNoController.onPageLoad().url),
+      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad().url),
+      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad().url),
+      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad().url)
     ).flatten
 
-    val amend: Seq[AnswerRow] = Seq(
-      bound.nameQuestion(NamePage, "otherIndividual.name", controllers.routes.NameController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", controllers.routes.DateOfBirthYesNoController.onPageLoad(CheckMode).url),
-      bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", controllers.routes.DateOfBirthController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(CheckMode).url),
-      bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", controllers.routes.NationalInsuranceNumberController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", controllers.routes.AddressYesNoController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", controllers.routes.LiveInTheUkYesNoController.onPageLoad(CheckMode).url),
-      bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", controllers.routes.UkAddressController.onPageLoad(CheckMode).url),
-      bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress", controllers.routes.NonUkAddressController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", controllers.routes.PassportDetailsYesNoController.onPageLoad(CheckMode).url),
-      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", controllers.routes.PassportDetailsController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", controllers.routes.IdCardDetailsYesNoController.onPageLoad(CheckMode).url),
-      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", controllers.routes.IdCardDetailsController.onPageLoad(CheckMode).url)
+    lazy val amend: Seq[AnswerRow] = Seq(
+      bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(CheckMode).url),
+      bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", rts.DateOfBirthController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", rts.NationalInsuranceNumberYesNoController.onPageLoad(CheckMode).url),
+      bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", rts.NationalInsuranceNumberController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", rts.AddressYesNoController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(CheckMode).url),
+      bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(CheckMode).url),
+      bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress", rts.NonUkAddressController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", addRts.PassportDetailsYesNoController.onPageLoad().url),
+      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad().url),
+      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad().url)
     ).flatten
 
     AnswerSection(

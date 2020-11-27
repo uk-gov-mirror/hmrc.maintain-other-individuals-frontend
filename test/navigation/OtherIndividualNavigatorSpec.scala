@@ -17,6 +17,8 @@
 package navigation
 
 import base.SpecBase
+import controllers.individual.add.{routes => addRts}
+import controllers.individual.{routes => rts}
 import models.{CheckMode, NormalMode}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual._
@@ -35,7 +37,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
     "Name page -> Do you know date of birth page" in {
       navigator.nextPage(NamePage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.DateOfBirthYesNoController.onPageLoad(NormalMode))
+        .mustBe(rts.DateOfBirthYesNoController.onPageLoad(NormalMode))
     }
 
     "Do you know date of birth page -> Yes -> Date of birth page" in {
@@ -43,12 +45,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(DateOfBirthYesNoPage, true).success.value
 
       navigator.nextPage(DateOfBirthYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.DateOfBirthController.onPageLoad(NormalMode))
+        .mustBe(rts.DateOfBirthController.onPageLoad(NormalMode))
     }
 
     "Date of birth page -> Do you know NINO page" in {
       navigator.nextPage(DateOfBirthPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode))
+        .mustBe(rts.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode))
     }
 
     "Do you know date of birth page -> No -> Do you know NINO page" in {
@@ -56,7 +58,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(DateOfBirthYesNoPage, false).success.value
 
       navigator.nextPage(DateOfBirthYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode))
+        .mustBe(rts.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode))
     }
 
     "Do you know NINO page -> Yes -> NINO page" in {
@@ -64,12 +66,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(NationalInsuranceNumberYesNoPage, true).success.value
 
       navigator.nextPage(NationalInsuranceNumberYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.NationalInsuranceNumberController.onPageLoad(NormalMode))
+        .mustBe(rts.NationalInsuranceNumberController.onPageLoad(NormalMode))
     }
 
     "NINO page -> When was the other individual added page" in {
       navigator.nextPage(NationalInsuranceNumberPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
+        .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
     }
 
     "Do you know NINO page -> No -> Do you know address page" in {
@@ -77,7 +79,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(NationalInsuranceNumberYesNoPage, false).success.value
 
       navigator.nextPage(NationalInsuranceNumberYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.AddressYesNoController.onPageLoad(NormalMode))
+        .mustBe(rts.AddressYesNoController.onPageLoad(NormalMode))
     }
 
     "Do you know address page -> Yes -> Is address in UK page" in {
@@ -85,7 +87,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(AddressYesNoPage, true).success.value
 
       navigator.nextPage(AddressYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.LiveInTheUkYesNoController.onPageLoad(NormalMode))
+        .mustBe(rts.LiveInTheUkYesNoController.onPageLoad(NormalMode))
     }
 
     "Do you know address page -> No -> When was the other individual added page" in {
@@ -93,7 +95,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(AddressYesNoPage, false).success.value
 
       navigator.nextPage(AddressYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
+        .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
     }
 
     "Is address in UK page -> Yes -> UK address page" in {
@@ -101,12 +103,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(LiveInTheUkYesNoPage, true).success.value
 
       navigator.nextPage(LiveInTheUkYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.UkAddressController.onPageLoad(NormalMode))
+        .mustBe(rts.UkAddressController.onPageLoad(NormalMode))
     }
 
     "UK address page -> Do you know passport details page" in {
       navigator.nextPage(UkAddressPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.PassportDetailsYesNoController.onPageLoad(NormalMode))
+        .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
     }
 
     "Is address in UK page -> No -> Non-UK address page" in {
@@ -114,12 +116,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(LiveInTheUkYesNoPage, false).success.value
 
       navigator.nextPage(LiveInTheUkYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.NonUkAddressController.onPageLoad(NormalMode))
+        .mustBe(rts.NonUkAddressController.onPageLoad(NormalMode))
     }
 
     "Non-UK address page -> Do you know passport details page" in {
       navigator.nextPage(NonUkAddressPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.PassportDetailsYesNoController.onPageLoad(NormalMode))
+        .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
     }
 
     "Do you know passport details page -> Yes -> Passport details page" in {
@@ -127,12 +129,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(PassportDetailsYesNoPage, true).success.value
 
       navigator.nextPage(PassportDetailsYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.PassportDetailsController.onPageLoad(NormalMode))
+        .mustBe(addRts.PassportDetailsController.onPageLoad())
     }
 
     "Passport details page -> When was the other individual added page" in {
       navigator.nextPage(PassportDetailsPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
+        .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
     }
 
     "Do you know passport details page -> No -> Do you know ID card details page" in {
@@ -140,7 +142,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(PassportDetailsYesNoPage, false).success.value
 
       navigator.nextPage(PassportDetailsYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.IdCardDetailsYesNoController.onPageLoad(NormalMode))
+        .mustBe(addRts.IdCardDetailsYesNoController.onPageLoad())
     }
 
     "Do you know ID card details page -> Yes -> ID card details page" in {
@@ -148,12 +150,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(IdCardDetailsYesNoPage, true).success.value
 
       navigator.nextPage(IdCardDetailsYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.IdCardDetailsController.onPageLoad(NormalMode))
+        .mustBe(addRts.IdCardDetailsController.onPageLoad())
     }
 
     "ID card details page -> When was the other individual added page" in {
       navigator.nextPage(IdCardDetailsPage, NormalMode, emptyUserAnswers)
-        .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
+        .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
     }
 
     "Do you know ID card details page -> No -> When was the other individual added page" in {
@@ -161,7 +163,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
         .set(IdCardDetailsYesNoPage, false).success.value
 
       navigator.nextPage(IdCardDetailsYesNoPage, NormalMode, answers)
-        .mustBe(controllers.routes.WhenIndividualAddedController.onPageLoad())
+        .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
     }
 
     "NINO page -> Check Details page" in {
