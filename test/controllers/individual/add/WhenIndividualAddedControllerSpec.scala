@@ -21,9 +21,11 @@ import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.DateAddedToTrustFormProvider
 import models.{Name, UserAnswers}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthPage, NamePage, WhenIndividualAddedPage}
 import play.api.data.Form
+import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -199,7 +201,6 @@ import views.html.individual.add.WhenIndividualAddedView
 
       "redirect to Session Expired for a GET if no existing data is found" in {
 
-
         val application = applicationBuilder(userAnswers = None).build()
 
         val result = route(application, getRequest()).value
@@ -217,7 +218,9 @@ import views.html.individual.add.WhenIndividualAddedView
           .set(NamePage, name).success.value
 
         val application =
-          applicationBuilder(userAnswers = Some(userAnswers)).build()
+          applicationBuilder(userAnswers = Some(userAnswers))
+            .overrides(bind[Navigator].toInstance(fakeNavigator))
+            .build()
 
         val request =
           FakeRequest(POST, addedDateRoute)
@@ -226,11 +229,12 @@ import views.html.individual.add.WhenIndividualAddedView
               "value.month" -> validAnswer.getMonthValue.toString,
               "value.year"  -> validAnswer.getYear.toString
             )
+            
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual routes.CheckDetailsController.onPageLoad().url
+        redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
         application.stop()
       }

@@ -64,7 +64,7 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
           addRts.PassportDetailsYesNoController.onPageLoad()
       }
       case CheckMode => {
-        case NationalInsuranceNumberPage | PassportDetailsPage | IdCardDetailsPage => ua =>
+        case NationalInsuranceNumberPage => ua =>
           checkDetailsRoute(ua)
         case AddressYesNoPage => ua =>
           yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), checkDetailsRoute(ua))
