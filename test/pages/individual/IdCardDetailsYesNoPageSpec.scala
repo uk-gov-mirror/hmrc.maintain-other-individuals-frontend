@@ -14,29 +14,30 @@
  * limitations under the License.
  */
 
-package pages.behaviours
+package pages.individual
 
 import java.time.LocalDate
 
-import pages.individual._
+import models.IdCard
+import pages.behaviours.PageBehaviours
 
 
-class DateOfBirthYesNoPageSpec extends PageBehaviours {
+class IdCardDetailsYesNoPageSpec extends PageBehaviours {
 
-  "DateOfBirthYesNoPage" must {
+  "IdCardDetailsYesNoPage" must {
 
-    beRetrievable[Boolean](DateOfBirthYesNoPage)
+    beRetrievable[Boolean](IdCardDetailsYesNoPage)
 
-    beSettable[Boolean](DateOfBirthYesNoPage)
+    beSettable[Boolean](IdCardDetailsYesNoPage)
 
-    beRemovable[Boolean](DateOfBirthYesNoPage)
+    beRemovable[Boolean](IdCardDetailsYesNoPage)
 
     "implement cleanup logic when NO selected" in {
       val userAnswers = emptyUserAnswers
-        .set(DateOfBirthPage, LocalDate.now)
-        .flatMap(_.set(DateOfBirthYesNoPage, false))
+        .set(IdCardDetailsPage, IdCard("GB", "12345678", LocalDate.now))
+        .flatMap(_.set(IdCardDetailsYesNoPage, false))
 
-      userAnswers.get.get(DateOfBirthPage) mustNot be(defined)
+      userAnswers.get.get(IdCardDetailsPage) mustNot be(defined)
     }
   }
 }

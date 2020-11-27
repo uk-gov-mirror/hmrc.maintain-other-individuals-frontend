@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package pages.behaviours
+package pages.individual
 
 import models.{NonUkAddress, UkAddress}
-import pages.individual.{LiveInTheUkYesNoPage, NonUkAddressPage, UkAddressPage}
+import pages.behaviours.PageBehaviours
 
 
 class LiveInTheUkYesNoPageSpec extends PageBehaviours {

@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package pages.behaviours
+package pages.individual
 
 import java.time.LocalDate
 
 import models.{IdCard, Passport, UserAnswers}
-import pages.individual._
+import pages.behaviours.PageBehaviours
 
 
 class PassportDetailsYesNoPageSpec extends PageBehaviours {
