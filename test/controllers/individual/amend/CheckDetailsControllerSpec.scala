@@ -67,7 +67,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     .set(DateOfBirthYesNoPage, true).success.value
     .set(DateOfBirthPage, LocalDate.parse("1990-03-09")).success.value
     .set(NationalInsuranceNumberYesNoPage, false).success.value
-    .set(StartDatePage, startDate).success.value
+    .set(WhenIndividualAddedPage, startDate).success.value
 
   "CheckDetails Controller" must {
 
