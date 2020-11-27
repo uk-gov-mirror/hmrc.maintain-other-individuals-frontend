@@ -19,10 +19,10 @@ package utils.mappers
 import java.time.LocalDate
 
 import base.SpecBase
-import models.{IdCard, Name, NationalInsuranceNumber, NonUkAddress, Passport, UkAddress}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
+import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, NonUkAddress, Passport, UkAddress}
+import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, StartDatePage, UkAddressPage, WhenIndividualAddedPage}
 
-class AddOtherIndividualMapperSpec extends SpecBase {
+class OtherIndividualMapperSpec extends SpecBase {
 
   private val name = Name("First", None, "Last")
   private val dateOfBirth = LocalDate.parse("2010-02-03")
@@ -30,11 +30,11 @@ class AddOtherIndividualMapperSpec extends SpecBase {
   private val ukAddress = UkAddress("line1", "line2", Some("line3"), Some("line4"), "POSTCODE")
   private val nonUkAddress = NonUkAddress("line1", "line2", Some("line3"), "country")
 
+  private val mapper = injector.instanceOf[OtherIndividualMapper]
+
   "otherIndividual mapper" must {
 
-    "generate class of individual model with nino and income discretion" in {
-
-      val mapper = injector.instanceOf[OtherIndividualMapper]
+    "generate individual model with nino" in {
 
       val nino = "AA123456A"
 
@@ -53,9 +53,8 @@ class AddOtherIndividualMapperSpec extends SpecBase {
       result.address mustBe None
       result.entityStart mustBe startDate
     }
-    "generate class of individual model with UK address and no income discretion" in {
 
-      val mapper = injector.instanceOf[OtherIndividualMapper]
+    "generate individual model with UK address" in {
 
       val userAnswers = emptyUserAnswers
         .set(NamePage, name).success.value
@@ -76,9 +75,8 @@ class AddOtherIndividualMapperSpec extends SpecBase {
       result.address mustBe Some(ukAddress)
       result.entityStart mustBe startDate
     }
-    "generate class of individual model with non-UK address" in {
 
-      val mapper = injector.instanceOf[OtherIndividualMapper]
+    "generate individual model with non-UK address" in {
 
       val userAnswers = emptyUserAnswers
         .set(NamePage, name).success.value
@@ -100,9 +98,7 @@ class AddOtherIndividualMapperSpec extends SpecBase {
       result.entityStart mustBe startDate
     }
 
-    "generate class of individual model with passport" in {
-
-      val mapper = injector.instanceOf[OtherIndividualMapper]
+    "generate individual model with passport" in {
 
       val passport = Passport("SP", "123456789", LocalDate.of(2024, 8, 16))
 
@@ -126,9 +122,7 @@ class AddOtherIndividualMapperSpec extends SpecBase {
       result.entityStart mustBe startDate
     }
 
-    "generate class of individual model with id card" in {
-
-      val mapper = injector.instanceOf[OtherIndividualMapper]
+    "generate individual model with id card" in {
 
       val idcard = IdCard("SP", "123456789", LocalDate.of(2024, 8, 16))
 
@@ -154,9 +148,7 @@ class AddOtherIndividualMapperSpec extends SpecBase {
     }
   }
 
-  "generate class of individual model with neither nino nor address" in {
-
-    val mapper = injector.instanceOf[OtherIndividualMapper]
+  "generate individual model with neither nino nor address" in {
 
     val userAnswers = emptyUserAnswers
       .set(NamePage, name).success.value
@@ -174,23 +166,27 @@ class AddOtherIndividualMapperSpec extends SpecBase {
     result.entityStart mustBe startDate
   }
 
-  "generate class of individual model with role in company" in {
+  "generate individual model with passport or ID card" in {
 
-    val mapper = injector.instanceOf[OtherIndividualMapper]
+    val passportOrIdCard = CombinedPassportOrIdCard("SP", "123456789", LocalDate.of(2024, 8, 16))
 
     val userAnswers = emptyUserAnswers
       .set(NamePage, name).success.value
-      .set(DateOfBirthPage, dateOfBirth).success.value
+      .set(DateOfBirthYesNoPage, false).success.value
       .set(NationalInsuranceNumberYesNoPage, false).success.value
-      .set(AddressYesNoPage, false).success.value
-      .set(WhenIndividualAddedPage, startDate).success.value
+      .set(AddressYesNoPage, true).success.value
+      .set(LiveInTheUkYesNoPage, true).success.value
+      .set(UkAddressPage, ukAddress).success.value
+      .set(PassportOrIdCardDetailsYesNoPage, true).success.value
+      .set(PassportOrIdCardDetailsPage, passportOrIdCard).success.value
+      .set(StartDatePage, startDate).success.value
 
     val result = mapper(userAnswers).get
 
     result.name mustBe name
-    result.dateOfBirth mustBe Some(dateOfBirth)
-    result.identification mustBe None
-    result.address mustBe None
+    result.dateOfBirth mustBe None
+    result.identification mustBe Some(passportOrIdCard)
+    result.address mustBe Some(ukAddress)
     result.entityStart mustBe startDate
   }
 }
