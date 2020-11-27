@@ -19,8 +19,8 @@ package utils.mappers
 import java.time.LocalDate
 
 import base.SpecBase
-import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, NonUkAddress, Passport, UkAddress}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
+import models._
+import pages.individual._
 
 class OtherIndividualMapperSpec extends SpecBase {
 
