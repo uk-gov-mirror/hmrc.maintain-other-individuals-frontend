@@ -290,7 +290,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual controllers.routes.NameController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.individual.routes.NameController.onPageLoad(NormalMode).url
 
         application.stop()
       }

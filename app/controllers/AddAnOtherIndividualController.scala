@@ -139,7 +139,7 @@ class AddAnOtherIndividualController @Inject()(
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
                 _ <- repository.set(updatedAnswers)
-              } yield Redirect(controllers.routes.NameController.onPageLoad(NormalMode))
+              } yield Redirect(controllers.individual.routes.NameController.onPageLoad(NormalMode))
 
             case AddAnOtherIndividual.YesLater =>
               Future.successful(Redirect(appConfig.maintainATrustOverview))

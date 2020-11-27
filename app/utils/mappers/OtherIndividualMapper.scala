@@ -18,7 +18,7 @@ package utils.mappers
 
 import java.time.LocalDate
 
-import models.{Address, IdCard, IndividualIdentification, Name, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
+import models._
 import pages.individual._
 import play.api.Logger
 import play.api.libs.functional.syntax._
@@ -61,11 +61,13 @@ class OtherIndividualMapper {
       hasAddress <- AddressYesNoPage.path.readWithDefault(false)
       hasPassport <- PassportDetailsYesNoPage.path.readWithDefault(false)
       hasIdCard <- IdCardDetailsYesNoPage.path.readWithDefault(false)
-    } yield (hasNino, hasAddress, hasPassport, hasIdCard)).flatMap[Option[IndividualIdentification]] {
-        case (false, true, true, false) => PassportDetailsPage.path.read[Passport].map(Some(_))
-        case (false, true, false, true) => IdCardDetailsPage.path.read[IdCard].map(Some(_))
-        case _ => Reads(_ => JsSuccess(None))
-      }
+      hasPassportOrIdCard <- PassportOrIdCardDetailsYesNoPage.path.readWithDefault(false)
+    } yield (hasNino, hasAddress, hasPassport, hasIdCard, hasPassportOrIdCard)).flatMap[Option[IndividualIdentification]] {
+      case (false, true, true, false, _) => PassportDetailsPage.path.read[Passport].map(Some(_))
+      case (false, true, false, true, _) => IdCardDetailsPage.path.read[IdCard].map(Some(_))
+      case (false, true, false, false, true) => PassportOrIdCardDetailsPage.path.read[CombinedPassportOrIdCard].map(Some(_))
+      case _ => Reads(_ => JsSuccess(None))
+    }
   }
 
   private def readAddress: Reads[Option[Address]] = {

@@ -194,6 +194,30 @@ otherIndividual.passportDetails.expiryDate.error.invalid=Nodwch ddyddiad dod i b
 otherIndividual.passportDetails.expiryDate.error.future=Mae’n rhaid i ddyddiad dod i ben y pasbort fod ar ôl 31 Rhagfyr 1499 a chyn 01 Ionawr 2100
 otherIndividual.passportDetails.expiryDate.error.past=Mae’n rhaid i ddyddiad dod i ben y pasbort fod ar ôl 31 Rhagfyr 1499 a chyn 01 Ionawr 2100
 
+#otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel=
+#otherIndividual.passportOrIdCardDetailsYesNo.title=
+#otherIndividual.passportOrIdCardDetailsYesNo.heading=
+#otherIndividual.passportOrIdCardDetailsYesNo.error.required=
+
+#otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel=
+#otherIndividual.passportOrIdCardDetails.title=
+#otherIndividual.passportOrIdCardDetails.heading=
+#otherIndividual.passportOrIdCardDetails.country=
+#otherIndividual.passportOrIdCardDetails.country.error.required=
+#otherIndividual.passportOrIdCardDetails.country.error.length=
+#otherIndividual.passportOrIdCardDetails.number=
+#otherIndividual.passportOrIdCardDetails.number.error.required=
+#otherIndividual.passportOrIdCardDetails.number.error.length=
+#otherIndividual.passportOrIdCardDetails.number.error.invalid=
+#otherIndividual.passportOrIdCardDetails.expiryDate.title=
+#otherIndividual.passportOrIdCardDetails.expiryDate.hint=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.required.all=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.required.two=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.required=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.invalid=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.future=
+#otherIndividual.passportOrIdCardDetails.expiryDate.error.past=
+
 otherIndividual.ukAddress.checkYourAnswersLabel=Beth yw cyfeiriad {0}?
 otherIndividual.ukAddress.title=Beth yw cyfeiriad yr unigolyn?
 otherIndividual.ukAddress.heading=Beth yw cyfeiriad {0}?
