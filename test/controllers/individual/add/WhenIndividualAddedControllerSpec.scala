@@ -229,7 +229,7 @@ import views.html.individual.add.WhenIndividualAddedView
               "value.month" -> validAnswer.getMonthValue.toString,
               "value.year"  -> validAnswer.getYear.toString
             )
-            
+
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
