@@ -18,50 +18,35 @@ package base
 
 import java.time.LocalDate
 
-import config.FrontendAppConfig
 import controllers.actions._
 import models.UserAnswers
 import navigation.FakeNavigator
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
-import org.scalatest.{TestSuite, TryValues}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.{TestSuite, TryValues}
 import org.scalatestplus.mockito.MockitoSugar
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
-import play.api.i18n.{Messages, MessagesApi}
+import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.inject.{Injector, bind}
 import play.api.libs.json.Json
 import play.api.mvc.BodyParsers
-import play.api.test.FakeRequest
 import repositories.{ActiveSessionRepository, PlaybackRepository}
 import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolment, Enrolments}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience with MockitoSugar {
+trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience with MockitoSugar with FakeTrustsApp {
   this: TestSuite =>
 
   val userAnswersId = "id"
 
   val fakeNavigator = new FakeNavigator()
 
-  def emptyUserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", LocalDate.now(), Json.obj())
+  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", LocalDate.now(), Json.obj())
 
-  def injector: Injector = app.injector
-
-  def frontendAppConfig: FrontendAppConfig = injector.instanceOf[FrontendAppConfig]
-
-  def messagesApi: MessagesApi = injector.instanceOf[MessagesApi]
-
-  val bodyParsers = injector.instanceOf[BodyParsers.Default]
-
-  def fakeRequest = FakeRequest("", "")
-
-  implicit def executionContext = injector.instanceOf[ExecutionContext]
-
-  implicit def messages: Messages = messagesApi.preferred(fakeRequest)
+  val bodyParsers: BodyParsers.Default = injector.instanceOf[BodyParsers.Default]
 
   val playbackRepository: PlaybackRepository = mock[PlaybackRepository]
 
