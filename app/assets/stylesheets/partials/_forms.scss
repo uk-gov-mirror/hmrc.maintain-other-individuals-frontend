@@ -155,3 +155,47 @@ override character count display
         display: block;
     }
 }
+
+/*
+====================================
+Date field spacing
+Fixes issue when translated to Welsh
+====================================
+*/
+.form-date .form-group {
+    width: auto;
+}
+.form-date .form-group input {
+    width: 2.7em;
+}
+.form-date .form-group-year input {
+    width: 3.7em;
+}
+
+
+/*
+====================================
+Adds Extra Spacing (margin and/or padding)
+====================================
+*/
+fieldset legend {
+  margin-bottom: 0.75em;
+}
+
+@media (min-width: 641px) {
+  .form-hint, .form-hint-list {
+    margin-top: .42105em;
+    margin-bottom: .26316em;
+  }
+}
+
+@media (max-width: 640px) {
+  .form-hint, .form-hint-list {
+    margin-top: 0;
+    margin-bottom: .26316em;
+  }
+}
+
+article h2 {
+  margin: .8em 0 .4em 0;
+}
