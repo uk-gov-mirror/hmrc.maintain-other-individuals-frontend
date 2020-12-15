@@ -79,8 +79,8 @@ addAnOtherIndividualYesNo.heading=A oes gan yr ymddiriedolaeth unrhyw unigolion 
 entities.otherIndividuals=Unigolion eraill
 entities.otherIndividual=Unigolyn arall
 
-removeOtherIndividual.title=A ydych yn si_r eich bod am dynnu’r unigolyn arall?
-removeOtherIndividual.heading=A ydych yn si_r eich bod am dynnu {0}?
+removeOtherIndividual.title=A ydych yn siŵr eich bod am dynnu’r unigolyn arall?
+removeOtherIndividual.heading=A ydych yn siŵr eich bod am dynnu {0}?
 removeOtherIndividual.error.required=Dewiswch ’Iawn’ os ydych am dynnu’r unigolyn arall
 
 otherIndividual.whenRemoved.title=Pryd tynnwyd yr unigolyn fel unigolyn arall?
@@ -263,7 +263,7 @@ site.address.nonUk.country.select=Dewiswch wlad
 otherIndividual.whenIndividualAdded.checkYourAnswersLabel=Pryd ychwanegwyd {0} fel unigolyn?
 otherIndividual.whenIndividualAdded.title=Pryd ychwanegwyd yr unigolyn at yr ymddiriedolaeth?
 otherIndividual.whenIndividualAdded.heading=Pryd ychwanegwyd {0} fel unigolyn?
-otherIndividual.whenIndividualAdded.hint=Gwiriwch y weithred ymddiriedolaeth neu’r ddogfen p_er penodi. Er enghraifft, 31 3 1980.
+otherIndividual.whenIndividualAdded.hint=Gwiriwch y weithred ymddiriedolaeth neu’r ddogfen pŵer penodi. Er enghraifft, 31 3 1980.
 otherIndividual.whenIndividualAdded.error.required.all=Nodwch y dyddiad yr ychwanegwyd yr unigolyn at yr ymddiriedolaeth
 otherIndividual.whenIndividualAdded.error.required.two=Mae’n rhaid i’r dyddiad yr ychwanegwyd yr unigolyn at yr ymddiriedolaeth gynnwys {0} a {1}
 otherIndividual.whenIndividualAdded.error.required=Mae’n rhaid i’r dyddiad yr ychwanegwyd yr unigolyn at yr ymddiriedolaeth gynnwys {0}
