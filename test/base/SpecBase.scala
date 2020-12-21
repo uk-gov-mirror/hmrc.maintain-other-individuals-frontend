@@ -40,6 +40,9 @@ import scala.concurrent.Future
 trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience with MockitoSugar with FakeTrustsApp {
   this: TestSuite =>
 
+  final val ENGLISH = "en"
+  final val WELSH = "cy"
+
   val userAnswersId = "id"
 
   val fakeNavigator = new FakeNavigator()
