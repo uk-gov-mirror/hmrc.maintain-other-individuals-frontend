@@ -62,6 +62,11 @@ class RemoveOtherIndividualController @Inject()(
         otherIndividual =>
           Ok(view(preparedForm, index, otherIndividual.name.displayName))
       } recoverWith {
+        case iobe: IndexOutOfBoundsException =>
+          logger.warn(s"[Session ID: ${utils.Session.id(hc)}][UTR: ${request.userAnswers.utr}]" +
+            s" error showing the user the other individual to remove for index $index from trusts service ${iobe.getMessage}: IndexOutOfBoundsException")
+
+          Future.successful(Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad()))
         case _ =>
           logger.error(s"[Remove Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
             s" no other individual found in trusts service to remove")

@@ -29,8 +29,6 @@
 
     @formHelper(action = AddAnOtherIndividualController.submitOne(), 'autoComplete -> "off") {
 
-        @components.back_link()
-
         @components.error_summary(form.errors)
 
         @components.input_yes_no(

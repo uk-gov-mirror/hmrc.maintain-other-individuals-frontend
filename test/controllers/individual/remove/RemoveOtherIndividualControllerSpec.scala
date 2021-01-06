@@ -253,5 +253,24 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
 
       application.stop()
     }
+
+    "redirect to the Add Other Individual page when we get an IndexOutOfBoundsException" in {
+      val index = 0
+
+      when(mockConnector.getOtherIndividuals(any())(any(), any()))
+        .thenReturn(Future.failed(new IndexOutOfBoundsException("")))
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(bind[TrustConnector].toInstance(mockConnector)).build()
+
+      val request = FakeRequest(GET, routes.RemoveOtherIndividualController.onPageLoad(index).url)
+
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+
+      redirectLocation(result).value mustEqual controllers.routes.AddAnOtherIndividualController.onPageLoad().url
+
+      application.stop()
+    }
   }
 }
