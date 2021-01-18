@@ -19,7 +19,7 @@ package controllers.actions
 import com.google.inject.{ImplementedBy, Inject}
 import models.UtrSession
 import models.requests.IdentifierRequest
-import play.api.Logger
+import play.api.Logging
 import play.api.mvc.{ActionFilter, Result}
 import repositories.ActiveSessionRepository
 import uk.gov.hmrc.play.HeaderCarrierConverter
@@ -28,9 +28,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class SaveActiveSessionImpl @Inject()(utr: String,
                                       activeSessionRepository: ActiveSessionRepository
-                                     )(override implicit val executionContext: ExecutionContext) extends SaveSessionAction {
-
-  private val logger = Logger(getClass)
+                                     )(override implicit val executionContext: ExecutionContext) extends SaveSessionAction with Logging {
 
   override protected def filter[A](request: IdentifierRequest[A]): Future[Option[Result]] = {
 
