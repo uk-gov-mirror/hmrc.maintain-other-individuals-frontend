@@ -25,7 +25,6 @@ import play.api.Configuration
 import play.api.libs.json._
 import reactivemongo.api.WriteConcern
 import reactivemongo.api.indexes.IndexType
-import reactivemongo.play.json.compat.jsObjectWrites
 import reactivemongo.play.json.collection.JSONCollection
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,6 +34,8 @@ class ActiveSessionRepositoryImpl @Inject()(
                                     mongo: MongoDriver,
                                     config: Configuration
                                   )(implicit ec: ExecutionContext) extends ActiveSessionRepository {
+
+  implicit final val jsObjectWrites: OWrites[JsObject] = OWrites[JsObject](identity)
 
   private val collectionName: String = "session"
 
