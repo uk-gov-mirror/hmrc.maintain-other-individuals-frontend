@@ -16,84 +16,44 @@
 
 package repositories
 
-import java.time.LocalDateTime
-
 import com.google.inject.ImplementedBy
-import javax.inject.{Inject, Singleton}
-import models.{MongoDateTimeFormats, UtrSession}
+import models.UtrSession
 import play.api.Configuration
 import play.api.libs.json._
-import reactivemongo.api.WriteConcern
-import reactivemongo.api.indexes.IndexType
-import reactivemongo.play.json.collection.JSONCollection
+import reactivemongo.api.indexes.{Index, IndexType}
+import java.time.LocalDateTime
+
+import javax.inject.{Inject, Singleton}
+import reactivemongo.api.bson.collection.BSONSerializationPack
 
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ActiveSessionRepositoryImpl @Inject()(
-                                    mongo: MongoDriver,
-                                    config: Configuration
-                                  )(implicit ec: ExecutionContext) extends ActiveSessionRepository {
+                                             mongo: MongoDriver,
+                                             config: Configuration
+                                           )(implicit ec: ExecutionContext) extends IndexesManager(mongo, config) with ActiveSessionRepository {
 
-  implicit final val jsObjectWrites: OWrites[JsObject] = OWrites[JsObject](identity)
+  override val collectionName: String = "session"
 
-  private val collectionName: String = "session"
+  override val cacheTtl: Int = config.get[Int]("mongodb.session.ttlSeconds")
 
-  private val cacheTtl = config.get[Int]("mongodb.session.ttlSeconds")
+  override val lastUpdatedIndexName: String = "session-updated-at-index"
 
-  private def collection: Future[JSONCollection] =
-    for {
-      _ <- ensureIndexes
-      res <- mongo.api.database.map(_.collection[JSONCollection](collectionName))
-    } yield res
-
-  private val lastUpdatedIndex = MongoIndex(
-    key = Seq("updatedAt" -> IndexType.Ascending),
-    name = "session-updated-at-index",
-    expireAfterSeconds = Some(cacheTtl)
-  )
-
-  private val utrIndex = MongoIndex(
+  override def idIndex: Index.Aux[BSONSerializationPack.type] = MongoIndex(
     key = Seq("utr" -> IndexType.Ascending),
     name = "utr-index"
   )
 
-  private lazy val ensureIndexes = for {
-      collection              <- mongo.api.database.map(_.collection[JSONCollection](collectionName))
-      createdLastUpdatedIndex <- collection.indexesManager.ensure(lastUpdatedIndex)
-      createdIdIndex          <- collection.indexesManager.ensure(utrIndex)
-    } yield createdLastUpdatedIndex && createdIdIndex
+  private def selector(internalId: String): JsObject = Json.obj(
+    "internalId" -> internalId
+  )
 
   override def get(internalId: String): Future[Option[UtrSession]] = {
-
-    val selector = Json.obj("internalId" -> internalId)
-
-    val modifier = Json.obj(
-      "$set" -> Json.obj(
-        "updatedAt" -> MongoDateTimeFormats.localDateTimeWrite.writes(LocalDateTime.now)
-      )
-    )
-
-    for {
-      col <- collection
-      r <- col.findAndUpdate(
-        selector = selector,
-        update = modifier,
-        fetchNewObject = true,
-        upsert = false,
-        sort = None,
-        fields = None,
-        bypassDocumentValidation = false,
-        writeConcern = WriteConcern.Default,
-        maxTime = None,
-        collation = None,
-        arrayFilters = Nil)
-    } yield r.result[UtrSession]
+    findCollectionAndUpdate[UtrSession](selector(internalId))
   }
 
   override def set(session: UtrSession): Future[Boolean] = {
-
-    val selector = Json.obj("internalId" -> session.internalId)
 
     val modifier = Json.obj(
       "$set" -> session.copy(updatedAt = LocalDateTime.now)
@@ -101,7 +61,7 @@ class ActiveSessionRepositoryImpl @Inject()(
 
     for {
       col <- collection
-      r <- col.update(ordered = false).one(selector, modifier, upsert = true, multi = false)
+      r <- col.update(ordered = false).one(selector(session.internalId), modifier, upsert = true, multi = false)
     } yield r.ok
   }
 }
