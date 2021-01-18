@@ -28,7 +28,7 @@ import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
-import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.individual.add.WhenIndividualAddedView
 
 import scala.concurrent.{ExecutionContext, Future}
