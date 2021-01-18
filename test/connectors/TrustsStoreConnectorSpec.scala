@@ -86,9 +86,8 @@ class TrustsStoreConnectorSpec extends SpecBase
 
       val futureResult = connector.setTaskComplete("123456789")
 
-      whenReady(futureResult.failed) {
-        case Upstream5xxResponse(_, upstream, _ ) =>
-          upstream mustBe 500
+      connector.setTaskComplete("123456789") map { response =>
+        response.status mustBe 500
       }
 
       application.stop()

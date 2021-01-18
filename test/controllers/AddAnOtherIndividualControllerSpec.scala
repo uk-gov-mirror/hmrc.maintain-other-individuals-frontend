@@ -80,7 +80,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
     override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)
                                       (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-      Future.successful(HttpResponse(OK))
+      Future.successful(HttpResponse(OK, ""))
   }
 
   "AddAnOtherIndividual Controller" when {
@@ -162,7 +162,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
             .withFormUrlEncodedBody(("value", "false"))
 
         when(mockStoreConnector.setTaskComplete(any())(any(), any()))
-          .thenReturn(Future.successful(HttpResponse.apply(200)))
+          .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -240,7 +240,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
           FakeRequest(POST, submitAnotherRoute)
             .withFormUrlEncodedBody(("value", AddAnOtherIndividual.NoComplete.toString))
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(200)))
+        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -377,7 +377,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val request = FakeRequest(POST, submitCompleteRoute)
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(200)))
+        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 

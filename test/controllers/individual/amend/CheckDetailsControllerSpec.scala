@@ -108,7 +108,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
           .build()
 
       when(mockTrustConnector.amendOtherIndividual(any(), any(), any())(any(), any()))
-        .thenReturn(Future.successful(HttpResponse(OK)))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 

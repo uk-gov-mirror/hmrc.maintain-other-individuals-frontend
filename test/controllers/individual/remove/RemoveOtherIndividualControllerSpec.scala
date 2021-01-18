@@ -178,7 +178,7 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
           .thenReturn(Future.successful(OtherIndividuals(otherIndividuals)))
 
         when(mockConnector.removeOtherIndividual(any(), any())(any(), any()))
-          .thenReturn(Future.successful(HttpResponse(200)))
+          .thenReturn(Future.successful(HttpResponse(OK, "")))
 
         val request =
           FakeRequest(POST, routes.RemoveOtherIndividualController.onSubmit(index).url)
