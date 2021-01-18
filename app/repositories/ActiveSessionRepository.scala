@@ -39,7 +39,7 @@ class ActiveSessionRepositoryImpl @Inject()(
 
   override val lastUpdatedIndexName: String = "session-updated-at-index"
 
-  override val idIndex: Index = Index(
+  override def idIndex: Index = Index(
     key = Seq("utr" -> IndexType.Ascending),
     name = Some("utr-index")
   )
