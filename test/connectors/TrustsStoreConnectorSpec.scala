@@ -20,7 +20,7 @@ import base.{SpecBase, WireMockHelper}
 import com.github.tomakehurst.wiremock.client.WireMock.{okJson, urlEqualTo, _}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import play.api.libs.json.Json
-import uk.gov.hmrc.http.{HeaderCarrier, Upstream5xxResponse}
+import uk.gov.hmrc.http.HeaderCarrier
 
 class TrustsStoreConnectorSpec extends SpecBase
   with ScalaFutures
@@ -84,11 +84,8 @@ class TrustsStoreConnectorSpec extends SpecBase
           .willReturn(serverError())
       )
 
-      val futureResult = connector.setTaskComplete("123456789")
-
-      whenReady(futureResult.failed) {
-        case Upstream5xxResponse(_, upstream, _ ) =>
-          upstream mustBe 500
+      connector.setTaskComplete("123456789") map { response =>
+        response.status mustBe 500
       }
 
       application.stop()

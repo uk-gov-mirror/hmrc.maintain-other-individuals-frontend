@@ -21,10 +21,11 @@ import play.api.Configuration
 import play.api.libs.json._
 import reactivemongo.api.WriteConcern
 import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
-
 import java.time.LocalDateTime
+
 import javax.inject.{Inject, Singleton}
+import reactivemongo.api.bson.collection.BSONSerializationPack
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -39,9 +40,9 @@ class PlaybackRepositoryImpl @Inject()(
 
   override val lastUpdatedIndexName: String = "user-answers-updated-at-index"
 
-  override def idIndex: Index = Index(
+  override def idIndex: Index.Aux[BSONSerializationPack.type] = MongoIndex(
     key = Seq("internalId" -> IndexType.Ascending, "utr" -> IndexType.Ascending),
-    name = Some("internal-id-and-utr-compound-index")
+    name = "internal-id-and-utr-compound-index"
   )
 
   private def selector(internalId: String, utr: String): JsObject = Json.obj(
@@ -81,3 +82,4 @@ trait PlaybackRepository {
 
   def resetCache(internalId: String, utr: String): Future[Option[JsObject]]
 }
+

@@ -19,15 +19,15 @@ package repositories
 import models.MongoDateTimeFormats
 import play.api.Configuration
 import play.api.Logger.logger
-import play.api.libs.json.{JsObject, Json, Reads}
+import play.api.libs.json.{JsObject, Json, OWrites, Reads}
 import reactivemongo.api.WriteConcern
 import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.bson.BSONDocument
-import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
 import reactivemongo.play.json.collection.JSONCollection
-
 import java.time.LocalDateTime
+
 import javax.inject.Inject
+import reactivemongo.api.bson.collection.BSONSerializationPack
+
 import scala.concurrent.{ExecutionContext, Future}
 
 abstract class IndexesManager @Inject()(
@@ -35,13 +35,15 @@ abstract class IndexesManager @Inject()(
                                          config: Configuration
                                        )(implicit ec: ExecutionContext) {
 
+  implicit final val jsObjectWrites: OWrites[JsObject] = OWrites[JsObject](identity)
+
   val collectionName: String
 
   val cacheTtl: Int
 
   val lastUpdatedIndexName: String
 
-  def idIndex: Index
+  def idIndex: Index.Aux[BSONSerializationPack.type]
 
   def collection: Future[JSONCollection] =
     for {
@@ -51,10 +53,10 @@ abstract class IndexesManager @Inject()(
 
   def ensureIndexes: Future[Boolean] = {
 
-    lazy val lastUpdatedIndex: Index = Index(
+    lazy val lastUpdatedIndex = MongoIndex(
       key = Seq("updatedAt" -> IndexType.Ascending),
-      name = Some(lastUpdatedIndexName),
-      options = BSONDocument("expireAfterSeconds" -> cacheTtl)
+      name = lastUpdatedIndexName,
+      expireAfterSeconds = Some(cacheTtl)
     )
 
     for {

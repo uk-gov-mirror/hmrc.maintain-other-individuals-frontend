@@ -21,10 +21,11 @@ import models.UtrSession
 import play.api.Configuration
 import play.api.libs.json._
 import reactivemongo.api.indexes.{Index, IndexType}
-import reactivemongo.play.json.ImplicitBSONHandlers.JsObjectDocumentWriter
-
 import java.time.LocalDateTime
+
 import javax.inject.{Inject, Singleton}
+import reactivemongo.api.bson.collection.BSONSerializationPack
+
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
@@ -39,9 +40,9 @@ class ActiveSessionRepositoryImpl @Inject()(
 
   override val lastUpdatedIndexName: String = "session-updated-at-index"
 
-  override def idIndex: Index = Index(
+  override def idIndex: Index.Aux[BSONSerializationPack.type] = MongoIndex(
     key = Seq("utr" -> IndexType.Ascending),
-    name = Some("utr-index")
+    name = "utr-index"
   )
 
   private def selector(internalId: String): JsObject = Json.obj(
