@@ -20,12 +20,11 @@ import models.UserAnswers
 import play.api.Configuration
 import play.api.libs.json._
 import reactivemongo.api.WriteConcern
-import reactivemongo.api.indexes.{Index, IndexType}
-import java.time.LocalDateTime
-
-import javax.inject.{Inject, Singleton}
 import reactivemongo.api.bson.collection.BSONSerializationPack
+import reactivemongo.api.indexes.{Index, IndexType}
 
+import java.time.LocalDateTime
+import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
