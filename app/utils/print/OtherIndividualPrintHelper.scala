@@ -23,16 +23,13 @@ import controllers.individual.{routes => rts}
 import models.{CheckMode, NormalMode, UserAnswers}
 import pages.individual._
 import play.api.i18n.Messages
-import utils.countryOptions.CountryOptions
 import viewmodels.{AnswerRow, AnswerSection}
 
-class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverter,
-                                           countryOptions: CountryOptions
-                                          ) {
+class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverter) {
 
   def apply(userAnswers: UserAnswers, provisional: Boolean, otherIndividualName: String)(implicit messages: Messages): AnswerSection = {
 
-    val bound = answerRowConverter.bind(userAnswers, otherIndividualName, countryOptions)
+    val bound = answerRowConverter.bind(userAnswers, otherIndividualName)
 
     lazy val add: Seq[AnswerRow] = Seq(
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(NormalMode).url),
@@ -69,7 +66,6 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       None,
       if (provisional) add else amend
     )
-
 
   }
 }
