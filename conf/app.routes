@@ -4,6 +4,7 @@ GET        /add                                             controllers.AddAnOth
 POST       /add                                             controllers.AddAnOtherIndividualController.submitOne()
 GET        /add-another                                     controllers.AddAnOtherIndividualController.onPageLoad()
 POST       /add-another                                     controllers.AddAnOtherIndividualController.submitAnother()
+GET        /complete                                        controllers.AddAnOtherIndividualController.onPageLoad()
 POST       /complete                                        controllers.AddAnOtherIndividualController.submitComplete()
 
 GET        /:index/remove                                   controllers.individual.remove.RemoveOtherIndividualController.onPageLoad(index: Int)
