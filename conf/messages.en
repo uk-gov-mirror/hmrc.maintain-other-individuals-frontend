@@ -21,9 +21,10 @@ index.title = maintain-other-individuals-frontend
 index.heading = maintain-other-individuals-frontend
 index.guidance = Welcome to your new frontend. Please see the README file for a guide to getting started.
 
-session_expired.title = For your security, this service has been reset
-session_expired.heading = For your security, this service has been reset
-session_expired.guidance = The details you have given have been deleted because you did not continue the service for 15 minutes.
+session_expired.title = For your security, we signed you out
+session_expired.heading = For your security, we signed you out
+session_expired.guidance = This is because you have been inactive on the service for 15 minutes.
+session_expired.guidance.2 = You will need to sign in to continue maintaining the trust.
 
 site.back = Back
 site.delete = Remove
@@ -38,6 +39,7 @@ site.service_name = Register and Maintain a Trust
 site.service_section = Other Individuals
 site.textarea.char_limit = (Limit is {0} characters)
 site.sign_out = Sign out
+site.sign_in = Sign in
 site.inprogress = In Progress
 site.complete = Completed
 site.date.hint = For example, 31 3 1980.
@@ -47,7 +49,7 @@ site.cannotRemove-hidden = Cannot remove {0}
 
 #timeout dialog
 timeout.title=Your application will time out soon
-timeout.message=We will reset your application if you do not respond in
+timeout.message=We will sign you out if you do not respond in
 timeout.keep-alive-button=Continue application
 
 address.country.select = Select a country
@@ -193,6 +195,30 @@ otherIndividual.passportDetails.expiryDate.error.required = Passport expiry date
 otherIndividual.passportDetails.expiryDate.error.invalid = Enter a real expiry date
 otherIndividual.passportDetails.expiryDate.error.future = Passport expiry date must be after 31 December 1499 and before 01 January 2100
 otherIndividual.passportDetails.expiryDate.error.past = Passport expiry date must be after 31 December 1499 and before 01 January 2100
+
+otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel = Do you know {0}’s passport or ID card details?
+otherIndividual.passportOrIdCardDetailsYesNo.title = Do you know the individual’s passport or ID card details?
+otherIndividual.passportOrIdCardDetailsYesNo.heading = Do you know {0}’s passport or ID card details?
+otherIndividual.passportOrIdCardDetailsYesNo.error.required = Select yes if you know the individual’s passport or ID card details
+
+otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel = What are {0}’s passport or ID card details?
+otherIndividual.passportOrIdCardDetails.title = What are the individual’s passport or ID card details?
+otherIndividual.passportOrIdCardDetails.heading = What are {0}’s passport or ID card details?
+otherIndividual.passportOrIdCardDetails.country = ID card country of issue
+otherIndividual.passportOrIdCardDetails.country.error.required = Enter the individual’s ID card country of issue
+otherIndividual.passportOrIdCardDetails.country.error.length = The individual’s ID card country must be 100 characters or less
+otherIndividual.passportOrIdCardDetails.number = ID card number
+otherIndividual.passportOrIdCardDetails.number.error.required = Enter the individual’s ID card number
+otherIndividual.passportOrIdCardDetails.number.error.length = The individual’s ID card number must be 30 characters or less
+otherIndividual.passportOrIdCardDetails.number.error.invalid = ID card number can only include letters and numbers
+otherIndividual.passportOrIdCardDetails.expiryDate.title = Expiry date
+otherIndividual.passportOrIdCardDetails.expiryDate.hint = Expiry date can be in the past. For example, 31 3 1980.
+otherIndividual.passportOrIdCardDetails.expiryDate.error.required.all = Enter the ID card expiry date
+otherIndividual.passportOrIdCardDetails.expiryDate.error.required.two = ID card expiry date must include a {0} and {1}
+otherIndividual.passportOrIdCardDetails.expiryDate.error.required = ID card expiry date must include a {0}
+otherIndividual.passportOrIdCardDetails.expiryDate.error.invalid = Enter a real date when the individual’s ID card expires
+otherIndividual.passportOrIdCardDetails.expiryDate.error.future = ID card expiry date must be after 31 December 1499 and before 01 January 2100
+otherIndividual.passportOrIdCardDetails.expiryDate.error.past = ID card expiry date must be after 31 December 1499 and before 01 January 2100
 
 otherIndividual.ukAddress.checkYourAnswersLabel = What is {0}’s address?
 otherIndividual.ukAddress.title = What is the individual’s address?

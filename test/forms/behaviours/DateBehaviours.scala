@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -132,13 +132,13 @@ trait DateBehaviours extends FieldBehaviours {
     }
   }
 
-  def mandatoryDateField(form: Form[_], key: String, requiredAllKey: String): Unit = {
+  def mandatoryDateField(form: Form[_], key: String, requiredAllKey: String, errorArgs: Seq[String] = Seq.empty): Unit = {
 
     "fail to bind an empty date" in {
 
       val result = form.bind(Map.empty[String, String]).apply(key)
 
-      result.errors should contain only FormError(key, requiredAllKey, List("day", "month", "year"))
+      result.errors should contain only FormError(key, requiredAllKey, errorArgs)
     }
   }
 

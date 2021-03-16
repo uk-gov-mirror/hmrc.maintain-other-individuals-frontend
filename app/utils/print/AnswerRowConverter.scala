@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,118 +16,98 @@
 
 package utils.print
 
-import java.time.LocalDate
-
 import com.google.inject.Inject
-import models.{Address, IdCard, Name, Passport, UserAnswers}
+import models.{Address, CombinedPassportOrIdCard, IdCard, Name, Passport, UserAnswers}
+import pages.QuestionPage
 import play.api.i18n.Messages
 import play.api.libs.json.Reads
-import play.twirl.api.HtmlFormat
+import play.twirl.api.{Html, HtmlFormat}
 import queries.Gettable
-import utils.countryOptions.CountryOptions
-import utils.print.CheckAnswersFormatters._
 import viewmodels.AnswerRow
 
-class AnswerRowConverter @Inject()() {
+import java.time.LocalDate
 
-  def bind(userAnswers: UserAnswers, name: String, countryOptions: CountryOptions)
-          (implicit messages: Messages): Bound = new Bound(userAnswers, name, countryOptions)
+class AnswerRowConverter @Inject()(checkAnswersFormatters: CheckAnswersFormatters) {
 
-  class Bound(userAnswers: UserAnswers, name: String, countryOptions: CountryOptions)(implicit messages: Messages) {
+  def bind(userAnswers: UserAnswers, name: String)
+          (implicit messages: Messages): Bound = new Bound(userAnswers, name)
+
+  class Bound(userAnswers: UserAnswers, name: String)(implicit messages: Messages) {
 
     def nameQuestion(query: Gettable[Name],
                      labelKey: String,
                      changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel")),
-          HtmlFormat.escape(x.displayFullName),
-          changeUrl
-        )
-      }
+      val format = (x: Name) => HtmlFormat.escape(x.displayFullName)
+      question(query, labelKey, format, changeUrl)
     }
 
     def stringQuestion(query: Gettable[String],
                        labelKey: String,
                        changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          HtmlFormat.escape(x),
-          changeUrl
-        )
-      }
+      val format = (x: String) => HtmlFormat.escape(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def yesNoQuestion(query: Gettable[Boolean],
                      labelKey: String,
                      changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          yesOrNo(x),
-          changeUrl
-        )
-      }
+      val format = (x: Boolean) => checkAnswersFormatters.yesOrNo(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def dateQuestion(query: Gettable[LocalDate],
                      labelKey: String,
                      changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          HtmlFormat.escape(x.format(dateFormatter)),
-          changeUrl
-        )
-      }
+      val format = (x: LocalDate) => checkAnswersFormatters.formatDate(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def ninoQuestion(query: Gettable[String],
                      labelKey: String,
                      changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          formatNino(x),
-          changeUrl
-        )
-      }
+      val format = (x: String) => checkAnswersFormatters.formatNino(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def addressQuestion[T <: Address](query: Gettable[T],
                                       labelKey: String,
                                       changeUrl: String)
                                      (implicit messages:Messages, reads: Reads[T]): Option[AnswerRow] = {
-      userAnswers.get(query) map { x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          formatAddress(x, countryOptions),
-          changeUrl
-        )
-      }
+      val format = (x: T) => checkAnswersFormatters.formatAddress(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def passportDetailsQuestion(query: Gettable[Passport],
                                 labelKey: String,
                                 changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
-        AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          formatPassportDetails(x, countryOptions),
-          changeUrl
-        )
-      }
+      val format = (x: Passport) => checkAnswersFormatters.formatPassportDetails(x)
+      question(query, labelKey, format, changeUrl)
     }
 
     def idCardDetailsQuestion(query: Gettable[IdCard],
                               labelKey: String,
                               changeUrl: String): Option[AnswerRow] = {
-      userAnswers.get(query) map {x =>
+      val format = (x: IdCard) => checkAnswersFormatters.formatIdCardDetails(x)
+      question(query, labelKey, format, changeUrl)
+    }
+
+    def passportOrIdCardDetailsQuestion(query: QuestionPage[CombinedPassportOrIdCard],
+                                        labelKey: String,
+                                        changeUrl: String): Option[AnswerRow] = {
+      val format = (x: CombinedPassportOrIdCard) => checkAnswersFormatters.formatPassportOrIdCardDetails(x)
+      question(query, labelKey, format, changeUrl)
+    }
+
+    private def question[T](query: Gettable[T],
+                            labelKey: String,
+                            format: T => Html,
+                            changeUrl: String)
+                           (implicit rds: Reads[T]): Option[AnswerRow] = {
+      userAnswers.get(query) map { x =>
         AnswerRow(
-          HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
-          formatIdCardDetails(x, countryOptions),
-          changeUrl
+          label = HtmlFormat.escape(messages(s"$labelKey.checkYourAnswersLabel", name)),
+          answer = format(x),
+          changeUrl = changeUrl
         )
       }
     }

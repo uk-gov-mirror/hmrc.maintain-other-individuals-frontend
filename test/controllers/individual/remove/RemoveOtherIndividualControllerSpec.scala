@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -178,7 +178,7 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
           .thenReturn(Future.successful(OtherIndividuals(otherIndividuals)))
 
         when(mockConnector.removeOtherIndividual(any(), any())(any(), any()))
-          .thenReturn(Future.successful(HttpResponse(200)))
+          .thenReturn(Future.successful(HttpResponse(OK, "")))
 
         val request =
           FakeRequest(POST, routes.RemoveOtherIndividualController.onSubmit(index).url)
@@ -250,6 +250,25 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
       status(result) mustEqual SEE_OTHER
 
       redirectLocation(result).value mustEqual controllers.routes.SessionExpiredController.onPageLoad().url
+
+      application.stop()
+    }
+
+    "redirect to the Add Other Individual page when we get an IndexOutOfBoundsException" in {
+      val index = 0
+
+      when(mockConnector.getOtherIndividuals(any())(any(), any()))
+        .thenReturn(Future.failed(new IndexOutOfBoundsException("")))
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(bind[TrustConnector].toInstance(mockConnector)).build()
+
+      val request = FakeRequest(GET, routes.RemoveOtherIndividualController.onPageLoad(index).url)
+
+      val result = route(application, request).value
+
+      status(result) mustEqual SEE_OTHER
+
+      redirectLocation(result).value mustEqual controllers.routes.AddAnOtherIndividualController.onPageLoad().url
 
       application.stop()
     }

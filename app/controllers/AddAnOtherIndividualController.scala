@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,13 +23,13 @@ import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import handlers.ErrorHandler
 import javax.inject.Inject
 import models.{AddAnOtherIndividual, NormalMode}
-import play.api.Logger
+import play.api.Logging
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
 import services.TrustService
-import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.AddAnOtherIndividualViewHelper
 import views.html.{AddAnOtherIndividualView, AddAnOtherIndividualYesNoView, MaxedOutOtherIndividualsView}
 
@@ -49,13 +49,11 @@ class AddAnOtherIndividualController @Inject()(
                                                 yesNoView: AddAnOtherIndividualYesNoView,
                                                 completeView: MaxedOutOtherIndividualsView,
                                                 errorHandler: ErrorHandler
-                                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
 
   val addAnotherForm : Form[AddAnOtherIndividual] = addAnotherFormProvider()
 
   val yesNoForm: Form[Boolean] = yesNoFormProvider.withPrefix("addAnOtherIndividualYesNo")
-
-  private val logger = Logger(getClass)
 
   def onPageLoad(): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
@@ -139,7 +137,7 @@ class AddAnOtherIndividualController @Inject()(
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
                 _ <- repository.set(updatedAnswers)
-              } yield Redirect(controllers.routes.NameController.onPageLoad(NormalMode))
+              } yield Redirect(controllers.individual.routes.NameController.onPageLoad(NormalMode))
 
             case AddAnOtherIndividual.YesLater =>
               Future.successful(Redirect(appConfig.maintainATrustOverview))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import com.google.inject.Inject
 import config.FrontendAppConfig
 import javax.inject.Singleton
 import play.api.Environment
+import play.api.i18n.Messages
 import utils.InputOption
 
 @Singleton
@@ -27,5 +28,7 @@ class CountryOptionsNonUK @Inject()(
                                      environment: Environment,
                                      config: FrontendAppConfig
                                    ) extends CountryOptions(environment, config) {
-  override def options: Seq[InputOption] = CountryOptions.getCountries(environment, config.locationCanonicalListNonUK)
+  override def options()(implicit messages: Messages): Seq[InputOption] = {
+    CountryOptions.getCountries(environment, getFileName).filterNot(x => x.value == config.UK_COUNTRY_CODE)
+  }
 }

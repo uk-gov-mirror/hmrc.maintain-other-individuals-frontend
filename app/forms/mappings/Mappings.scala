@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,6 +52,7 @@ trait Mappings extends Formatters with Constraints {
                            invalidKey: String,
                            allRequiredKey: String,
                            twoRequiredKey: String,
-                           requiredKey: String): FieldMapping[LocalDate] =
-    of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey))
+                           requiredKey: String,
+                           args: Seq[String] = Seq.empty): FieldMapping[LocalDate] =
+    of(new LocalDateFormatter(invalidKey, allRequiredKey, twoRequiredKey, requiredKey, args))
 }

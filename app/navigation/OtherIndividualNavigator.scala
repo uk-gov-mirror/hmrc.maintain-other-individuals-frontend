@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,10 +16,13 @@
 
 package navigation
 
+import controllers.individual.add.{routes => addRts}
+import controllers.individual.amend.{routes => amendRts}
+import controllers.individual.{routes => rts}
 import javax.inject.Inject
 import models.{CheckMode, Mode, NormalMode, UserAnswers}
-import pages.individual.{AddressYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, IndexPage, LiveInTheUkYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
-import pages.{Page, QuestionPage}
+import pages.Page
+import pages.individual._
 import play.api.mvc.Call
 
 class OtherIndividualNavigator @Inject()() extends Navigator {
@@ -27,63 +30,62 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
   override def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call =
     routes(mode)(page)(userAnswers)
 
-  private def simpleNavigation(mode: Mode): PartialFunction[Page, Call] = {
-    case NamePage => controllers.routes.DateOfBirthYesNoController.onPageLoad(mode)
-    case DateOfBirthPage => controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(mode)
-    case UkAddressPage => controllers.routes.PassportDetailsYesNoController.onPageLoad(mode)
-    case NonUkAddressPage => controllers.routes.PassportDetailsYesNoController.onPageLoad(mode)
-    case WhenIndividualAddedPage => controllers.routes.CheckDetailsController.onPageLoad()
+  private def simpleNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
+    case NamePage => _ => rts.DateOfBirthYesNoController.onPageLoad(mode)
+    case DateOfBirthPage => _ => rts.NationalInsuranceNumberYesNoController.onPageLoad(mode)
+    case PassportDetailsPage | IdCardDetailsPage => _ => addRts.WhenIndividualAddedController.onPageLoad()
+    case PassportOrIdCardDetailsPage => ua => checkDetailsRoute(ua)
+    case WhenIndividualAddedPage => _ => addRts.CheckDetailsController.onPageLoad()
   }
 
   private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
     case DateOfBirthYesNoPage => ua =>
-      yesNoNav(ua, DateOfBirthYesNoPage, controllers.routes.DateOfBirthController.onPageLoad(mode), controllers.routes.NationalInsuranceNumberYesNoController.onPageLoad(mode))
+      yesNoNav(ua, DateOfBirthYesNoPage, rts.DateOfBirthController.onPageLoad(mode), rts.NationalInsuranceNumberYesNoController.onPageLoad(mode))
     case NationalInsuranceNumberYesNoPage => ua =>
-      yesNoNav(ua, NationalInsuranceNumberYesNoPage, controllers.routes.NationalInsuranceNumberController.onPageLoad(mode), controllers.routes.AddressYesNoController.onPageLoad(mode))
+      yesNoNav(ua, NationalInsuranceNumberYesNoPage, rts.NationalInsuranceNumberController.onPageLoad(mode), rts.AddressYesNoController.onPageLoad(mode))
     case LiveInTheUkYesNoPage => ua =>
-      yesNoNav(ua, LiveInTheUkYesNoPage, controllers.routes.UkAddressController.onPageLoad(mode), controllers.routes.NonUkAddressController.onPageLoad(mode))
+      yesNoNav(ua, LiveInTheUkYesNoPage, rts.UkAddressController.onPageLoad(mode), rts.NonUkAddressController.onPageLoad(mode))
     case PassportDetailsYesNoPage => ua =>
-      yesNoNav(ua, PassportDetailsYesNoPage, controllers.routes.PassportDetailsController.onPageLoad(mode), controllers.routes.IdCardDetailsYesNoController.onPageLoad(mode))
+      yesNoNav(ua, PassportDetailsYesNoPage, addRts.PassportDetailsController.onPageLoad(), addRts.IdCardDetailsYesNoController.onPageLoad())
+    case IdCardDetailsYesNoPage => ua =>
+      yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(), addRts.WhenIndividualAddedController.onPageLoad())
+    case PassportOrIdCardDetailsYesNoPage => ua =>
+      yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(), checkDetailsRoute(ua))
   }
 
   private def navigationWithCheck(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
     mode match {
       case NormalMode => {
-        case NationalInsuranceNumberPage | PassportDetailsPage | IdCardDetailsPage  => _ =>
-          controllers.routes.WhenIndividualAddedController.onPageLoad()
+        case NationalInsuranceNumberPage  => _ =>
+          addRts.WhenIndividualAddedController.onPageLoad()
         case AddressYesNoPage => ua =>
-          yesNoNav(ua, AddressYesNoPage, controllers.routes.LiveInTheUkYesNoController.onPageLoad(mode), controllers.routes.WhenIndividualAddedController.onPageLoad())
-        case IdCardDetailsYesNoPage => ua =>
-          yesNoNav(ua, IdCardDetailsYesNoPage, controllers.routes.IdCardDetailsController.onPageLoad(mode), controllers.routes.WhenIndividualAddedController.onPageLoad())
+          yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), addRts.WhenIndividualAddedController.onPageLoad())
+        case UkAddressPage | NonUkAddressPage => _ =>
+          addRts.PassportDetailsYesNoController.onPageLoad()
       }
       case CheckMode => {
-        case NationalInsuranceNumberPage | PassportDetailsPage | IdCardDetailsPage => ua =>
+        case NationalInsuranceNumberPage => ua =>
           checkDetailsRoute(ua)
         case AddressYesNoPage => ua =>
-          yesNoNav(ua, AddressYesNoPage, controllers.routes.LiveInTheUkYesNoController.onPageLoad(mode), checkDetailsRoute(ua))
-        case IdCardDetailsYesNoPage => ua =>
-          yesNoNav(ua, IdCardDetailsYesNoPage, controllers.routes.IdCardDetailsController.onPageLoad(mode), checkDetailsRoute(ua))
+          yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), checkDetailsRoute(ua))
+        case UkAddressPage | NonUkAddressPage => _ =>
+          amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad()
       }
     }
   }
 
-  def yesNoNav(ua: UserAnswers, fromPage: QuestionPage[Boolean], yesCall: => Call, noCall: => Call): Call = {
-    ua.get(fromPage)
-      .map(if (_) yesCall else noCall)
-      .getOrElse(controllers.routes.SessionExpiredController.onPageLoad())
-  }
-
   def checkDetailsRoute(answers: UserAnswers): Call = {
     answers.get(IndexPage) match {
-      case None => controllers.routes.SessionExpiredController.onPageLoad()
+      case None =>
+        controllers.routes.SessionExpiredController.onPageLoad()
       case Some(x) =>
         controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(x)
     }
   }
 
   def routes(mode: Mode): PartialFunction[Page, UserAnswers => Call] =
-    simpleNavigation(mode) andThen (c => (_: UserAnswers) => c) orElse
-      yesNoNavigation(mode)  orElse
+    simpleNavigation(mode) orElse
+      yesNoNavigation(mode) orElse
       navigationWithCheck(mode)
 
 }

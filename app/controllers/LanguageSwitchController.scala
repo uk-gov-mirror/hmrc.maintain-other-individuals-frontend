@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,28 +19,19 @@ package controllers
 import com.google.inject.Inject
 import config.FrontendAppConfig
 import play.api.Configuration
-import play.api.i18n.{I18nSupport, Lang, MessagesApi}
+import play.api.i18n.{Lang, MessagesApi}
 import play.api.mvc._
-import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import uk.gov.hmrc.play.language.{LanguageController, LanguageUtils}
 
 class LanguageSwitchController @Inject()(
                                           configuration: Configuration,
                                           appConfig: FrontendAppConfig,
                                           override implicit val messagesApi: MessagesApi,
-                                          val controllerComponents: MessagesControllerComponents
-                                        ) extends FrontendBaseController with I18nSupport {
+                                          languageUtils: LanguageUtils,
+                                          cc: MessagesControllerComponents
+                                        ) extends LanguageController(configuration, languageUtils, cc) {
 
-  private def languageMap: Map[String, Lang] = appConfig.languageMap
+  override def fallbackURL: String = appConfig.loginContinueUrl
 
-  def switchToLanguage(language: String): Action[AnyContent] = Action {
-      if (isWelshEnabled) {
-        languageMap.getOrElse(language, Lang.defaultLang)
-      } else {
-        Lang("en")
-      }
-      Ok
-  }
-
-  private def isWelshEnabled: Boolean =
-    configuration.getOptional[Boolean]("microservice.services.features.welsh-translation").getOrElse(true)
+  override def languageMap: Map[String, Lang] = appConfig.languageMap
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package controllers.actions
 import controllers.routes
 import javax.inject.Inject
 import models.requests.{DataRequest, OptionalDataRequest}
-import play.api.Logger
+import play.api.Logging
 import play.api.mvc.Results.Redirect
 import play.api.mvc.{ActionRefiner, Result}
 import uk.gov.hmrc.play.HeaderCarrierConverter
@@ -29,9 +29,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait DataRequiredAction extends ActionRefiner[OptionalDataRequest, DataRequest]
 
 
-class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionContext) extends DataRequiredAction {
-
-  private val logger = Logger(getClass)
+class DataRequiredActionImpl @Inject()(implicit val executionContext: ExecutionContext) extends DataRequiredAction with Logging {
 
   override protected def refine[A](request: OptionalDataRequest[A]): Future[Either[Result, DataRequest[A]]] = {
 

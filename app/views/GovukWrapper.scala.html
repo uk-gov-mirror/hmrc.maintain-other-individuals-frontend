@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,6 @@
  *@
 
 @import play.twirl.api.HtmlFormat
-@import views.html.components.language_selection
 @import views.html.layouts.GovUkTemplate
 
 @this(
@@ -39,23 +38,26 @@
   contentHeader: Option[Html] = None,
   mainContent: Html = HtmlFormat.empty,
   serviceInfoContent: Html = HtmlFormat.empty,
-  scriptElem: Option[Html] = None)(implicit request: Request[_], messages: Messages)
+  scriptElem: Option[Html] = None,
+  canSignOut: Boolean = true
+  )(implicit request: Request[_], messages: Messages)
 
 @headContent = {
     @head(
       linkElem = None,
       headScripts = None)
-    <script src='@routes.Assets.versioned("javascripts/gtm.js")'></script>
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href='@routes.Assets.versioned("stylesheets/maintainotherindividualsfrontend-app.css")' />
 }
 
 @headerNavLinks = {
-<li>
-    <a id="logOut" href="@controllers.routes.LogoutController.logout" data-target="link - click:@title:@Messages("site.sign_out")">
-    @Messages("site.sign_out")
-    </a>
-</li>
+    @if(canSignOut) {
+        <li>
+            <a id="logOut" href="@controllers.routes.LogoutController.logout" data-target="link - click:@title:@Messages("site.sign_out")">
+            @Messages("site.sign_out")
+            </a>
+        </li>
+    }
 }
 
 @insideHeader = {
@@ -70,7 +72,7 @@
 
 @bodyEnd = {
     @footer(
-      analyticsToken = Some(appConfig.analyticsToken),
+      analyticsToken = None,
       analyticsHost = appConfig.analyticsHost,
       ssoUrl = None,
       scriptElem = scriptElem,
@@ -99,7 +101,7 @@
 @mainContentHeader = {
 
     @if(appConfig.languageTranslationEnabled) {
-        @language_selection(
+        @views.html.language_selection(
             appConfig.languageMap,
             appConfig.routeToSwitchLanguage,
             Some("translate u-align--right"))

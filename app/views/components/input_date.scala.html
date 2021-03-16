@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,13 @@
  *@
 
 @import viewmodels.Link
+@import utils.DateErrorFormatter._
 
 @(
     field: Field,
     legend: String = "",
     legendClass: String = "",
     hint: Option[String] = None,
-    readerHint: Option[String] = None,
     link : Option[Link] = None,
     headingIsLegend: Boolean = false
 )(implicit messages: Messages)
@@ -39,10 +39,10 @@
             </span>
             @if(headingIsLegend){</h1>}
         </legend>
-        @form_hint(hint = hint, readerHint = readerHint, link = link)
+        @form_hint(hint = hint, link = link)
         @field.errors.map { error =>
             <span class="error-message" id="error-message-@{field.id}-input">
-                <span class="visually-hidden">@messages("site.error") </span>@messages(error.message, error.args: _*)
+                <span class="visually-hidden">@messages("site.error") </span>@messages(error.message, formatArgs(error.args): _*)
             </span>
         }
         <div class="form-date">

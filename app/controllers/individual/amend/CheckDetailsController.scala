@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,12 +23,12 @@ import extractors.OtherIndividualExtractor
 import handlers.ErrorHandler
 import javax.inject.Inject
 import models.UserAnswers
-import play.api.Logger
+import play.api.Logging
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc._
 import repositories.PlaybackRepository
 import services.TrustService
-import uk.gov.hmrc.play.bootstrap.controller.FrontendBaseController
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.mappers.OtherIndividualMapper
 import utils.print.OtherIndividualPrintHelper
 import viewmodels.AnswerSection
@@ -50,15 +50,13 @@ class CheckDetailsController @Inject()(
                                         nameAction: NameRequiredAction,
                                         extractor: OtherIndividualExtractor,
                                         errorHandler: ErrorHandler
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
-
-  private val logger = Logger(getClass)
+                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with Logging {
 
   private def render(userAnswers: UserAnswers,
                      index: Int,
                      name: String)
                     (implicit request: Request[AnyContent]): Result = {
-    val section: AnswerSection = printHelper(userAnswers, false, name)
+    val section: AnswerSection = printHelper(userAnswers, provisional = false, name)
     Ok(view(section, index))
   }
 

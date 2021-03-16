@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,5 +23,11 @@ import play.api.mvc.Call
 trait Navigator {
 
   def nextPage(page: Page, mode: Mode, userAnswers: UserAnswers): Call
+
+  def yesNoNav(ua: UserAnswers, fromPage: QuestionPage[Boolean], yesCall: => Call, noCall: => Call): Call = {
+    ua.get(fromPage)
+      .map(if (_) yesCall else noCall)
+      .getOrElse(controllers.routes.SessionExpiredController.onPageLoad())
+  }
 
 }

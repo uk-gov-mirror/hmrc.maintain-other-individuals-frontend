@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ class WhenRemovedControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted" in {
 
-      when(mockConnector.removeOtherIndividual(any(), any())(any(), any())).thenReturn(Future.successful(HttpResponse(200)))
+      when(mockConnector.removeOtherIndividual(any(), any())(any(), any())).thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val application =
         applicationBuilder(userAnswers = Some(emptyUserAnswers))

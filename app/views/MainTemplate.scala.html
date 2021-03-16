@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,7 +30,9 @@
   bodyClasses: Option[String] = None,
   mainClass: Option[String] = None,
   scriptElem: Option[Html] = None,
-  timeoutEnabled: Boolean = true)(mainContent: Html)(implicit request : Request[_], messages: Messages)
+  timeoutEnabled: Boolean = true,
+  canSignOut: Boolean = true
+)(mainContent: Html)(implicit request : Request[_], messages: Messages)
 
 @import uk.gov.hmrc.play.views.html.layouts
 
@@ -38,7 +40,7 @@
 
 @defaultScriptElem = {
 @if(timeoutEnabled) {
-    <script id="timeoutScript" tabindex="-1">
+    <script>
             window.GOVUK.timeoutDialog({
                 timeout: @appConfig.timeoutLength,
                 countdown: @appConfig.countdownLength,
@@ -67,5 +69,6 @@
                contentHeader = contentHeader,
                mainContent = article(mainContent),
                serviceInfoContent = serviceInfoContent,
-               scriptElem = Some(defaultScriptElem)
+               scriptElem = Some(defaultScriptElem),
+               canSignOut = canSignOut
 )

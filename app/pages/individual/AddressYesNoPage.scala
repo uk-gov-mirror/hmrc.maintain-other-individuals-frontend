@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,6 +38,8 @@ case object AddressYesNoPage extends QuestionPage[Boolean] {
           .flatMap(_.remove(PassportDetailsPage))
           .flatMap(_.remove(IdCardDetailsYesNoPage))
           .flatMap(_.remove(IdCardDetailsPage))
+          .flatMap(_.remove(PassportOrIdCardDetailsYesNoPage))
+          .flatMap(_.remove(PassportOrIdCardDetailsPage))
       case _ =>
         super.cleanup(value, userAnswers)
     }

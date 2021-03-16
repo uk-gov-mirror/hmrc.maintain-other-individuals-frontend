@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     .set(DateOfBirthYesNoPage, true).success.value
     .set(DateOfBirthPage, LocalDate.parse("1990-03-09")).success.value
     .set(NationalInsuranceNumberYesNoPage, false).success.value
-    .set(StartDatePage, startDate).success.value
+    .set(WhenIndividualAddedPage, startDate).success.value
 
   "CheckDetails Controller" must {
 
@@ -108,7 +108,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
           .build()
 
       when(mockTrustConnector.amendOtherIndividual(any(), any(), any())(any(), any()))
-        .thenReturn(Future.successful(HttpResponse(OK)))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
 
       val request = FakeRequest(POST, submitDetailsRoute)
 

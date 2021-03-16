@@ -1,5 +1,5 @@
 @*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
  * limitations under the License.
  *@
 
+@import controllers.individual.routes._
 @import models.NormalMode
 
 @this(
@@ -40,5 +41,5 @@
         <li>@messages("otherIndividual.interrupt.page.b4")</li>
     </ul>
 
-    @components.button_link(messages("site.continue"), controllers.routes.NameController.onPageLoad(NormalMode).url)
+    @components.button_link(messages("site.continue"), NameController.onPageLoad(NormalMode).url)
 }

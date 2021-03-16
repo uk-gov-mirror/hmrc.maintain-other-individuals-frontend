@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 HM Revenue & Customs
+ * Copyright 2021 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,6 +27,7 @@ import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import play.api.data.Form
 import play.api.inject.bind
+import play.api.mvc.Headers
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.TrustService
@@ -79,7 +80,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
     override def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)
                                       (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-      Future.successful(HttpResponse(OK))
+      Future.successful(HttpResponse(OK, ""))
   }
 
   "AddAnOtherIndividual Controller" when {
@@ -161,7 +162,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
             .withFormUrlEncodedBody(("value", "false"))
 
         when(mockStoreConnector.setTaskComplete(any())(any(), any()))
-          .thenReturn(Future.successful(HttpResponse.apply(200)))
+          .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -239,7 +240,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
           FakeRequest(POST, submitAnotherRoute)
             .withFormUrlEncodedBody(("value", AddAnOtherIndividual.NoComplete.toString))
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(200)))
+        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -289,7 +290,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         status(result) mustEqual SEE_OTHER
 
-        redirectLocation(result).value mustEqual controllers.routes.NameController.onPageLoad(NormalMode).url
+        redirectLocation(result).value mustEqual controllers.individual.routes.NameController.onPageLoad(NormalMode).url
 
         application.stop()
       }
@@ -376,7 +377,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val request = FakeRequest(POST, submitCompleteRoute)
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(200)))
+        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -386,6 +387,37 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         application.stop()
 
+      }
+    }
+
+    "toggling language from an error state" must {
+
+      "redirect to GET /add-another" in {
+
+        val fakeService = new FakeService(OtherIndividuals(Nil))
+
+        val submitRoute = submitAnotherRoute
+
+        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(Seq(
+          bind(classOf[TrustService]).toInstance(fakeService)
+        )).build()
+
+        val submitEmptyFormRequest = FakeRequest(POST, submitRoute).withFormUrlEncodedBody(("value", ""))
+        val submitEmptyFormResult = route(application, submitEmptyFormRequest).value
+        status(submitEmptyFormResult) mustEqual BAD_REQUEST
+
+        val toggleLanguageRoute: String = routes.LanguageSwitchController.switchToLanguage("cymraeg").url
+        val headers: Headers = new Headers(Seq(("Referer", submitRoute)))
+        val toggleLanguageRequest = FakeRequest(GET, toggleLanguageRoute).withHeaders(headers)
+        val toggleLanguageResult = route(application, toggleLanguageRequest).value
+        status(toggleLanguageResult) mustEqual SEE_OTHER
+
+        val referrerRoute = redirectLocation(toggleLanguageResult).value
+        val referrerRequest = FakeRequest(GET, referrerRoute)
+        val referrerResult = route(application, referrerRequest).value
+        status(referrerResult) mustEqual OK
+
+        application.stop()
       }
     }
   }
