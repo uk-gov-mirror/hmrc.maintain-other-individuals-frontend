@@ -13,15 +13,14 @@ object AppDependencies {
   val compile: Seq[ModuleID] = Seq(
     play.sbt.PlayImport.ws,
     "org.reactivemongo" %% "play2-reactivemongo"            % "0.18.8-play26",
-    "uk.gov.hmrc"       %% "logback-json-logger"            % "4.8.0",
+    "uk.gov.hmrc"       %% "logback-json-logger"            % "5.1.0",
     "uk.gov.hmrc"       %% "govuk-template"                 % "5.55.0-play-26",
     "uk.gov.hmrc"       %% "play-health"                    % "3.15.0-play-26",
     "uk.gov.hmrc"       %% "domain"                         % "5.9.0-play-26",
     "com.typesafe.play" %% "play-json-joda"                 % "2.7.4",
-    "uk.gov.hmrc"       %% "play-ui"                        % "8.10.0-play-26",
+    "uk.gov.hmrc"       %% "play-ui"                        % "9.0.0-play-26",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping"  % "1.2.0-play-26",
-    "uk.gov.hmrc"       %% "bootstrap-play-26"              % "1.8.0",
-    "uk.gov.hmrc"       %% "play-whitelist-filter"          % "3.4.0-play-26"
+    "uk.gov.hmrc"       %% "bootstrap-play-26"              % "3.4.0"
   )
 
   val test: Seq[ModuleID] = Seq(
