@@ -19,7 +19,7 @@ object AppDependencies {
     "com.typesafe.play" %% "play-json-joda"                 % "2.7.4",
     "uk.gov.hmrc"       %% "play-ui"                        % "9.0.0-play-27",
     "uk.gov.hmrc"       %% "play-conditional-form-mapping"  % "1.2.0-play-26",
-    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27"     % "3.4.0",
+    "uk.gov.hmrc"       %% "bootstrap-frontend-play-27"     % "4.1.0",
     "uk.gov.hmrc"       %% "play-language"                  % "4.5.0-play-27"
   )
 
