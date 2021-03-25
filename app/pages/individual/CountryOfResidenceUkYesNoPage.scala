@@ -14,15 +14,26 @@
  * limitations under the License.
  */
 
-package models
+package pages.individual
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import models.UserAnswers
+import pages.QuestionPage
+import play.api.libs.json.JsPath
 
-case class TrustDetails(startDate: LocalDate, trustTaxable: Option[Boolean])
+import scala.util.Try
 
-object TrustDetails {
+case object CountryOfResidenceUkYesNoPage extends QuestionPage[Boolean] {
 
-  implicit val formats: Format[TrustDetails] = Json.format[TrustDetails]
+  override def path: JsPath = basePath \ toString
 
+  override def toString: String = "countryOfResidenceUkYesNo"
+
+  override def cleanup(value: Option[Boolean], userAnswers: UserAnswers): Try[UserAnswers] = {
+    value match {
+      case Some(true) =>
+        userAnswers.remove(CountryOfResidencePage)
+      case _ =>
+        super.cleanup(value, userAnswers)
+    }
+  }
 }

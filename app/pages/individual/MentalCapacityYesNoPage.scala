@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package models
+package pages.individual
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import pages.QuestionPage
+import play.api.libs.json.JsPath
 
-case class TrustDetails(startDate: LocalDate, trustTaxable: Option[Boolean])
+case object MentalCapacityYesNoPage extends QuestionPage[Boolean] {
 
-object TrustDetails {
+  override def path: JsPath = basePath \ toString
 
-  implicit val formats: Format[TrustDetails] = Json.format[TrustDetails]
+  override def toString: String = "mentalCapacityYesNo"
 
 }

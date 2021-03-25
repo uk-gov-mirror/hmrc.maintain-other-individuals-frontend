@@ -14,15 +14,24 @@
  * limitations under the License.
  */
 
-package models
+package forms
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import forms.mappings.Mappings
+import play.api.data.Form
 
-case class TrustDetails(startDate: LocalDate, trustTaxable: Option[Boolean])
+import javax.inject.Inject
 
-object TrustDetails {
+class CountryFormProvider @Inject() extends Mappings {
 
-  implicit val formats: Format[TrustDetails] = Json.format[TrustDetails]
-
+  def withPrefix(prefix: String): Form[String] =
+    Form(
+      "value" -> text(s"$prefix.error.required")
+        .verifying(
+          firstError(
+            maxLength(100, s"$prefix.error.length"),
+            regexp(Validation.countryRegex, s"$prefix.error.invalidCharacters"),
+            nonEmptyString("value", s"$prefix.error.required")
+          )
+        )
+    )
 }

@@ -41,7 +41,7 @@ class WhenRemovedController @Inject()(
   def onPageLoad(index: Int): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      trust.getOtherIndividual(request.userAnswers.utr, index).map {
+      trust.getOtherIndividual(request.userAnswers.identifier, index).map {
         otherIndividual =>
           val form = formProvider.withPrefixAndEntityStartDate("otherIndividual.whenRemoved", otherIndividual.entityStart)
           Ok(view(form, index, otherIndividual.name.displayName))
@@ -51,7 +51,7 @@ class WhenRemovedController @Inject()(
   def onSubmit(index: Int): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      trust.getOtherIndividual(request.userAnswers.utr, index).flatMap {
+      trust.getOtherIndividual(request.userAnswers.identifier, index).flatMap {
         otherIndividual =>
           val form = formProvider.withPrefixAndEntityStartDate("otherIndividual.whenRemoved", otherIndividual.entityStart)
           form.bindFromRequest().fold(
@@ -59,7 +59,7 @@ class WhenRemovedController @Inject()(
               Future.successful(BadRequest(view(formWithErrors, index, otherIndividual.name.displayName)))
             },
             value =>
-              trustService.removeOtherIndividual(request.userAnswers.utr, RemoveOtherIndividual(index, value)).map(_ =>
+              trustService.removeOtherIndividual(request.userAnswers.identifier, RemoveOtherIndividual(index, value)).map(_ =>
                 Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
               )
           )

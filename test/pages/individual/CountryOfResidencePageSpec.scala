@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package models
+package pages.individual
 
-import java.time.LocalDate
-import play.api.libs.json.{Format, Json}
+import pages.behaviours.PageBehaviours
 
-case class TrustDetails(startDate: LocalDate, trustTaxable: Option[Boolean])
+class CountryOfResidencePageSpec extends PageBehaviours {
 
-object TrustDetails {
+  "CountryOfResidencePage" must {
 
-  implicit val formats: Format[TrustDetails] = Json.format[TrustDetails]
+    beRetrievable[String](CountryOfResidencePage)
 
+    beSettable[String](CountryOfResidencePage)
+
+    beRemovable[String](CountryOfResidencePage)
+  }
 }

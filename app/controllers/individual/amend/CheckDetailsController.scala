@@ -63,7 +63,7 @@ class CheckDetailsController @Inject()(
   def extractAndRender(index: Int): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      service.getOtherIndividual(request.userAnswers.utr, index) flatMap {
+      service.getOtherIndividual(request.userAnswers.identifier, index) flatMap {
         individual =>
           val extractedAnswers = extractor(request.userAnswers, individual, index)
           for {
@@ -72,7 +72,7 @@ class CheckDetailsController @Inject()(
           } yield render(extractedF, index, individual.name.displayName)
       } recoverWith {
         case _ =>
-          logger.error(s"[Amend Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+          logger.error(s"[Amend Individual][UTR: ${request.userAnswers.identifier}][Session ID: ${utils.Session.id(hc)}]" +
             s" no other individual found in trusts service to maintain")
           Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
@@ -88,11 +88,11 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers).map {
         individual =>
-          connector.amendOtherIndividual(request.userAnswers.utr, index, individual).map(_ =>
+          connector.amendOtherIndividual(request.userAnswers.identifier, index, individual).map(_ =>
             Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
           )
       } getOrElse {
-        logger.error(s"[Amend Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+        logger.error(s"[Amend Individual][UTR: ${request.userAnswers.identifier}][Session ID: ${utils.Session.id(hc)}]" +
           s" unable to submit amended other individual due to problems mapping user answers")
         Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }

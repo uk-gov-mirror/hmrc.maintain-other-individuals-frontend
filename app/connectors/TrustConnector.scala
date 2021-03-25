@@ -52,4 +52,10 @@ class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
 
   def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
     http.PUT[JsValue, HttpResponse](removeOtherIndividualUrl(utr), Json.toJson(otherIndividual))
+
+  def isTrust5mld(identifier: String)
+                 (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
+    val url: String = s"${config.trustsUrl}/trusts/$identifier/is-trust-5mld"
+    http.GET[Boolean](url)
+  }
 }
