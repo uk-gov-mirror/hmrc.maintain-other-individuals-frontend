@@ -41,7 +41,7 @@ class OtherIndividualMapper extends Logging {
       case JsSuccess(value, _) =>
         Some(value)
       case JsError(errors) =>
-        logger.error(s"[Mapper][UTR: ${answers.utr}] Failed to rehydrate OtherIndividual from UserAnswers due to ${JsError.toJson(errors)}")
+        logger.error(s"[Mapper][UTR: ${answers.identifier}] Failed to rehydrate OtherIndividual from UserAnswers due to ${JsError.toJson(errors)}")
         None
     }
   }

@@ -25,10 +25,13 @@ import scala.util.{Failure, Success, Try}
 
 final case class UserAnswers(
                               internalId: String,
-                              utr: String,
+                              identifier: String,
                               whenTrustSetup: LocalDate,
                               data: JsObject = Json.obj(),
-                              updatedAt: LocalDateTime = LocalDateTime.now
+                              updatedAt: LocalDateTime = LocalDateTime.now,
+                              is5mldEnabled: Boolean = false,
+                              isTaxable: Boolean = true,
+                              isUnderlyingData5mld: Boolean = false
                             ) {
 
   def cleanup : Try[UserAnswers] = {
@@ -100,10 +103,13 @@ object UserAnswers {
 
     (
       (__ \ "internalId").read[String] and
-        (__ \ "utr").read[String] and
+        (__ \ "identifier").read[String] and
         (__ \ "whenTrustSetup").read[LocalDate] and
         (__ \ "data").read[JsObject] and
-        (__ \ "updatedAt").read(MongoDateTimeFormats.localDateTimeRead)
+        (__ \ "updatedAt").read(MongoDateTimeFormats.localDateTimeRead) and
+        (__ \ "is5mldEnabled").readWithDefault[Boolean](false) and
+        (__ \ "isTaxable").readWithDefault[Boolean](true) and
+        (__ \ "isUnderlyingData5mld").readWithDefault[Boolean](false)
       ) (UserAnswers.apply _)
   }
 
@@ -113,10 +119,13 @@ object UserAnswers {
 
     (
       (__ \ "internalId").write[String] and
-        (__ \ "utr").write[String] and
+        (__ \ "identifier").write[String] and
         (__ \ "whenTrustSetup").write[LocalDate] and
         (__ \ "data").write[JsObject] and
-        (__ \ "updatedAt").write(MongoDateTimeFormats.localDateTimeWrite)
+        (__ \ "updatedAt").write(MongoDateTimeFormats.localDateTimeWrite) and
+        (__ \ "is5mldEnabled").write[Boolean] and
+        (__ \ "isTaxable").write[Boolean] and
+        (__ \ "isUnderlyingData5mld").write[Boolean]
       ) (unlift(UserAnswers.unapply))
   }
 }

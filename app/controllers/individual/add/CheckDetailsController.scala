@@ -57,11 +57,11 @@ class CheckDetailsController @Inject()(
 
       mapper(request.userAnswers) match {
         case None =>
-          logger.error(s"[Check Details Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+          logger.error(s"[Check Details Individual][UTR: ${request.userAnswers.identifier}][Session ID: ${utils.Session.id(hc)}]" +
             s" unable to map user answers to OtherIndividual due to errors")
           Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate(request.request)))
         case Some(otherIndividual) =>
-          connector.addOtherIndividual(request.userAnswers.utr, otherIndividual).map(_ =>
+          connector.addOtherIndividual(request.userAnswers.identifier, otherIndividual).map(_ =>
             Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
           )
       }
