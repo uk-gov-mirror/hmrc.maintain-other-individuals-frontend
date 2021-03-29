@@ -63,7 +63,10 @@ class IndexControllerSpec extends SpecBase {
         ))
 
       val application = applicationBuilder(userAnswers = None)
-        .overrides(bind[TrustConnector].toInstance(mockTrustConnector)).build()
+        .overrides(
+          bind[TrustConnector].toInstance(mockTrustConnector),
+          bind[FeatureFlagService].toInstance(mockFeatureFlagService)
+        ).build()
 
       val request = FakeRequest(GET, routes.IndexController.onPageLoad(identifier).url)
 
