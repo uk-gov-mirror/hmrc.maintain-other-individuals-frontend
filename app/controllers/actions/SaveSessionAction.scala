@@ -22,7 +22,7 @@ import models.requests.IdentifierRequest
 import play.api.Logging
 import play.api.mvc.{ActionFilter, Result}
 import repositories.ActiveSessionRepository
-import uk.gov.hmrc.play.HeaderCarrierConverter
+import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -32,7 +32,7 @@ class SaveActiveSessionImpl @Inject()(utr: String,
 
   override protected def filter[A](request: IdentifierRequest[A]): Future[Option[Result]] = {
 
-    val hc = HeaderCarrierConverter.fromHeadersAndSessionAndRequest(request.headers, Some(request.session), Some(request))
+    val hc = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     val session = UtrSession(request.user.internalId, utr)
 
