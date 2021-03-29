@@ -22,32 +22,41 @@ import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
 final case class OtherIndividual(name: Name,
-                                     dateOfBirth: Option[LocalDate],
-                                     identification: Option[IndividualIdentification],
-                                     address : Option[Address],
-                                     entityStart: LocalDate,
-                                     provisional : Boolean)
+                                 dateOfBirth: Option[LocalDate],
+                                 countryOfNationality: Option[String],
+                                 countryOfResidence: Option[String],
+                                 identification: Option[IndividualIdentification],
+                                 address : Option[Address],
+                                 mentalCapacityYesNo: Option[Boolean],
+                                 entityStart: LocalDate,
+                                 provisional : Boolean)
 
 object OtherIndividual {
 
   implicit val reads: Reads[OtherIndividual] =
     ((__ \ 'name).read[Name] and
       (__ \ 'dateOfBirth).readNullable[LocalDate] and
+      (__ \ 'nationality).readNullable[String] and
+      (__ \ 'countryOfResidence).readNullable[String] and
       __.lazyRead(readNullableAtSubPath[IndividualIdentification](__ \ 'identification)) and
       __.lazyRead(readNullableAtSubPath[Address](__ \ 'identification \ 'address)) and
+      (__ \ 'legallyIncapable).readNullable[Boolean].map(_.map(!_)) and
       (__ \ "entityStart").read[LocalDate] and
       (__ \ "provisional").readWithDefault(false)).tupled.map{
 
-      case (name, dob, nino, identification, entityStart, provisional) =>
-        OtherIndividual(name, dob, nino, identification, entityStart, provisional)
+      case (name, dob, countryOfNationality, countryOfResidence, nino, identification, mentalCapacity, entityStart, provisional) =>
+        OtherIndividual(name, dob, countryOfNationality, countryOfResidence, nino, identification, mentalCapacity, entityStart, provisional)
 
     }
 
   implicit val writes: Writes[OtherIndividual] =
     ((__ \ 'name).write[Name] and
       (__ \ 'dateOfBirth).writeNullable[LocalDate] and
+      (__ \ 'nationality).writeNullable[String] and
+      (__ \ 'countryOfResidence).writeNullable[String] and
       (__ \ 'identification).writeNullable[IndividualIdentification] and
       (__ \ 'identification \ 'address).writeNullable[Address] and
+      (__ \ 'legallyIncapable).writeNullable[Boolean](x => JsBoolean(!x)) and
       (__ \ "entityStart").write[LocalDate] and
       (__ \ "provisional").write[Boolean]
       ).apply(unlift(OtherIndividual.unapply))

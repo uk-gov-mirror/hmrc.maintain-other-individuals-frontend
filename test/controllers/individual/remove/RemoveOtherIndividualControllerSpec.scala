@@ -49,8 +49,11 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
   def otherIndividual(id: Int, provisional : Boolean) = OtherIndividual(
     name = Name(firstName = "Name", middleName = None, lastName = s"$id"),
     dateOfBirth = Some(LocalDate.parse("1983-09-24")),
+    countryOfNationality = None,
+    countryOfResidence = None,
     identification = Some(NationalInsuranceNumber("JS123456A")),
     address = None,
+    mentalCapacityYesNo = None,
     entityStart = LocalDate.parse("2019-02-28"),
     provisional = provisional
   )

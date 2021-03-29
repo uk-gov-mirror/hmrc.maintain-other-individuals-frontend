@@ -50,12 +50,15 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
   private val startDate = LocalDate.parse("2019-03-09")
   private val address = UkAddress("Line 1", "Line 2", None, None, "NE98 1ZZ")
 
-  private val trustBeneficiary = OtherIndividual(
+  private val otherIndividual = OtherIndividual(
     name = name,
-    address = Some(address),
-    entityStart = LocalDate.parse("2019-03-09"),
     dateOfBirth = Some(LocalDate.parse("1990-03-09")),
+    countryOfNationality = None,
+    countryOfResidence = None,
     identification = None,
+    address = Some(address),
+    mentalCapacityYesNo = None,
+    entityStart = LocalDate.parse("2019-03-09"),
     provisional = false
   )
 
@@ -82,7 +85,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
         .build()
 
       when(mockService.getOtherIndividual(any(), any())(any(), any()))
-        .thenReturn(Future.successful(trustBeneficiary))
+        .thenReturn(Future.successful(otherIndividual))
 
       val request = FakeRequest(GET, checkDetailsRoute)
 

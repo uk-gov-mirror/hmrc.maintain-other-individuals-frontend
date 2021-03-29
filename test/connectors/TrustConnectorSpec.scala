@@ -17,7 +17,6 @@
 package connectors
 
 import java.time.LocalDate
-
 import base.SpecBase
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
@@ -26,7 +25,7 @@ import generators.Generators
 import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
-import play.api.libs.json.Json
+import play.api.libs.json.{JsBoolean, Json}
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
 
@@ -51,10 +50,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
     server.stop()
   }
 
-  val utr = "0987654321"
+  val identifier = "0987654321"
   val index = 0
 
-  private def amendOtherIndividualUrl(utr: String, index: Int) = s"/trusts/other-individuals/amend/$utr/$index"
+  private def amendOtherIndividualUrl(identifier: String, index: Int) = s"/trusts/other-individuals/amend/$identifier/$index"
+  private def isTrust5mldUrl(identifier: String) = s"/trusts/$identifier/is-trust-5mld"
 
   "trust connector" when {
 
@@ -99,7 +99,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
 
       whenReady(processed) {
         r =>
-          r mustBe TrustDetails(startDate = LocalDate.parse("1920-03-28"))
+          r mustBe TrustDetails(startDate = LocalDate.parse("1920-03-28"), None)
       }
     }
 
@@ -189,8 +189,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
                 OtherIndividual(
                   name = Name("Other", None, "Individual"),
                   dateOfBirth = None,
+                  countryOfNationality = None,
+                  countryOfResidence = None,
                   identification = None,
                   address = None,
+                  mentalCapacityYesNo = None,
                   entityStart = LocalDate.parse("2019-09-23"),
                   provisional = false
                 )
@@ -217,7 +220,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
         val connector = application.injector.instanceOf[TrustConnector]
 
         server.stubFor(
-          post(urlEqualTo(amendOtherIndividualUrl(utr, index)))
+          post(urlEqualTo(amendOtherIndividualUrl(identifier, index)))
             .willReturn(ok)
         )
 
@@ -228,13 +231,16 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
             lastName = "Last"
           ),
           dateOfBirth = None,
+          countryOfNationality = None,
+          countryOfResidence = None,
           identification = None,
           address = None,
+          mentalCapacityYesNo = None,
           entityStart = LocalDate.parse("2020-03-27"),
           provisional = false
         )
 
-        val result = connector.amendOtherIndividual(utr, index, individual)
+        val result = connector.amendOtherIndividual(identifier, index, individual)
 
         result.futureValue.status mustBe OK
 
@@ -254,7 +260,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
         val connector = application.injector.instanceOf[TrustConnector]
 
         server.stubFor(
-          post(urlEqualTo(amendOtherIndividualUrl(utr, index)))
+          post(urlEqualTo(amendOtherIndividualUrl(identifier, index)))
             .willReturn(badRequest)
         )
 
@@ -265,19 +271,83 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
             lastName = "Last"
           ),
           dateOfBirth = None,
+          countryOfNationality = None,
+          countryOfResidence = None,
           identification = None,
           address = None,
+          mentalCapacityYesNo = None,
           entityStart = LocalDate.parse("2020-03-27"),
           provisional = false
         )
 
-        val result = connector.amendOtherIndividual(utr, index, individual)
+        val result = connector.amendOtherIndividual(identifier, index, individual)
 
         result.map(response => response.status mustBe BAD_REQUEST)
 
         application.stop()
       }
 
+    }
+
+    "isTrust5mld" must {
+
+      "return true" when {
+        "untransformed data is 5mld" in {
+
+          val json = JsBoolean(true)
+
+          val application = applicationBuilder()
+            .configure(
+              Seq(
+                "microservice.services.trusts.port" -> server.port(),
+                "auditing.enabled" -> false
+              ): _*
+            ).build()
+
+          val connector = application.injector.instanceOf[TrustConnector]
+
+          server.stubFor(
+            get(urlEqualTo(isTrust5mldUrl(identifier)))
+              .willReturn(okJson(json.toString))
+          )
+
+          val processed = connector.isTrust5mld(identifier)
+
+          whenReady(processed) {
+            r =>
+              r mustBe true
+          }
+        }
+      }
+
+      "return false" when {
+        "untransformed data is 4mld" in {
+
+          val json = JsBoolean(false)
+
+          val application = applicationBuilder()
+            .configure(
+              Seq(
+                "microservice.services.trusts.port" -> server.port(),
+                "auditing.enabled" -> false
+              ): _*
+            ).build()
+
+          val connector = application.injector.instanceOf[TrustConnector]
+
+          server.stubFor(
+            get(urlEqualTo(isTrust5mldUrl(identifier)))
+              .willReturn(okJson(json.toString))
+          )
+
+          val processed = connector.isTrust5mld(identifier)
+
+          whenReady(processed) {
+            r =>
+              r mustBe false
+          }
+        }
+      }
     }
 
   }

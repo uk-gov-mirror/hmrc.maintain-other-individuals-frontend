@@ -118,6 +118,48 @@ otherIndividual.dateOfBirthYesNo.title = Do you know the individual’s date of 
 otherIndividual.dateOfBirthYesNo.heading = Do you know {0}’s date of birth?
 otherIndividual.dateOfBirthYesNo.error.required = Select yes if you know the individual’s date of birth
 
+otherIndividual.countryOfNationalityYesNo.title = Do you know the individual’s country of nationality?
+otherIndividual.countryOfNationalityYesNo.heading = Do you know {0}’s country of nationality?
+otherIndividual.countryOfNationalityYesNo.checkYourAnswersLabel = Do you know {0}’s country of nationality?
+otherIndividual.countryOfNationalityYesNo.error.required = Select yes if you know the individual’s country of nationality
+otherIndividual.countryOfNationalityYesNo.hint = The country of nationality is usually where the individual was born and where their passport is registered.
+
+otherIndividual.countryOfNationalityUkYesNo.title = Does the individual have UK nationality?
+otherIndividual.countryOfNationalityUkYesNo.heading = Does {0} have UK nationality?
+otherIndividual.countryOfNationalityUkYesNo.checkYourAnswersLabel = Does {0} have UK nationality?
+otherIndividual.countryOfNationalityUkYesNo.error.required = Select yes if the individual has UK nationality
+
+otherIndividual.countryOfNationality.title = What is the individual’s country of nationality?
+otherIndividual.countryOfNationality.heading = What is {0}’s country of nationality?
+otherIndividual.countryOfNationality.checkYourAnswersLabel = What is {0}’s country of nationality?
+otherIndividual.countryOfNationality.error.required = Enter a country
+otherIndividual.countryOfNationality.error.length = The country of nationality must be 100 characters or less
+otherIndividual.countryOfNationality.error.invalidCharacters = The country of nationality must only include letters a to z, apostrophes, commas, full stops, hyphens, round brackets and spaces
+
+otherIndividual.countryOfResidenceYesNo.title = Do you know the individual’s country of residence?
+otherIndividual.countryOfResidenceYesNo.heading = Do you know {0}’s country of residence?
+otherIndividual.countryOfResidenceYesNo.checkYourAnswersLabel = Do you know {0}’s country of residence?
+otherIndividual.countryOfResidenceYesNo.error.required = Select yes if you know the individual’s country of residence
+otherIndividual.countryOfResidenceYesNo.hint = The country of residence is usually where the individual lived and worked most of the time during the tax year.
+
+otherIndividual.countryOfResidenceUkYesNo.title = Does the individual have UK residency?
+otherIndividual.countryOfResidenceUkYesNo.heading = Does {0} have UK residency?
+otherIndividual.countryOfResidenceUkYesNo.checkYourAnswersLabel = Does {0} have UK residency?
+otherIndividual.countryOfResidenceUkYesNo.error.required = Select yes if the individual has UK residency
+
+otherIndividual.countryOfResidence.title = What is the individual’s country of residence?
+otherIndividual.countryOfResidence.heading = What is {0}’s country of residence?
+otherIndividual.countryOfResidence.checkYourAnswersLabel = What is {0}’s country of residence?
+otherIndividual.countryOfResidence.error.required = Enter a country
+otherIndividual.countryOfResidence.error.length = The country of residence must be 100 characters or less
+otherIndividual.countryOfResidence.error.invalidCharacters = The country of residence must only include letters a to z, apostrophes, commas, full stops, hyphens, round brackets and spaces
+
+otherIndividual.mentalCapacityYesNo.title = Does the individual have mental capacity at the time of registration?
+otherIndividual.mentalCapacityYesNo.heading = Does {0} have mental capacity at the time of registration?
+otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel = Does {0} have mental capacity at the time of registration?
+otherIndividual.mentalCapacityYesNo.error.required = Select yes if you know the individual has mental capacity at the time of registration
+otherIndividual.mentalCapacityYesNo.hint = An individual does not have mental capacity if they cannot understand information and make decisions about the trust due to a mental illness, learning disability, dementia or related condition, or they cannot communicate.
+
 otherIndividual.idCardDetails.checkYourAnswersLabel = What are {0}’s ID card details?
 otherIndividual.idCardDetails.title = What are the individual’s ID card details?
 otherIndividual.idCardDetails.heading = What are {0}’s ID card details?

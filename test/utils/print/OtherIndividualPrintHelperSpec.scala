@@ -39,12 +39,19 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
     .set(NamePage, name).success.value
     .set(DateOfBirthYesNoPage, true).success.value
     .set(DateOfBirthPage, LocalDate.of(2010, 10, 10)).success.value
+    .set(CountryOfNationalityYesNoPage, true).success.value
+    .set(CountryOfNationalityUkYesNoPage, false).success.value
+    .set(CountryOfNationalityPage, "FR").success.value
     .set(NationalInsuranceNumberYesNoPage, true).success.value
     .set(NationalInsuranceNumberPage, "AA000000A").success.value
+    .set(CountryOfResidenceYesNoPage, true).success.value
+    .set(CountryOfResidenceUkYesNoPage, false).success.value
+    .set(CountryOfResidencePage, "FR").success.value
     .set(AddressYesNoPage, true).success.value
     .set(LiveInTheUkYesNoPage, true).success.value
     .set(UkAddressPage, ukAddress).success.value
     .set(NonUkAddressPage, nonUkAddress).success.value
+    .set(MentalCapacityYesNoPage, true).success.value
     .set(WhenIndividualAddedPage, LocalDate.of(2020, 1, 1)).success.value
 
   "OtherIndividualPrintHelper" must {
@@ -68,8 +75,14 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = Html(messages("otherIndividual.name.checkYourAnswersLabel")), answer = Html("First Middle Last"), changeUrl = rts.NameController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.dateOfBirthYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.DateOfBirthYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.dateOfBirth.checkYourAnswersLabel", name.displayName)), answer = Html("10 October 2010"), changeUrl = rts.DateOfBirthController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationalityYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.CountryOfNationalityYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationalityUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("No"), changeUrl = rts.CountryOfNationalityUkYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationality.checkYourAnswersLabel", name.displayName)), answer = Html("France"), changeUrl = rts.CountryOfNationalityController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.nationalInsuranceNumberYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.NationalInsuranceNumberYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.nationalInsuranceNumber.checkYourAnswersLabel", name.displayName)), answer = Html("AA 00 00 00 A"), changeUrl = rts.NationalInsuranceNumberController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidenceYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.CountryOfResidenceYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidenceUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("No"), changeUrl = rts.CountryOfResidenceUkYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidence.checkYourAnswersLabel", name.displayName)), answer = Html("France"), changeUrl = rts.CountryOfResidenceController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.addressYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.AddressYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.LiveInTheUkYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.ukAddress.checkYourAnswersLabel", name.displayName)), answer = Html("value 1<br />value 2<br />AB1 1AB"), changeUrl = rts.UkAddressController.onPageLoad(mode).url),
@@ -78,6 +91,7 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = Html(messages("otherIndividual.passportDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = addRts.PassportDetailsController.onPageLoad().url),
             AnswerRow(label = Html(messages("otherIndividual.idCardDetailsYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = addRts.IdCardDetailsYesNoController.onPageLoad().url),
             AnswerRow(label = Html(messages("otherIndividual.idCardDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = addRts.IdCardDetailsController.onPageLoad().url),
+            AnswerRow(label = Html(messages("otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.MentalCapacityYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.whenIndividualAdded.checkYourAnswersLabel", name.displayName)), answer = Html("1 January 2020"), changeUrl = addRts.WhenIndividualAddedController.onPageLoad().url)
           )
         )
@@ -98,14 +112,21 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = Html(messages("otherIndividual.name.checkYourAnswersLabel")), answer = Html("First Middle Last"), changeUrl = rts.NameController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.dateOfBirthYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.DateOfBirthYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.dateOfBirth.checkYourAnswersLabel", name.displayName)), answer = Html("10 October 2010"), changeUrl = rts.DateOfBirthController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationalityYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.CountryOfNationalityYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationalityUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("No"), changeUrl = rts.CountryOfNationalityUkYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfNationality.checkYourAnswersLabel", name.displayName)), answer = Html("France"), changeUrl = rts.CountryOfNationalityController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.nationalInsuranceNumberYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.NationalInsuranceNumberYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.nationalInsuranceNumber.checkYourAnswersLabel", name.displayName)), answer = Html("AA 00 00 00 A"), changeUrl = rts.NationalInsuranceNumberController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidenceYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.CountryOfResidenceYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidenceUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("No"), changeUrl = rts.CountryOfResidenceUkYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = Html(messages("otherIndividual.countryOfResidence.checkYourAnswersLabel", name.displayName)), answer = Html("France"), changeUrl = rts.CountryOfResidenceController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.addressYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.AddressYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.LiveInTheUkYesNoController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.ukAddress.checkYourAnswersLabel", name.displayName)), answer = Html("value 1<br />value 2<br />AB1 1AB"), changeUrl = rts.UkAddressController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.nonUkAddress.checkYourAnswersLabel", name.displayName)), answer = Html("value 1<br />value 2<br />Germany"), changeUrl = rts.NonUkAddressController.onPageLoad(mode).url),
             AnswerRow(label = Html(messages("otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad().url),
-            AnswerRow(label = Html(messages("otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = amendRts.PassportOrIdCardDetailsController.onPageLoad().url)
+            AnswerRow(label = Html(messages("otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel", name.displayName)), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = amendRts.PassportOrIdCardDetailsController.onPageLoad().url),
+            AnswerRow(label = Html(messages("otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel", name.displayName)), answer = Html("Yes"), changeUrl = rts.MentalCapacityYesNoController.onPageLoad(mode).url)
           )
         )
       }

@@ -59,7 +59,7 @@ class AddAnOtherIndividualController @Inject()(
     implicit request =>
 
       (for {
-        otherIndividuals <- trustService.getOtherIndividuals(request.userAnswers.utr)
+        otherIndividuals <- trustService.getOtherIndividuals(request.userAnswers.identifier)
         updatedAnswers <- Future.fromTry(request.userAnswers.cleanup)
         _ <- repository.set(updatedAnswers)
       } yield {
@@ -84,7 +84,7 @@ class AddAnOtherIndividualController @Inject()(
         }
       }) recoverWith {
         case _ =>
-          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.identifier}][Session ID: ${utils.Session.id(hc)}]" +
             s" error in getting other individuals from trusts to show user on add to page")
           Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
@@ -105,7 +105,7 @@ class AddAnOtherIndividualController @Inject()(
             } yield Redirect(controllers.routes.InterruptPageController.onPageLoad())
           } else {
             for {
-              _ <- trustStoreConnector.setTaskComplete(request.userAnswers.utr)
+              _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
             } yield {
               Redirect(appConfig.maintainATrustOverview)
             }
@@ -117,7 +117,7 @@ class AddAnOtherIndividualController @Inject()(
   def submitAnother(): Action[AnyContent] = standardActionSets.verifiedForUtr.async {
     implicit request =>
 
-      trustService.getOtherIndividuals(request.userAnswers.utr).flatMap { otherIndividuals =>
+      trustService.getOtherIndividuals(request.userAnswers.identifier).flatMap { otherIndividuals =>
         addAnotherForm.bindFromRequest().fold(
           (formWithErrors: Form[_]) => {
 
@@ -144,7 +144,7 @@ class AddAnOtherIndividualController @Inject()(
 
             case AddAnOtherIndividual.NoComplete =>
               for {
-                _ <- trustStoreConnector.setTaskComplete(request.userAnswers.utr)
+                _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
               } yield {
                 Redirect(appConfig.maintainATrustOverview)
               }
@@ -152,7 +152,7 @@ class AddAnOtherIndividualController @Inject()(
         )
       } recoverWith {
         case _ =>
-          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.utr}][Session ID: ${utils.Session.id(hc)}]" +
+          logger.error(s"[Add an Individual][UTR: ${request.userAnswers.identifier}][Session ID: ${utils.Session.id(hc)}]" +
             s" error in getting other individuals from trusts, cannot add another")
           Future.successful(InternalServerError(errorHandler.internalServerErrorTemplate))
       }
@@ -162,7 +162,7 @@ class AddAnOtherIndividualController @Inject()(
     implicit request =>
 
       for {
-        _ <- trustStoreConnector.setTaskComplete(request.userAnswers.utr)
+        _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
       } yield {
         Redirect(appConfig.maintainATrustOverview)
       }

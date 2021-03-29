@@ -35,8 +35,14 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(NormalMode).url),
       bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", rts.DateOfBirthController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(CountryOfNationalityYesNoPage, "otherIndividual.countryOfNationalityYesNo", rts.CountryOfNationalityYesNoController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(CountryOfNationalityUkYesNoPage, "otherIndividual.countryOfNationalityUkYesNo", rts.CountryOfNationalityUkYesNoController.onPageLoad(NormalMode).url),
+      bound.countryQuestion(CountryOfNationalityUkYesNoPage, CountryOfNationalityPage, "otherIndividual.countryOfNationality", rts.CountryOfNationalityController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", rts.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url),
       bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", rts.NationalInsuranceNumberController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(CountryOfResidenceYesNoPage, "otherIndividual.countryOfResidenceYesNo", rts.CountryOfResidenceYesNoController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(CountryOfResidenceUkYesNoPage, "otherIndividual.countryOfResidenceUkYesNo", rts.CountryOfResidenceUkYesNoController.onPageLoad(NormalMode).url),
+      bound.countryQuestion(CountryOfResidenceUkYesNoPage, CountryOfResidencePage, "otherIndividual.countryOfResidence", rts.CountryOfResidenceController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", rts.AddressYesNoController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(NormalMode).url),
       bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
@@ -45,6 +51,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad().url),
       bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad().url),
       bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(NormalMode).url),
       bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad().url)
     ).flatten
 
@@ -52,14 +59,21 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(CheckMode).url),
       bound.dateQuestion(DateOfBirthPage, "otherIndividual.dateOfBirth", rts.DateOfBirthController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(CountryOfNationalityYesNoPage, "otherIndividual.countryOfNationalityYesNo", rts.CountryOfNationalityYesNoController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(CountryOfNationalityUkYesNoPage, "otherIndividual.countryOfNationalityUkYesNo", rts.CountryOfNationalityUkYesNoController.onPageLoad(CheckMode).url),
+      bound.countryQuestion(CountryOfNationalityUkYesNoPage, CountryOfNationalityPage, "otherIndividual.countryOfNationality", rts.CountryOfNationalityController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(NationalInsuranceNumberYesNoPage, "otherIndividual.nationalInsuranceNumberYesNo", rts.NationalInsuranceNumberYesNoController.onPageLoad(CheckMode).url),
       bound.ninoQuestion(NationalInsuranceNumberPage, "otherIndividual.nationalInsuranceNumber", rts.NationalInsuranceNumberController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(CountryOfResidenceYesNoPage, "otherIndividual.countryOfResidenceYesNo", rts.CountryOfResidenceYesNoController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(CountryOfResidenceUkYesNoPage, "otherIndividual.countryOfResidenceUkYesNo", rts.CountryOfResidenceUkYesNoController.onPageLoad(CheckMode).url),
+      bound.countryQuestion(CountryOfResidenceUkYesNoPage, CountryOfResidencePage, "otherIndividual.countryOfResidence", rts.CountryOfResidenceController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(AddressYesNoPage, "otherIndividual.addressYesNo", rts.AddressYesNoController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(CheckMode).url),
       bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(CheckMode).url),
       bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress", rts.NonUkAddressController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad().url),
-      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad().url)
+      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(CheckMode).url)
     ).flatten
 
     AnswerSection(

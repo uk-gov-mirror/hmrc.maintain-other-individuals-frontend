@@ -17,6 +17,8 @@
 package connectors
 
 import config.FrontendAppConfig
+import models.FeatureResponse
+
 import javax.inject.Inject
 import uk.gov.hmrc.http.HttpReads.Implicits._
 import uk.gov.hmrc.http.{HeaderCarrier, HttpClient, HttpResponse}
@@ -29,6 +31,11 @@ class TrustStoreConnector @Inject()(http: HttpClient, config: FrontendAppConfig)
 
   def setTaskComplete(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[HttpResponse] = {
     http.POSTEmpty[HttpResponse](maintainTasksUrl(utr))
+  }
+
+  def getFeature(feature: String)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[FeatureResponse] = {
+    val url: String = s"${config.trustsStoreUrl}/trusts-store/features/$feature"
+    http.GET[FeatureResponse](url)
   }
 
 }
