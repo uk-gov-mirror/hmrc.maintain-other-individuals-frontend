@@ -58,7 +58,7 @@ class IndexControllerSpec extends SpecBase {
       when(mockTrustConnector.getOtherIndividuals(any())(any(), any()))
         .thenReturn(Future.successful(
           OtherIndividuals(
-            List(OtherIndividual(Name("Adam", None, "Test"), None, None, None, LocalDate.now, provisional = false))
+            List(OtherIndividual(Name("Adam", None, "Test"), None, None, None, None, None, None, LocalDate.now, provisional = false))
           )
         ))
 

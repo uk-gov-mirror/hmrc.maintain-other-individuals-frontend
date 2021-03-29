@@ -189,8 +189,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
                 OtherIndividual(
                   name = Name("Other", None, "Individual"),
                   dateOfBirth = None,
+                  countryOfNationality = None,
+                  countryOfResidence = None,
                   identification = None,
                   address = None,
+                  mentalCapacityYesNo = None,
                   entityStart = LocalDate.parse("2019-09-23"),
                   provisional = false
                 )
@@ -228,8 +231,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
             lastName = "Last"
           ),
           dateOfBirth = None,
+          countryOfNationality = None,
+          countryOfResidence = None,
           identification = None,
           address = None,
+          mentalCapacityYesNo = None,
           entityStart = LocalDate.parse("2020-03-27"),
           provisional = false
         )
@@ -265,8 +271,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
             lastName = "Last"
           ),
           dateOfBirth = None,
+          countryOfNationality = None,
+          countryOfResidence = None,
           identification = None,
           address = None,
+          mentalCapacityYesNo = None,
           entityStart = LocalDate.parse("2020-03-27"),
           provisional = false
         )

@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.NationalInsuranceNumberFormProvider
 import models.{Name, NormalMode}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.individual.{NamePage, NationalInsuranceNumberPage}
+import pages.individual.{NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage}
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -123,8 +123,10 @@ class NationalInsuranceNumberControllerSpec extends SpecBase with MockitoSugar {
 
     "redirect to the next page when valid data is submitted  is submitted" in {
 
+      val answers = emptyUserAnswers.set(NationalInsuranceNumberYesNoPage, true).success.value
+
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(answers)).build()
 
       val request =
         FakeRequest(POST, nationalInsuranceNumberRoute)
