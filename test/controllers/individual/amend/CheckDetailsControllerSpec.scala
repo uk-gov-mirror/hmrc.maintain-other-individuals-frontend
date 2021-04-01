@@ -64,12 +64,13 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
   private val userAnswers = emptyUserAnswers
     .set(NamePage, name).success.value
-    .set(AddressYesNoPage, true).success.value
-    .set(LiveInTheUkYesNoPage, true).success.value
-    .set(UkAddressPage, address).success.value
     .set(DateOfBirthYesNoPage, true).success.value
     .set(DateOfBirthPage, LocalDate.parse("1990-03-09")).success.value
     .set(NationalInsuranceNumberYesNoPage, false).success.value
+    .set(AddressYesNoPage, true).success.value
+    .set(LiveInTheUkYesNoPage, true).success.value
+    .set(UkAddressPage, address).success.value
+    .set(PassportOrIdCardDetailsYesNoPage, false).success.value
     .set(WhenIndividualAddedPage, startDate).success.value
 
   "CheckDetails Controller" must {
@@ -93,7 +94,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
       val view = application.injector.instanceOf[CheckDetailsView]
       val printHelper = application.injector.instanceOf[OtherIndividualPrintHelper]
-      val answerSection = printHelper(userAnswers, false, name.displayName)
+      val answerSection = printHelper(userAnswers, provisional = false, name.displayName)
 
       status(result) mustEqual OK
 

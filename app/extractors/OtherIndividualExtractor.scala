@@ -25,7 +25,7 @@ import scala.util.{Success, Try}
 
 class OtherIndividualExtractor @Inject()() {
 
-  def apply(answers: UserAnswers, individual : OtherIndividual, index: Int): Try[UserAnswers] =
+  def apply(answers: UserAnswers, individual: OtherIndividual, index: Int): Try[UserAnswers] =
     answers.deleteAtPath(pages.individual.basePath)
       .flatMap(_.set(NamePage, individual.name))
       .flatMap(answers => extractDateOfBirth(individual, answers))
@@ -75,58 +75,69 @@ class OtherIndividualExtractor @Inject()() {
     }
   }
 
-  private def extractAddress(address: Option[Address], answers: UserAnswers) : Try[UserAnswers] = {
-    address match {
-      case Some(uk: UkAddress) =>
-        answers.set(AddressYesNoPage, true)
+  private def extractAddress(address: Option[Address], answers: UserAnswers): Try[UserAnswers] = {
+    if (answers.isTaxable) {
+      address match {
+        case Some(uk: UkAddress) => answers
+          .set(AddressYesNoPage, true)
           .flatMap(_.set(LiveInTheUkYesNoPage, true))
           .flatMap(_.set(UkAddressPage, uk))
-      case Some(nonUk: NonUkAddress) =>
-        answers.set(AddressYesNoPage, true)
+        case Some(nonUk: NonUkAddress) => answers
+          .set(AddressYesNoPage, true)
           .flatMap(_.set(LiveInTheUkYesNoPage, false))
           .flatMap(_.set(NonUkAddressPage, nonUk))
-      case _ if answers.isTaxable =>
-        answers.set(AddressYesNoPage, false)
-      case _ =>
-        Success(answers)
+        case _ =>
+          answers.set(AddressYesNoPage, false)
+      }
+    } else {
+      Success(answers)
     }
   }
 
-  private def extractDateOfBirth(individual: OtherIndividual, answers: UserAnswers) : Try[UserAnswers] =
-  {
+  private def extractDateOfBirth(individual: OtherIndividual, answers: UserAnswers): Try[UserAnswers] = {
     individual.dateOfBirth match {
-      case Some(dob) =>
-        answers.set(DateOfBirthYesNoPage, true)
-          .flatMap(_.set(DateOfBirthPage, dob))
-      case None =>
-        // Assumption that user answered no as dob is not provided
-        answers.set(DateOfBirthYesNoPage, false)
+      case Some(dob) => answers
+        .set(DateOfBirthYesNoPage, true)
+        .flatMap(_.set(DateOfBirthPage, dob))
+      case None => answers
+        .set(DateOfBirthYesNoPage, false)
     }
   }
 
   private def extractIdentification(individual: OtherIndividual,
-                                    answers: UserAnswers) : Try[UserAnswers] =
-  {
-    individual.identification match {
-      case Some(NationalInsuranceNumber(nino)) =>
-        answers.set(NationalInsuranceNumberYesNoPage, true)
+                                    answers: UserAnswers): Try[UserAnswers] = {
+    if (answers.isTaxable) {
+      individual.identification match {
+        case Some(NationalInsuranceNumber(nino)) => answers
+          .set(NationalInsuranceNumberYesNoPage, true)
           .flatMap(_.set(NationalInsuranceNumberPage, nino))
-      case Some(p : Passport) =>
-        answers.set(NationalInsuranceNumberYesNoPage, false)
+        case Some(p: Passport) => answers
+          .set(NationalInsuranceNumberYesNoPage, false)
           .flatMap(_.set(PassportDetailsYesNoPage, true))
           .flatMap(_.set(PassportDetailsPage, p))
-      case Some(id: IdCard) =>
-        answers.set(NationalInsuranceNumberYesNoPage, false)
+        case Some(id: IdCard) => answers
+          .set(NationalInsuranceNumberYesNoPage, false)
           .flatMap(_.set(IdCardDetailsYesNoPage, true))
           .flatMap(_.set(IdCardDetailsPage, id))
-      case Some(combined: CombinedPassportOrIdCard) =>
-        answers.set(NationalInsuranceNumberYesNoPage, false)
+        case Some(combined: CombinedPassportOrIdCard) => answers
+          .set(NationalInsuranceNumberYesNoPage, false)
           .flatMap(_.set(PassportOrIdCardDetailsYesNoPage, true))
           .flatMap(_.set(PassportOrIdCardDetailsPage, combined))
-      case _ if answers.isTaxable =>
-        answers.set(NationalInsuranceNumberYesNoPage, false)
-      case _ =>
-        Success(answers)
+        case _ => answers
+          .set(NationalInsuranceNumberYesNoPage, false)
+          .flatMap(answers => extractPassportOrIdCardDetailsYesNo(individual.address, answers))
+      }
+    } else {
+      Success(answers)
     }
   }
+
+  private def extractPassportOrIdCardDetailsYesNo(address: Option[Address], answers: UserAnswers): Try[UserAnswers] = {
+    if (address.isDefined) {
+      answers.set(PassportOrIdCardDetailsYesNoPage, false)
+    } else {
+      Success(answers)
+    }
+  }
+
 }
