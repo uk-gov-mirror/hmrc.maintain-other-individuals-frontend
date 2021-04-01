@@ -78,6 +78,8 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
   }
 
   private def navigateAwayFromDateOfBirthQuestions(is5mldEnabled: Boolean, mode: Mode): Call = {
+    println("***")
+    println(is5mldEnabled)
     if (is5mldEnabled) {
       rts.CountryOfNationalityYesNoController.onPageLoad(mode)
     } else {
