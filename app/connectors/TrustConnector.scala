@@ -26,36 +26,44 @@ import uk.gov.hmrc.http.HttpReads.Implicits._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class TrustConnector @Inject()(http: HttpClient, config : FrontendAppConfig) {
+class TrustConnector @Inject()(http: HttpClient, config: FrontendAppConfig) {
+  
+  private val baseUrl: String = s"${config.trustsUrl}/trusts"
+  private val otherIndividualsUrl: String = s"$baseUrl/other-individuals"
 
-  private def getTrustDetailsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/trust-details"
+  private def getTrustDetailsUrl(identifier: String) = s"$baseUrl/$identifier/trust-details"
 
-  def getTrustDetails(utr: String)(implicit hc: HeaderCarrier, ex: ExecutionContext): Future[TrustDetails] =
-    http.GET[TrustDetails](getTrustDetailsUrl(utr))
+  def getTrustDetails(identifier: String)
+                     (implicit hc: HeaderCarrier, ex: ExecutionContext): Future[TrustDetails] =
+    http.GET[TrustDetails](getTrustDetailsUrl(identifier))
 
-  private def getOtherIndividualsUrl(utr: String) = s"${config.trustsUrl}/trusts/$utr/transformed/other-individuals"
+  private def getOtherIndividualsUrl(identifier: String) = s"$otherIndividualsUrl/$identifier/transformed"
 
-  def getOtherIndividuals(utr: String)(implicit hc: HeaderCarrier, ec : ExecutionContext): Future[OtherIndividuals] =
-    http.GET[OtherIndividuals](getOtherIndividualsUrl(utr))
+  def getOtherIndividuals(identifier: String)
+                         (implicit hc: HeaderCarrier, ec : ExecutionContext): Future[OtherIndividuals] =
+    http.GET[OtherIndividuals](getOtherIndividualsUrl(identifier))
 
-  private def addOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/add/$utr"
+  private def addOtherIndividualUrl(identifier: String) = s"$otherIndividualsUrl/add/$identifier"
 
-  def addOtherIndividual(utr: String, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-    http.POST[JsValue, HttpResponse](addOtherIndividualUrl(utr), Json.toJson(otherIndividual))
+  def addOtherIndividual(identifier: String, otherIndividual: OtherIndividual)
+                        (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    http.POST[JsValue, HttpResponse](addOtherIndividualUrl(identifier), Json.toJson(otherIndividual))
 
-  private def amendOtherIndividualUrl(utr: String, index: Int) = s"${config.trustsUrl}/trusts/other-individuals/amend/$utr/$index"
+  private def amendOtherIndividualUrl(identifier: String, index: Int) = s"$otherIndividualsUrl/amend/$identifier/$index"
 
-  def amendOtherIndividual(utr: String, index: Int, otherIndividual: OtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-    http.POST[JsValue, HttpResponse](amendOtherIndividualUrl(utr, index), Json.toJson(otherIndividual))
+  def amendOtherIndividual(identifier: String, index: Int, otherIndividual: OtherIndividual)
+                          (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    http.POST[JsValue, HttpResponse](amendOtherIndividualUrl(identifier, index), Json.toJson(otherIndividual))
 
-  private def removeOtherIndividualUrl(utr: String) = s"${config.trustsUrl}/trusts/other-individuals/$utr/remove"
+  private def removeOtherIndividualUrl(identifier: String) = s"$otherIndividualsUrl/$identifier/remove"
 
-  def removeOtherIndividual(utr: String, otherIndividual: RemoveOtherIndividual)(implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
-    http.PUT[JsValue, HttpResponse](removeOtherIndividualUrl(utr), Json.toJson(otherIndividual))
+  def removeOtherIndividual(identifier: String, otherIndividual: RemoveOtherIndividual)
+                           (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[HttpResponse] =
+    http.PUT[JsValue, HttpResponse](removeOtherIndividualUrl(identifier), Json.toJson(otherIndividual))
 
   def isTrust5mld(identifier: String)
                  (implicit hc: HeaderCarrier, ec: ExecutionContext): Future[Boolean] = {
-    val url: String = s"${config.trustsUrl}/trusts/$identifier/is-trust-5mld"
+    val url: String = s"$baseUrl/$identifier/is-trust-5mld"
     http.GET[Boolean](url)
   }
 }
