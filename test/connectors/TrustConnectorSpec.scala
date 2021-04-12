@@ -107,7 +107,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
 
       "return a default empty list of other individuals" in {
 
-        val utr = "1000000008"
+        val identifier = "1000000008"
 
         val json = Json.parse(
           """
@@ -128,11 +128,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
         val connector = application.injector.instanceOf[TrustConnector]
 
         server.stubFor(
-          get(urlEqualTo(s"/trusts/$utr/transformed/other-individuals"))
+          get(urlEqualTo(s"/trusts/other-individuals/$identifier/transformed"))
             .willReturn(okJson(json.toString))
         )
 
-        val processed = connector.getOtherIndividuals(utr)
+        val processed = connector.getOtherIndividuals(identifier)
 
         whenReady(processed) {
           result =>
@@ -176,7 +176,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
         val connector = application.injector.instanceOf[TrustConnector]
 
         server.stubFor(
-          get(urlEqualTo(s"/trusts/$utr/transformed/other-individuals"))
+          get(urlEqualTo(s"/trusts/other-individuals/$utr/transformed"))
             .willReturn(okJson(json.toString))
         )
 
