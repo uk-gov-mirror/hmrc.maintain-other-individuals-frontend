@@ -16,14 +16,13 @@
 
 package config
 
-import java.net.{URI, URLEncoder}
-import java.time.LocalDate
-
 import com.google.inject.{Inject, Singleton}
 import controllers.routes
 import play.api.Configuration
 import play.api.i18n.{Lang, Messages}
-import play.api.mvc.{Call, Request}
+import play.api.mvc.Call
+
+import java.time.LocalDate
 
 @Singleton
 class FrontendAppConfig @Inject() (val configuration: Configuration) {
@@ -75,14 +74,6 @@ class FrontendAppConfig @Inject() (val configuration: Configuration) {
 
   def routeToSwitchLanguage: String => Call =
     (lang: String) => routes.LanguageSwitchController.switchToLanguage(lang)
-
-
-  private lazy val accessibilityBaseLinkUrl: String = configuration.get[String]("urls.accessibility")
-
-  def accessibilityLinkUrl(implicit request: Request[_]): String = {
-    val userAction = URLEncoder.encode(new URI(request.uri).getPath, "UTF-8")
-    s"$accessibilityBaseLinkUrl?userAction=$userAction"
-  }
 
   private val minDay: Int = configuration.get[Int]("dates.minimum.day")
   private val minMonth: Int = configuration.get[Int]("dates.minimum.month")
