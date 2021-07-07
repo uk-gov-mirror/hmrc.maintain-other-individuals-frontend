@@ -16,12 +16,14 @@
 
 @import controllers.individual.routes._
 @import models.NormalMode
-@import views.html.components.{Heading, BulletList}
+@import views.html.components.{Heading, BulletList, SubmitButton}
 
 @this(
     main_template: MainTemplate,
+    formHelper: FormWithCSRF,
     heading: Heading,
-    bulletList: BulletList
+    bulletList: BulletList,
+    submitButton: SubmitButton
 )
 
 @()(implicit request: Request[_], messages: Messages)

@@ -33,6 +33,6 @@ class InterruptPageController @Inject()(
   }
 
   def onSubmit: Action[AnyContent] = Action {
-    Redirect(controllers.individual.routes.NameController(NormalMode))
+    Redirect(controllers.individual.routes.NameController.onPageLoad(NormalMode))
   }
 }

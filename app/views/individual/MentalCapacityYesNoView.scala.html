@@ -15,12 +15,14 @@
  *@
 
 @import controllers.individual.routes._
-@import views.html.components.{ErrorSummary, InputYesNo, SubmitButton}
+@import views.html.components.{ErrorSummary, Heading, BulletList, InputYesNo, SubmitButton}
 
 @this(
     main_template: MainTemplate,
     formHelper: FormWithCSRF,
     errorSummary: ErrorSummary,
+    heading: Heading,
+    bulletList: BulletList,
     inputYesNo: InputYesNo,
     submitButton: SubmitButton
 )
@@ -44,7 +46,7 @@
 
         @inputYesNo(
             field = form("value"),
-            legend = messages("otherIndividual.mentalCapacityYesNo.heading", name),
+            label = messages("otherIndividual.mentalCapacityYesNo.heading", name),
             legendClass = Some("govuk-visually-hidden"),
             legendAsHeading = false
         )
