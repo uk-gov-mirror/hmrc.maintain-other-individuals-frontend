@@ -1,3 +1,5 @@
+service.name=Cofrestru Ymddiriedolaeth a’i Chynnal
+
 session_expired.guidance=Mae hyn oherwydd eich bod wedi bod yn segur yn y gwasanaeth ers 15 munud.
 session_expired.guidance.2=Bydd angen i chi fewngofnodi i barhau i gynnal yr ymddiriedolaeth.
 site.sign_in=Mewngofnodi
@@ -68,7 +70,6 @@ site.change.details=Newid manylion
 site.no=Na
 site.yes=Iawn
 site.continue=Yn eich blaen
-site.service_name=Cofrestru Ymddiriedolaeth a’i Chynnal
 site.service_section=Unigolion Eraill
 site.textarea.char_limit=(Y terfyn yw {0} o gymeriadau)
 site.sign_out=Allgofnodi
