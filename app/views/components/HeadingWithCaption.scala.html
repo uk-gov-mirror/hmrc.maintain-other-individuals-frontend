@@ -14,18 +14,13 @@
  * limitations under the License.
  *@
 
-@import viewmodels.addAnother.AddRow
+@this(
+ subHeading: SubHeading
+)
 
-@(data: Seq[AddRow], id: String)(implicit messages: Messages)
+@(messagePrefix: String, optionalParam: Option[String] = None, captionParam: Option[String] = None, hiddenText: Boolean = false)(implicit messages: Messages)
 
-@if(data.nonEmpty){
-
-<div class="form-group">
- <h2 id="data-list-heading--@id">@messages(s"site.$id")</h2>
- <dl id="data-list--@id" class="hmrc-add-to-a-list hmrc-add-to-a-list--short">
-  @for(item <- data) {
-  @components.data_list_row(item)
-  }
- </dl>
-</div>
-}
+<h1 class="govuk-heading-l">
+ @subHeading(s"$messagePrefix.caption", captionParam.getOrElse(""), hiddenText)
+ @messages(s"$messagePrefix.heading", optionalParam.getOrElse(""))
+</h1>
