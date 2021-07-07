@@ -18,10 +18,17 @@
 @import models.AddAnOtherIndividual
 @import viewmodels.addAnother.AddRow
 @import viewmodels.RadioOption
+@import views.html.components.{Heading, ErrorSummary, InputText, AddToList, InputRadio, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    headingComp: Heading,
+    errorSummary: ErrorSummary,
+    inputText: InputText,
+    addToList: AddToList,
+    inputRadio: InputRadio,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_],
@@ -35,21 +42,21 @@
 
     @formHelper(action = AddAnOtherIndividualController.submitAnother(), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors, AddAnOtherIndividual.options)
 
-        @components.heading(heading)
+        @headingComp(heading)
 
-        @components.data_list(inProgressOtherIndividuals, "inprogress")
+        @addToList(inProgressOtherIndividuals, "inprogress")
 
-        @components.data_list(completeOtherIndividuals, "complete")
+        @addToList(completeOtherIndividuals, "complete")
 
-        @components.input_radio(
+        @inputRadio(
             field = form("value"),
             legend = messages("addAnOtherIndividual.additional-content"),
             legendClass = Some("govuk-heading-m"),
-            inputs = AddAnOtherIndividual.options
+            inputs = mapRadioOptionsToRadioItems(form("value"), false, AddAnOtherIndividual.options)
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

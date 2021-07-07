@@ -18,10 +18,14 @@
 @import models.AddAnOtherIndividual
 @import viewmodels.addAnother.AddRow
 @import viewmodels.RadioOption
+@import views.html.components.{Heading, AddToList, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    headingComp: Heading,
+    addToList: AddToList,
+    submitButton: SubmitButton
 )
 
 @(inProgressOtherIndividuals: Seq[AddRow],
@@ -35,17 +39,19 @@
 
     @formHelper(action = AddAnOtherIndividualController.submitComplete(), 'autoComplete -> "off") {
 
-        @components.heading(heading)
+        @headingComp(heading)
 
-        @components.data_list(inProgressOtherIndividuals, "inprogress")
+        @addToList(inProgressOtherIndividuals, "inprogress")
 
-        @components.data_list(completeOtherIndividuals, "complete")
+        @addToList(completeOtherIndividuals, "complete")
 
-        <ul>
-            <li class="panel-indent"><p>@messages("addAnOtherIndividual.maxedOut")</p></li>
-            <li class="panel-indent"><p>@messages("addAnOtherIndividual.maxedOut.paragraph")</p></li>
-        </ul>
+        <div class="govuk-inset-text">
+            <ul class="govuk-list">
+                <li><p>@messages("addAnOtherIndividual.maxedOut")</p></li>
+                <li><p>@messages("addAnOtherIndividual.maxedOut.paragraph")</p></li>
+            </ul>
+        </div>
 
-        @components.submit_button()
+        @submitButton()
     }
 }
