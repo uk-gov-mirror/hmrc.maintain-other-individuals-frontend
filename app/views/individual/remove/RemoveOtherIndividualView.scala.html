@@ -15,29 +15,32 @@
  *@
 
 @import controllers.individual.remove.routes._
+@import views.html.components.{ErrorSummary, InputYesNo, SubmitButton}
 
 @this(
-        main_template: MainTemplate,
-        formHelper: FormWithCSRF
+    main_template: MainTemplate,
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputYesNo: InputYesNo,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], index: Int, name: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)}${messages("removeOtherIndividual.title")}",
+    title = s"${errorPrefix(form)}${messages("removeOtherIndividualYesNo.title")}",
     showBackLink = true
 ) {
 
     @formHelper(action = RemoveOtherIndividualController.onSubmit(index), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.input_yes_no(
+        @inputYesNo(
             field = form("value"),
-            legend = messages("removeOtherIndividual.heading", name),
-            headingIsLegend = true
+            legend = messages("removeOtherIndividualYesNo.heading", name)
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

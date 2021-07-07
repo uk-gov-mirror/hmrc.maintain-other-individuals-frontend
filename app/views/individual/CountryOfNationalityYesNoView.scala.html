@@ -15,10 +15,14 @@
  *@
 
 @import controllers.individual.routes._
+@import views.html.components.{ErrorSummary, InputYesNo, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputYesNo: InputYesNo,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], mode: Mode, name: String)(implicit request: Request[_], messages: Messages)
@@ -30,15 +34,14 @@
 
     @formHelper(action = CountryOfNationalityYesNoController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.input_yes_no(
+        @inputYesNo(
             field = form("value"),
             legend = messages("otherIndividual.countryOfNationalityYesNo.heading", name),
-            headingIsLegend = true,
             hint = Some(messages("otherIndividual.countryOfNationalityYesNo.hint"))
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

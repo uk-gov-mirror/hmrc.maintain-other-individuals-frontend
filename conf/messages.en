@@ -82,9 +82,9 @@ addAnOtherIndividualYesNo.error.required = Select yes if you want to add another
 entities.otherIndividuals = Other individuals
 entities.otherIndividual = Other individual
 
-removeOtherIndividual.title = Are you sure you want to remove the other individual?
-removeOtherIndividual.heading = Are you sure you want to remove {0}?
-removeOtherIndividual.error.required = Select yes if you want to remove the other individual
+removeOtherIndividualYesNo.title = Are you sure you want to remove the other individual?
+removeOtherIndividualYesNo.heading = Are you sure you want to remove {0}?
+removeOtherIndividualYesNo.error.required = Select yes if you want to remove the other individual
 
 otherIndividual.whenRemoved.title = When was the individual removed as an other individual?
 otherIndividual.whenRemoved.heading = When was {0} removed as an other individual?
