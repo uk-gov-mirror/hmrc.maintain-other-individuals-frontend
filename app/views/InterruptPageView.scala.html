@@ -24,10 +24,9 @@
 @()(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherIndividual.interrupt.page.title")
-    ) {
-
-    @components.back_link()
+    title = messages("otherIndividual.interrupt.page.title"),
+    showBackLink = true
+) {
 
     <span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
     @components.heading("otherIndividual.interrupt.page.heading", headingSize = "heading-xlarge govuk-fieldset__heading")

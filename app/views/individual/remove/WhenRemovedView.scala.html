@@ -24,12 +24,11 @@
 @(form: Form[_], index: Int, name: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)}${messages("otherIndividual.whenRemoved.title", name)}"
+    title = s"${errorPrefix(form)}${messages("otherIndividual.whenRemoved.title", name)}",
+    showBackLink = true
 ) {
 
     @formHelper(action = WhenRemovedController.onSubmit(index), 'autoComplete -> "off") {
-
-        @components.back_link()
 
         @components.error_summary(form.errors)
 

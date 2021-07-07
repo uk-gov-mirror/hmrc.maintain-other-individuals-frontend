@@ -24,12 +24,11 @@
 @(form: Form[_], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)}${messages("otherIndividual.dateOfBirth.title", name)}"
+    title = s"${errorPrefix(form)}${messages("otherIndividual.dateOfBirth.title", name)}",
+    showBackLink = true
 ) {
 
     @formHelper(action = DateOfBirthController.onSubmit(mode), 'autoComplete -> "off") {
-
-        @components.back_link()
 
         @components.error_summary(form.errors)
 

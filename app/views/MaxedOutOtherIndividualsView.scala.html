@@ -29,12 +29,11 @@
     heading: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = heading
-    ) {
+    title = heading,
+    showBackLink = true
+) {
 
     @formHelper(action = AddAnOtherIndividualController.submitComplete(), 'autoComplete -> "off") {
-
-        @components.back_link()
 
         @components.heading(heading)
 

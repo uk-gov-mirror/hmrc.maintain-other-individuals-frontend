@@ -25,7 +25,7 @@
 
 @main_template(
     title = s"${errorPrefix(form)}${messages("addAnOtherIndividualYesNo.title")}"
-    ) {
+) {
 
     @formHelper(action = AddAnOtherIndividualController.submitOne(), 'autoComplete -> "off") {
 
