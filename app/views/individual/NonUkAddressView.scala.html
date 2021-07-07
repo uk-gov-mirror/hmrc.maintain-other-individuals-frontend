@@ -16,10 +16,14 @@
 
 @import controllers.individual.routes._
 @import utils.InputOption
+@import views.html.components.{ErrorSummary, InternationalAddress, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    internationalAddress: InternationalAddress,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], countryOptions: Seq[InputOption], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
@@ -31,12 +35,15 @@
 
     @formHelper(action = NonUkAddressController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.heading("otherIndividual.nonUkAddress.heading", Some(name))
+        @internationalAddress(
+            form = form,
+            legend = messages("otherIndividual.nonUkAddress.heading", name),
+            legendAsHeading = true,
+            countryOptions = countryOptions
+        )
 
-        @components.non_uk_address(form, countryOptions)
-
-        @components.submit_button()
+        @submitButton()
     }
 }
