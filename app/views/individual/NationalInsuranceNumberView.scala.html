@@ -15,12 +15,15 @@
  *@
 
 @import controllers.individual.routes._
+@import views.html.components.{ErrorSummary, InputText, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputText: InputText,
+    submitButton: SubmitButton
 )
-
 @(form: Form[_], name: String, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @main_template(
@@ -30,15 +33,16 @@
 
     @formHelper(action = NationalInsuranceNumberController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.input_nino(
+        @inputText(
             field = form("value"),
             label = messages("otherIndividual.nationalInsuranceNumber.heading", name),
-            headingIsLabel = true,
+            labelAsHeading = true,
+            labelClass=Some("govuk-heading-l"),
             hint = Some(messages("otherIndividual.nationalInsuranceNumber.hint"))
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }
