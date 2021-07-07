@@ -16,10 +16,17 @@
 
 @import controllers.individual.add.routes._
 @import utils.InputOption
+@import views.html.components.{Heading, ErrorSummary, InputSelect, InputText, InputDate, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    heading: Heading,
+    errorSummary: ErrorSummary,
+    inputSelect: InputSelect,
+    inputText: InputText,
+    inputDate: InputDate,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], countryOptions: Seq[InputOption], name: String)(implicit request: Request[_], messages: Messages)
@@ -31,11 +38,11 @@
 
     @formHelper(action = IdCardDetailsController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.heading("otherIndividual.idCardDetails.heading", Some(name))
+        @heading("otherIndividual.idCardDetails.heading", Some(name))
 
-        @components.select(field = form("country"),
+        @inputSelect(field = form("country"),
             label = messages("otherIndividual.idCardDetails.country"),
             labelClasses = Set("bold"),
             options = countryOptions,
@@ -44,18 +51,18 @@
             selectAttribute = Set("data-non-uk-countries")
         )
 
-        @components.input_text(
+        @inputText(
             field = form("number"),
             label = messages("otherIndividual.idCardDetails.number"),
             hint = Some(messages("otherIndividual.idCardDetails.number.hint"))
         )
 
-        @components.input_date(
+        @inputDate(
             field = form("expiryDate"),
             legend = messages("otherIndividual.idCardDetails.expiryDate"),
             legendClass = "bold",
             hint = Some(messages("otherIndividual.idCardDetails.expiryDate.hint")),
-            headingIsLegend = false
+            legendAsHeading = false
         )
 
         @components.submit_button()

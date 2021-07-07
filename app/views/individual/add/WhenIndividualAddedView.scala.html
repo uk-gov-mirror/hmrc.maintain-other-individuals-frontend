@@ -15,10 +15,14 @@
  *@
 
 @import controllers.individual.add.routes._
+@import views.html.components.{ErrorSummary, InputDate, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputDate: InputDate,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], name: String)(implicit request: Request[_], messages: Messages)
@@ -30,15 +34,15 @@
 
     @formHelper(action = WhenIndividualAddedController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.input_date(
+        @inputDate(
             field = form("value"),
             legend = messages("otherIndividual.whenIndividualAdded.heading", name),
-            headingIsLegend = true,
+            legendAsHeading = true,
             hint = Some(messages("otherIndividual.whenIndividualAdded.hint"))
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }
