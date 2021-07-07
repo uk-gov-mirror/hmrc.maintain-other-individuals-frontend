@@ -52,11 +52,10 @@ lazy val root = (project in file("."))
     Concat.groups := Seq(
       "javascripts/maintainotherindividualsfrontend-app.js" ->
         group(Seq(
-          "javascripts/show-hide-content.js",
           "javascripts/maintainotherindividualsfrontend.js",
-          "javascripts/autocomplete.js",
-          "javascripts/libraries/location-autocomplete.min.js"
-
+          "javascripts/autocomplete.js"
+          "javascripts/iebacklink.js"
+          "javascripts/print.js"
         ))
     ),
     // prevent removal of unused code which generates warning errors due to use of third-party libs
