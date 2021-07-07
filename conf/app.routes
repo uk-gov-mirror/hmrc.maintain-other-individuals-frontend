@@ -134,8 +134,6 @@ GET        /language/:lang                                  controllers.Language
 GET        /this-service-has-been-reset                     controllers.SessionExpiredController.onPageLoad
 POST       /this-service-has-been-reset                     controllers.SessionExpiredController.onSubmit
 
-GET        /feature-not-available                           controllers.FeatureNotAvailableController.onPageLoad()
-
 GET        /logout                                          controllers.LogoutController.logout()
 
 GET        /unauthorised                                    controllers.UnauthorisedController.onPageLoad
