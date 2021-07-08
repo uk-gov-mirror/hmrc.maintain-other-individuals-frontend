@@ -14,7 +14,7 @@
  * limitations under the License.
  *@
 
-@import controllers.individual.routes._
+@import controllers.routes._
 @import models.NormalMode
 @import views.html.components.{Heading, BulletList, SubmitButton}
 
@@ -34,13 +34,13 @@
 ) {
 
     <span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
-    @heading("otherIndividual.interrupt.page.heading", headingSize = "heading-xlarge govuk-fieldset__heading")
+    @heading("otherIndividual.interrupt.page.heading")
 
     <p>@messages("otherIndividual.interrupt.page.p1")</p>
 
     @bulletList("otherIndividual.interrupt.page", Seq("b1", "b2", "b3", "b4"))
 
-    @formHelper(action = SessionExpiredController.onSubmit, 'autoComplete -> "off") {
+    @formHelper(action = InterruptPageController.onSubmit, 'autoComplete -> "off") {
         @submitButton(Some(messages("site.continue")))
     }
 }
