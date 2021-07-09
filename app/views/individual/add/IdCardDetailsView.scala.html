@@ -47,13 +47,14 @@
             labelClasses = Set("bold"),
             options = countryOptions,
             placeholder = Some(messages("site.address.country.select")),
-            formGroupClasses = Set("autocomplete-wrapper form-control-2-1"),
+            formGroupClasses = Set("autocomplete-wrapper govuk-!-width-two-thirds"),
             selectAttribute = Map("data-non-uk-countries" -> "")
         )
 
         @inputText(
             field = form("number"),
             label = messages("otherIndividual.idCardDetails.number"),
+            labelClass = Some("govuk-!-width-one-half"),
             hint = Some(messages("otherIndividual.idCardDetails.number.hint"))
         )
 
