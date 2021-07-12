@@ -326,7 +326,8 @@ otherIndividual.liveInTheUkYesNo.error.required = Select yes if the individual l
 
 otherIndividual.interrupt.page.title = Information you need to add other individuals
 otherIndividual.interrupt.page.heading = Information you need to add other individuals
-otherIndividual.interrupt.page.subheading = Other individuals
+otherIndividual.interrupt.page.caption = Other individuals
+otherIndividual.interrupt.page.caption.hidden = This section is
 otherIndividual.interrupt.page.p1 = For any other individuals, such as family members, friends or third parties, who are involved in the trust, you need their:
 otherIndividual.interrupt.page.b1 = National Insurance number
 otherIndividual.interrupt.page.b2 = Passport and address
