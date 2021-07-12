@@ -16,26 +16,32 @@
 
 @import viewmodels.AnswerSection
 @import controllers.individual.add.routes._
+@import utils.SectionFormatter.formatSections
+@import viewmodels.AnswerSection
+@import viewmodels.Section
+@import views.html.components.{Heading, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    heading: Heading,
+    govukSummaryList: GovukSummaryList,
+    submitButton: SubmitButton
 )
 
-@(answerSection: AnswerSection)(implicit request: Request[_], messages: Messages)
+@(answerSection: Seq[Section])(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherIndividual.checkDetails.title")
+    title = messages("otherIndividual.checkDetails.title"),
+    showBackLink = true
 ) {
 
     @formHelper(action = CheckDetailsController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @heading("otherIndividual.checkDetails.heading")
 
-        @components.heading("otherIndividual.checkDetails.heading")
+        @govukSummaryList(SummaryList(rows = formatSections(answerSection)))
 
-        @components.answer_section(answerSection)
-
-        @components.submit_button()
+        @submitButton()
     }
 }

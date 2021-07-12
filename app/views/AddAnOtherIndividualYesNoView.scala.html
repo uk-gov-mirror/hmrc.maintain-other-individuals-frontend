@@ -15,27 +15,31 @@
  *@
 
 @import controllers.routes._
+@import views.html.components.{ErrorSummary, InputYesNo, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    inputYesNo: InputYesNo,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_])(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = s"${errorPrefix(form)}${messages("addAnOtherIndividualYesNo.title")}"
-    ) {
+) {
 
     @formHelper(action = AddAnOtherIndividualController.submitOne(), 'autoComplete -> "off") {
 
-        @components.error_summary(form.errors)
+        @errorSummary(form.errors)
 
-        @components.input_yes_no(
+        @inputYesNo(
             field = form("value"),
-            legend = messages("addAnOtherIndividualYesNo.heading")
+            label = messages("addAnOtherIndividualYesNo.heading")
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

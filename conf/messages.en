@@ -1,3 +1,5 @@
+service.name = Register and Maintain a Trust
+
 date.day = Day
 date.month = Month
 date.year = Year
@@ -29,13 +31,12 @@ session_expired.guidance.2 = You will need to sign in to continue maintaining th
 site.back = Back
 site.delete = Remove
 site.edit = Change
-site.hidden-delete = Delete {0}
+site.hidden-delete = Remove {0}
 site.hidden-edit = Change {0}
 site.change.details = Change details
 site.no = No
 site.yes = Yes
 site.continue = Continue
-site.service_name = Register and Maintain a Trust
 site.service_section = Other Individuals
 site.textarea.char_limit = (Limit is {0} characters)
 site.sign_out = Sign out
@@ -46,13 +47,12 @@ site.date.hint = For example, 31 3 1980.
 site.error = Error:
 site.cannotRemove = Cannot remove
 site.cannotRemove-hidden = Cannot remove {0}
+site.address.country.select = Select a country
 
 #timeout dialog
 timeout.title=Your application will time out soon
 timeout.message=We will sign you out if you do not respond in
 timeout.keep-alive-button=Continue application
-
-address.country.select = Select a country
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
@@ -81,9 +81,9 @@ addAnOtherIndividualYesNo.error.required = Select yes if you want to add another
 entities.otherIndividuals = Other individuals
 entities.otherIndividual = Other individual
 
-removeOtherIndividual.title = Are you sure you want to remove the other individual?
-removeOtherIndividual.heading = Are you sure you want to remove {0}?
-removeOtherIndividual.error.required = Select yes if you want to remove the other individual
+removeOtherIndividualYesNo.title = Are you sure you want to remove the other individual?
+removeOtherIndividualYesNo.heading = Are you sure you want to remove {0}?
+removeOtherIndividualYesNo.error.required = Select yes if you want to remove the other individual
 
 otherIndividual.whenRemoved.title = When was the individual removed as an other individual?
 otherIndividual.whenRemoved.heading = When was {0} removed as an other individual?

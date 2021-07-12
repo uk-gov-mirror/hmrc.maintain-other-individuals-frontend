@@ -1,4 +1,8 @@
 # microservice specific routes
+->         /govuk-frontend                     govuk.Routes
+->         /hmrc-frontend                      hmrcfrontend.Routes
+
+# microservice specific routes
 
 GET        /add                                             controllers.AddAnOtherIndividualController.onPageLoad()
 POST       /add                                             controllers.AddAnOtherIndividualController.submitOne()
@@ -14,6 +18,7 @@ GET        /:index/when-removed                             controllers.individu
 POST       /:index/when-removed                             controllers.individual.remove.WhenRemovedController.onSubmit(index: Int)
 
 GET        /information-you-need                            controllers.InterruptPageController.onPageLoad()
+POST       /information-you-need                            controllers.InterruptPageController.onSubmit()
 
 GET        /name                                            controllers.individual.NameController.onPageLoad(mode: Mode = NormalMode)
 POST       /name                                            controllers.individual.NameController.onSubmit(mode: Mode = NormalMode)
@@ -128,8 +133,7 @@ GET        /assets/*file                                    controllers.Assets.v
 GET        /language/:lang                                  controllers.LanguageSwitchController.switchToLanguage(lang: String)
 
 GET        /this-service-has-been-reset                     controllers.SessionExpiredController.onPageLoad
-
-GET        /feature-not-available                           controllers.FeatureNotAvailableController.onPageLoad()
+POST       /this-service-has-been-reset                     controllers.SessionExpiredController.onSubmit
 
 GET        /logout                                          controllers.LogoutController.logout()
 

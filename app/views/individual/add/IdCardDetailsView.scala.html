@@ -16,49 +16,56 @@
 
 @import controllers.individual.add.routes._
 @import utils.InputOption
+@import views.html.components.{Heading, ErrorSummary, InputSelect, InputText, InputDate, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    heading: Heading,
+    errorSummary: ErrorSummary,
+    inputSelect: InputSelect,
+    inputText: InputText,
+    inputDate: InputDate,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], countryOptions: Seq[InputOption], name: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = s"${errorPrefix(form)}${messages("otherIndividual.idCardDetails.title")}"
+    title = s"${errorPrefix(form)}${messages("otherIndividual.idCardDetails.title")}",
+    showBackLink = true
 ) {
 
     @formHelper(action = IdCardDetailsController.onSubmit(), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @heading("otherIndividual.idCardDetails.heading", Some(name))
 
-        @components.heading("otherIndividual.idCardDetails.heading", Some(name))
-
-        @components.select(field = form("country"),
+        @inputSelect(field = form("country"),
             label = messages("otherIndividual.idCardDetails.country"),
             labelClasses = Set("bold"),
             options = countryOptions,
-            placeholder = Some(messages("address.country.select")),
-            formGroupClasses = Set("autocomplete-wrapper form-control-2-1"),
-            selectAttribute = Set("data-non-uk-countries")
+            placeholder = Some(messages("site.address.country.select")),
+            formGroupClasses = Set("autocomplete-wrapper govuk-!-width-two-thirds"),
+            selectAttribute = Map("data-non-uk-countries" -> "")
         )
 
-        @components.input_text(
+        @inputText(
             field = form("number"),
             label = messages("otherIndividual.idCardDetails.number"),
+            labelClass = Some("govuk-!-width-one-half"),
             hint = Some(messages("otherIndividual.idCardDetails.number.hint"))
         )
 
-        @components.input_date(
+        @inputDate(
             field = form("expiryDate"),
             legend = messages("otherIndividual.idCardDetails.expiryDate"),
             legendClass = "bold",
             hint = Some(messages("otherIndividual.idCardDetails.expiryDate.hint")),
-            headingIsLegend = false
+            legendAsHeading = false
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

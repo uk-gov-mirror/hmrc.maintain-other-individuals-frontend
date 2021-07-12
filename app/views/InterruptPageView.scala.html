@@ -14,32 +14,33 @@
  * limitations under the License.
  *@
 
-@import controllers.individual.routes._
+@import controllers.routes._
 @import models.NormalMode
+@import views.html.components.{Heading, BulletList, SubmitButton}
 
 @this(
-    main_template: MainTemplate
+    main_template: MainTemplate,
+    formHelper: FormWithCSRF,
+    heading: Heading,
+    bulletList: BulletList,
+    submitButton: SubmitButton
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = messages("otherIndividual.interrupt.page.title")
-    ) {
-
-    @components.back_link()
+    title = messages("otherIndividual.interrupt.page.title"),
+    showBackLink = true
+) {
 
     <span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
-    @components.heading("otherIndividual.interrupt.page.heading", headingSize = "heading-xlarge govuk-fieldset__heading")
+    @heading("otherIndividual.interrupt.page.heading", headingSize = "govuk-heading-xl")
 
     <p>@messages("otherIndividual.interrupt.page.p1")</p>
 
-    <ul class="bullet-list">
-        <li>@messages("otherIndividual.interrupt.page.b1")</li>
-        <li>@messages("otherIndividual.interrupt.page.b2")</li>
-        <li>@messages("otherIndividual.interrupt.page.b3")</li>
-        <li>@messages("otherIndividual.interrupt.page.b4")</li>
-    </ul>
+    @bulletList("otherIndividual.interrupt.page", Seq("b1", "b2", "b3", "b4"))
 
-    @components.button_link(messages("site.continue"), NameController.onPageLoad(NormalMode).url)
+    @formHelper(action = InterruptPageController.onSubmit, 'autoComplete -> "off") {
+        @submitButton(Some(messages("site.continue")))
+    }
 }

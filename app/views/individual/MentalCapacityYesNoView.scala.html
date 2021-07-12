@@ -15,42 +15,42 @@
  *@
 
 @import controllers.individual.routes._
+@import views.html.components.{ErrorSummary, Heading, BulletList, InputYesNo, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    errorSummary: ErrorSummary,
+    heading: Heading,
+    bulletList: BulletList,
+    inputYesNo: InputYesNo,
+    submitButton: SubmitButton
 )
 
 @(form: Form[_], mode: Mode, name: String)(implicit request: Request[_], messages: Messages)
 
-@content = {
-<p>@messages("otherIndividual.mentalCapacityYesNo.p1")</p>
-
-<ul class="govuk-list trust-list--bullet">
-    <li class="inside">@messages("otherIndividual.mentalCapacityYesNo.bulletpoint1")</li>
-    <li class="inside">@messages("otherIndividual.mentalCapacityYesNo.bulletpoint2")</li>
-    <li class="inside">@messages("otherIndividual.mentalCapacityYesNo.bulletpoint3")</li>
-    <li class="inside">@messages("otherIndividual.mentalCapacityYesNo.bulletpoint4")</li>
-</ul>
-}
-
 @main_template(
-    title = s"${errorPrefix(form)}${messages("otherIndividual.mentalCapacityYesNo.title")}"
+    title = s"${errorPrefix(form)}${messages("otherIndividual.mentalCapacityYesNo.title")}",
+    showBackLink = true
 ) {
 
     @formHelper(action = MentalCapacityYesNoController.onSubmit(mode), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @errorSummary(form.errors)
 
-        @components.error_summary(form.errors)
+        @heading("otherIndividual.mentalCapacityYesNo.heading", Some(name))
 
-        @components.input_yes_no(
+        <p>@messages("otherIndividual.mentalCapacityYesNo.p1")</p>
+
+        @bulletList("otherIndividual.mentalCapacityYesNo", Seq("bulletpoint1", "bulletpoint2", "bulletpoint3", "bulletpoint4"))
+
+        @inputYesNo(
             field = form("value"),
-            legend = messages("otherIndividual.mentalCapacityYesNo.heading", name),
-            headingIsLegend = true,
-            additionalContent = Some(content)
+            label = messages("otherIndividual.mentalCapacityYesNo.heading", name),
+            legendClass = Some("govuk-visually-hidden"),
+            legendAsHeading = false
         )
 
-        @components.submit_button()
+        @submitButton()
     }
 }

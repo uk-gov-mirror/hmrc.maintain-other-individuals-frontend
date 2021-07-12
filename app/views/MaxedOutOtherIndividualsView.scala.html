@@ -18,10 +18,14 @@
 @import models.AddAnOtherIndividual
 @import viewmodels.addAnother.AddRow
 @import viewmodels.RadioOption
+@import views.html.components.{Heading, AddToList, SubmitButton}
 
 @this(
     main_template: MainTemplate,
-    formHelper: FormWithCSRF
+    formHelper: FormWithCSRF,
+    headingComp: Heading,
+    addToList: AddToList,
+    submitButton: SubmitButton
 )
 
 @(inProgressOtherIndividuals: Seq[AddRow],
@@ -29,24 +33,25 @@
     heading: String)(implicit request: Request[_], messages: Messages)
 
 @main_template(
-    title = heading
-    ) {
+    title = heading,
+    showBackLink = true
+) {
 
     @formHelper(action = AddAnOtherIndividualController.submitComplete(), 'autoComplete -> "off") {
 
-        @components.back_link()
+        @headingComp(heading)
 
-        @components.heading(heading)
+        @addToList(inProgressOtherIndividuals, "inprogress")
 
-        @components.data_list(inProgressOtherIndividuals, "inprogress")
+        @addToList(completeOtherIndividuals, "complete")
 
-        @components.data_list(completeOtherIndividuals, "complete")
+        <div class="govuk-inset-text">
+            <ul class="govuk-list">
+                <li><p>@messages("addAnOtherIndividual.maxedOut")</p></li>
+                <li><p>@messages("addAnOtherIndividual.maxedOut.paragraph")</p></li>
+            </ul>
+        </div>
 
-        <ul>
-            <li class="panel-indent"><p>@messages("addAnOtherIndividual.maxedOut")</p></li>
-            <li class="panel-indent"><p>@messages("addAnOtherIndividual.maxedOut.paragraph")</p></li>
-        </ul>
-
-        @components.submit_button()
+        @submitButton()
     }
 }
