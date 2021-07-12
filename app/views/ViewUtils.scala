@@ -40,8 +40,7 @@ object ViewUtils {
       case _ if radioOptions.size != 0 =>
         radioOptions.head.id
       case _ =>
-        val isSingleDateField = isDateError(error) && !error.message.toLowerCase.contains("yesno")
-        if (isDateError(error) || isSingleDateField) {
+        if (isDateError(error)) {
           s"${error.key}.day"
         } else {
           s"${error.key}"
