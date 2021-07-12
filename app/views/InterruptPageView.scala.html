@@ -16,12 +16,12 @@
 
 @import controllers.routes._
 @import models.NormalMode
-@import views.html.components.{Heading, BulletList, SubmitButton}
+@import views.html.components.{HeadingWithCaption, BulletList, SubmitButton}
 
 @this(
     main_template: MainTemplate,
     formHelper: FormWithCSRF,
-    heading: Heading,
+    headingWithCaption: HeadingWithCaption,
     bulletList: BulletList,
     submitButton: SubmitButton
 )
@@ -33,8 +33,7 @@
     showBackLink = true
 ) {
 
-    <span class="govuk-caption-xl">@messages("otherIndividual.interrupt.page.subheading")</span>
-    @heading("otherIndividual.interrupt.page.heading", headingSize = "govuk-heading-xl")
+    @headingWithCaption(messagePrefix = "otherIndividual.interrupt.page", hiddenText = true)
 
     <p>@messages("otherIndividual.interrupt.page.p1")</p>
 
