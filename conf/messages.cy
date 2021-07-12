@@ -1,5 +1,6 @@
 service.name=Cofrestru Ymddiriedolaeth a’i Chynnal
-
+session_expired.title=Er eich diogelwch, mae’r gwasanaeth hwn wedi’i ailosod
+session_expired.heading=Er eich diogelwch, mae’r gwasanaeth hwn wedi’i ailosod
 session_expired.guidance=Mae hyn oherwydd eich bod wedi bod yn segur yn y gwasanaeth ers 15 munud.
 session_expired.guidance.2=Bydd angen i chi fewngofnodi i barhau i gynnal yr ymddiriedolaeth.
 site.sign_in=Mewngofnodi
