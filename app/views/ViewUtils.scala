@@ -40,13 +40,17 @@ object ViewUtils {
       case _ if radioOptions.size != 0 =>
         radioOptions.head.id
       case _ =>
-        val isSingleDateField = error.message.toLowerCase.contains("date") && !error.message.toLowerCase.contains("yesno")
-        if (error.key.toLowerCase.contains("date") || isSingleDateField) {
+        val isSingleDateField = isDateError(error) && !error.message.toLowerCase.contains("yesno")
+        if (isDateError(error) || isSingleDateField) {
           s"${error.key}.day"
         } else {
           s"${error.key}"
         }
     }
+  }
+
+  def isDateError(error: FormError): Boolean = {
+    error.message.toLowerCase.contains("date") || error.message.toLowerCase.contains("when")
   }
 
   def mapRadioOptionsToRadioItems(field: Field, trackGa: Boolean,
