@@ -54,7 +54,7 @@
             field = form("value"),
             legend = messages("addAnOtherIndividual.additional-content"),
             legendClass = Some("govuk-heading-m"),
-            inputs = mapRadioOptionsToRadioItems(form("value"), false, AddAnOtherIndividual.options)
+            inputs = mapRadioOptionsToRadioItems(form("value"), AddAnOtherIndividual.options)
         )
 
         @submitButton()
