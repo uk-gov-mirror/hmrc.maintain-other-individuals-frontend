@@ -53,8 +53,7 @@ object ViewUtils {
     error.toLowerCase.contains("date") || error.toLowerCase.contains("when")
   }
 
-  def mapRadioOptionsToRadioItems(field: Field, trackGa: Boolean,
-                                  inputs: Seq[RadioOption])(implicit messages: Messages): Seq[RadioItem] =
+  def mapRadioOptionsToRadioItems(field: Field, inputs: Seq[RadioOption])(implicit messages: Messages): Seq[RadioItem] =
     inputs.map(
       a => {
         RadioItem(
