@@ -42,9 +42,9 @@ class TrustServiceImpl @Inject()(connector: TrustConnector) extends TrustService
     getOtherIndividuals(identifier).map(_.otherIndividuals
       .zipWithIndex
       .filterNot(x => index.contains(x._2))
-      .map(_._1.identification)
+      .flatMap(_._1.identification)
       .collect {
-        case Some(NationalInsuranceNumber(nino)) => nino
+        case NationalInsuranceNumber(nino) => nino
       }
     )
   }
