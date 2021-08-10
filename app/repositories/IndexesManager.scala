@@ -18,7 +18,7 @@ package repositories
 
 import models.MongoDateTimeFormats
 import play.api.Configuration
-import play.api.Logger.logger
+import play.api.Logging
 import play.api.libs.json.{JsObject, Json, OWrites, Reads}
 import reactivemongo.api.WriteConcern
 import reactivemongo.api.indexes.{Index, IndexType}
@@ -33,7 +33,7 @@ import scala.concurrent.{ExecutionContext, Future}
 abstract class IndexesManager @Inject()(
                                          mongo: MongoDriver,
                                          config: Configuration
-                                       )(implicit ec: ExecutionContext) {
+                                       )(implicit ec: ExecutionContext) extends Logging {
 
   implicit final val jsObjectWrites: OWrites[JsObject] = OWrites[JsObject](identity)
 
