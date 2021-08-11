@@ -17,7 +17,7 @@
 package controllers
 
 import base.SpecBase
-import connectors.TrustStoreConnector
+import connectors.TrustsStoreConnector
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, NormalMode, OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
 import org.mockito.Matchers.any
@@ -44,7 +44,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
   lazy val submitAnotherRoute : String = controllers.routes.AddAnOtherIndividualController.submitAnother().url
   lazy val submitCompleteRoute : String = controllers.routes.AddAnOtherIndividualController.submitComplete().url
 
-  val mockStoreConnector : TrustStoreConnector = mock[TrustStoreConnector]
+  val mockStoreConnector : TrustsStoreConnector = mock[TrustsStoreConnector]
 
   val addOtherIndividualForm: Form[AddAnOtherIndividual] = new AddAnOtherIndividualFormProvider()()
   val addOtherIndividualYesNoForm: Form[Boolean] = new YesNoFormProvider().withPrefix("addAnOtherIndividualYesNo")
@@ -162,7 +162,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(Seq(
           bind(classOf[TrustService]).toInstance(fakeService),
-          bind(classOf[TrustStoreConnector]).toInstance(mockStoreConnector)
+          bind(classOf[TrustsStoreConnector]).toInstance(mockStoreConnector)
         )).build()
 
         val request =
@@ -188,7 +188,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(Seq(
             bind(classOf[TrustService]).toInstance(fakeService),
-            bind(classOf[TrustStoreConnector]).toInstance(mockStoreConnector)
+            bind(classOf[TrustsStoreConnector]).toInstance(mockStoreConnector)
           )).build()
 
         val request =
@@ -241,7 +241,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(Seq(
           bind(classOf[TrustService]).toInstance(fakeService),
-          bind(classOf[TrustStoreConnector]).toInstance(mockStoreConnector)
+          bind(classOf[TrustsStoreConnector]).toInstance(mockStoreConnector)
         )).build()
 
         val request =
@@ -287,7 +287,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(Seq(
             bind(classOf[TrustService]).toInstance(fakeService),
-            bind(classOf[TrustStoreConnector]).toInstance(mockStoreConnector)
+            bind(classOf[TrustsStoreConnector]).toInstance(mockStoreConnector)
           )).build()
 
         val request =
@@ -380,7 +380,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).overrides(Seq(
           bind(classOf[TrustService]).toInstance(fakeService),
-          bind(classOf[TrustStoreConnector]).toInstance(mockStoreConnector)
+          bind(classOf[TrustsStoreConnector]).toInstance(mockStoreConnector)
         )).build()
 
         val request = FakeRequest(POST, submitCompleteRoute)

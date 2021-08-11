@@ -17,7 +17,7 @@
 package controllers
 
 import config.FrontendAppConfig
-import connectors.TrustStoreConnector
+import connectors.TrustsStoreConnector
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import handlers.ErrorHandler
@@ -41,7 +41,7 @@ class AddAnOtherIndividualController @Inject()(
                                                 standardActionSets: StandardActionSets,
                                                 val controllerComponents: MessagesControllerComponents,
                                                 val appConfig: FrontendAppConfig,
-                                                trustStoreConnector: TrustStoreConnector,
+                                                trustStoreConnector: TrustsStoreConnector,
                                                 trustService: TrustService,
                                                 addAnotherFormProvider: AddAnOtherIndividualFormProvider,
                                                 yesNoFormProvider: YesNoFormProvider,

@@ -18,11 +18,12 @@ package controllers
 
 import connectors.TrustConnector
 import controllers.actions.StandardActionSets
+import models.TaskStatus.InProgress
 import models.UserAnswers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.PlaybackRepository
-import services.FeatureFlagService
+import services.TrustsStoreService
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 
 import javax.inject.Inject
@@ -31,9 +32,9 @@ import scala.concurrent.{ExecutionContext, Future}
 class IndexController @Inject()(
                                  val controllerComponents: MessagesControllerComponents,
                                  actions: StandardActionSets,
-                                 cacheRepository : PlaybackRepository,
+                                 cacheRepository: PlaybackRepository,
                                  connector: TrustConnector,
-                                 featureFlagService: FeatureFlagService
+                                 trustsStoreService: TrustsStoreService
                                )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   def onPageLoad(identifier: String): Action[AnyContent] = (actions.auth andThen actions.saveSession(identifier) andThen actions.getData).async {
@@ -41,7 +42,7 @@ class IndexController @Inject()(
 
       for {
         details <- connector.getTrustDetails(identifier)
-        is5mldEnabled <- featureFlagService.is5mldEnabled()
+        is5mldEnabled <- trustsStoreService.is5mldEnabled()
         isUnderlyingData5mld <- connector.isTrust5mld(identifier)
         ua <- Future.successful(
           request.userAnswers match {
@@ -61,6 +62,7 @@ class IndexController @Inject()(
           }
         )
         _ <- cacheRepository.set(ua)
+        _ <- trustsStoreService.updateTaskStatus(identifier, InProgress)
       } yield {
         Redirect(controllers.routes.AddAnOtherIndividualController.onPageLoad())
       }
