@@ -169,7 +169,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
           FakeRequest(POST, submitOneRoute)
             .withFormUrlEncodedBody(("value", "false"))
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any()))
+        when(mockStoreConnector.updateTaskStatus(any(), any())(any(), any()))
           .thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
@@ -248,7 +248,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
           FakeRequest(POST, submitAnotherRoute)
             .withFormUrlEncodedBody(("value", AddAnOtherIndividual.NoComplete.toString))
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
+        when(mockStoreConnector.updateTaskStatus(any(), any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 
@@ -385,7 +385,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures {
 
         val request = FakeRequest(POST, submitCompleteRoute)
 
-        when(mockStoreConnector.setTaskComplete(any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
+        when(mockStoreConnector.updateTaskStatus(any(), any())(any(), any())).thenReturn(Future.successful(HttpResponse.apply(OK, "")))
 
         val result = route(application, request).value
 

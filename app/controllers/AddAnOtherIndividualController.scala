@@ -21,7 +21,7 @@ import connectors.TrustStoreConnector
 import controllers.actions.StandardActionSets
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import handlers.ErrorHandler
-import javax.inject.Inject
+import models.TaskStatus.Completed
 import models.{AddAnOtherIndividual, NormalMode}
 import play.api.Logging
 import play.api.data.Form
@@ -33,6 +33,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.AddAnOtherIndividualViewHelper
 import views.html.{AddAnOtherIndividualView, AddAnOtherIndividualYesNoView, MaxedOutOtherIndividualsView}
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AddAnOtherIndividualController @Inject()(
@@ -104,11 +105,7 @@ class AddAnOtherIndividualController @Inject()(
               _ <- repository.set(updatedAnswers)
             } yield Redirect(controllers.routes.InterruptPageController.onPageLoad())
           } else {
-            for {
-              _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
-            } yield {
-              Redirect(appConfig.maintainATrustOverview)
-            }
+            submitComplete()(request)
           }
         }
       )
@@ -143,11 +140,7 @@ class AddAnOtherIndividualController @Inject()(
               Future.successful(Redirect(appConfig.maintainATrustOverview))
 
             case AddAnOtherIndividual.NoComplete =>
-              for {
-                _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
-              } yield {
-                Redirect(appConfig.maintainATrustOverview)
-              }
+              submitComplete()(request)
           }
         )
       } recoverWith {
@@ -162,7 +155,7 @@ class AddAnOtherIndividualController @Inject()(
     implicit request =>
 
       for {
-        _ <- trustStoreConnector.setTaskComplete(request.userAnswers.identifier)
+        _ <- trustStoreConnector.updateTaskStatus(request.userAnswers.identifier, Completed)
       } yield {
         Redirect(appConfig.maintainATrustOverview)
       }
