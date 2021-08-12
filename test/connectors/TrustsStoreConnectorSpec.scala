@@ -17,7 +17,7 @@
 package connectors
 
 import base.{SpecBase, WireMockHelper}
-import com.github.tomakehurst.wiremock.client.WireMock.{okJson, urlEqualTo, _}
+import com.github.tomakehurst.wiremock.client.WireMock.{urlEqualTo, _}
 import models.FeatureResponse
 import models.TaskStatus.Completed
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
@@ -48,20 +48,9 @@ class TrustsStoreConnectorSpec extends SpecBase
 
       val connector = application.injector.instanceOf[TrustsStoreConnector]
 
-      val json = Json.parse(
-        """
-          |{
-          |  "trustees": true,
-          |  "beneficiaries": false,
-          |  "settlors": false,
-          |  "otherIndividual": false,
-          |  "other": false
-          |}
-          |""".stripMargin)
-
       server.stubFor(
         post(urlEqualTo("/trusts-store/maintain/tasks/update-other-individuals/123456789"))
-          .willReturn(okJson(json.toString))
+          .willReturn(ok())
       )
 
       val futureResult = connector.updateTaskStatus("123456789", Completed)
