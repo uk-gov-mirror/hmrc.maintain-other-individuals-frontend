@@ -16,24 +16,26 @@
 
 package controllers
 
-import java.time.LocalDate
 import base.SpecBase
 import connectors.TrustConnector
+import models.TaskStatus.InProgress
 import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
-import org.mockito.Matchers.any
+import org.mockito.Matchers.{any, eq => eqTo}
 import org.mockito.Mockito._
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import services.FeatureFlagService
+import services.TrustsStoreService
+import uk.gov.hmrc.http.HttpResponse
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class IndexControllerSpec extends SpecBase {
 
   "Index Controller" must {
 
-    "redirect to task list when there are other individuals" in {
+    "redirect to AddAnOtherIndividualController and set task to in progress" in {
 
       val identifier = "1234567890"
       val startDate = "2019-06-01"
@@ -42,15 +44,18 @@ class IndexControllerSpec extends SpecBase {
       val isUnderlyingData5mld = false
 
       val mockTrustConnector = mock[TrustConnector]
-      val mockFeatureFlagService = mock[FeatureFlagService]
+      val mockTrustsStoreService = mock[TrustsStoreService]
 
       when(mockSessionRepository.set(any())).thenReturn(Future.successful(true))
 
       when(mockTrustConnector.getTrustDetails(any())(any(), any()))
         .thenReturn(Future.successful(TrustDetails(startDate = LocalDate.parse(startDate), trustTaxable = Some(isTaxable))))
 
-      when(mockFeatureFlagService.is5mldEnabled()(any(), any()))
+      when(mockTrustsStoreService.is5mldEnabled()(any(), any()))
         .thenReturn(Future.successful(is5mldEnabled))
+
+      when(mockTrustsStoreService.updateTaskStatus(any(), any())(any(), any()))
+        .thenReturn(Future.successful(HttpResponse(OK, "")))
 
       when(mockTrustConnector.isTrust5mld(any())(any(), any()))
         .thenReturn(Future.successful(isUnderlyingData5mld))
@@ -65,7 +70,7 @@ class IndexControllerSpec extends SpecBase {
       val application = applicationBuilder(userAnswers = None)
         .overrides(
           bind[TrustConnector].toInstance(mockTrustConnector),
-          bind[FeatureFlagService].toInstance(mockFeatureFlagService)
+          bind[TrustsStoreService].toInstance(mockTrustsStoreService)
         ).build()
 
       val request = FakeRequest(GET, routes.IndexController.onPageLoad(identifier).url)
@@ -75,6 +80,8 @@ class IndexControllerSpec extends SpecBase {
       status(result) mustEqual SEE_OTHER
 
       redirectLocation(result) mustBe Some(controllers.routes.AddAnOtherIndividualController.onPageLoad().url)
+
+      verify(mockTrustsStoreService).updateTaskStatus(eqTo(identifier), eqTo(InProgress))(any(), any())
 
       application.stop()
     }
