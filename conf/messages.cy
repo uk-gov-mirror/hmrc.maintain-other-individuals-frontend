@@ -184,6 +184,7 @@ otherIndividual.nationalInsuranceNumber.heading=Beth yw rhif Yswiriant Gwladol {
 otherIndividual.nationalInsuranceNumber.hint=Mae hwn ar ei gerdyn Yswiriant Gwladol, llythyr ynghylch budd-daliadau, slip cyflog neu P60. Er enghraifft, ’QQ 12 34 56 C’.
 otherIndividual.nationalInsuranceNumber.error.required=Nodwch rif Yswiriant Gwladol yr unigolyn
 otherIndividual.nationalInsuranceNumber.error.invalidFormat=Nodwch rif Yswiriant Gwladol yr unigolyn yn y fformat cywir
+otherIndividual.nationalInsuranceNumber.error.notUnique=Nodwch rif Yswiriant Gwladol nad yw wedi’i ddefnyddio eisoes i ychwanegu unigolyn
 otherIndividual.passportDetailsYesNo.checkYourAnswersLabel=A ydych yn gwybod manylion pasbort {0}?
 otherIndividual.passportDetailsYesNo.title=A ydych yn gwybod manylion pasbort yr unigolyn?
 otherIndividual.passportDetailsYesNo.heading=A ydych yn gwybod manylion pasbort {0}?
