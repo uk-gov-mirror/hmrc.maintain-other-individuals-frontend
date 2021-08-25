@@ -27,7 +27,7 @@ import viewmodels.{AnswerRow, AnswerSection}
 
 class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverter) {
 
-  def apply(userAnswers: UserAnswers, provisional: Boolean, otherIndividualName: String)(implicit messages: Messages): AnswerSection = {
+  def apply(userAnswers: UserAnswers, adding: Boolean, otherIndividualName: String)(implicit messages: Messages): AnswerSection = {
 
     val bound = answerRowConverter.bind(userAnswers, otherIndividualName)
 
@@ -78,7 +78,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
 
     AnswerSection(
       None,
-      if (provisional) add else amend
+      if (adding) add else amend
     )
 
   }

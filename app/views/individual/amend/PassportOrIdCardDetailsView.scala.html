@@ -29,14 +29,14 @@
     submitButton: SubmitButton
 )
 
-@(form: Form[_], name: String, countryOptions:Seq[InputOption])(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mode: Mode, name: String, countryOptions:Seq[InputOption])(implicit request: Request[_], messages: Messages)
 
 @main_template(
     title = s"${errorPrefix(form)}${messages("otherIndividual.passportOrIdCardDetails.title")}",
     showBackLink = true
 ) {
 
-    @formHelper(action = PassportOrIdCardDetailsController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = PassportOrIdCardDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 

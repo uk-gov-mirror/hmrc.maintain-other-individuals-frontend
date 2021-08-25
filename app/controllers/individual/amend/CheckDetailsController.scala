@@ -56,7 +56,7 @@ class CheckDetailsController @Inject()(
                      index: Int,
                      name: String)
                     (implicit request: Request[AnyContent]): Result = {
-    val section: AnswerSection = printHelper(userAnswers, provisional = false, name)
+    val section: AnswerSection = printHelper(userAnswers, adding = false, name)
     Ok(view(Seq(section), index))
   }
 
@@ -78,7 +78,7 @@ class CheckDetailsController @Inject()(
       }
   }
 
-  def renderFromUserAnswers(index: Int) : Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
+  def renderFromUserAnswers(index: Int): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
     implicit request =>
       render(request.userAnswers, index, request.otherIndividual)
   }

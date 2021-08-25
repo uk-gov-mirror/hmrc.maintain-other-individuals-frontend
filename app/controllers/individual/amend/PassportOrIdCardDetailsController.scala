@@ -18,8 +18,9 @@ package controllers.individual.amend
 
 import controllers.actions._
 import forms.CombinedPassportOrIdCardDetailsFormProvider
+
 import javax.inject.Inject
-import models.{CheckMode, CombinedPassportOrIdCard}
+import models.{CheckMode, CombinedPassportOrIdCard, Mode}
 import navigation.Navigator
 import pages.individual.PassportOrIdCardDetailsPage
 import play.api.data.Form
@@ -46,7 +47,7 @@ class PassportOrIdCardDetailsController @Inject()(
 
   private val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("otherIndividual.passportOrIdCardDetails")
 
-  def onPageLoad(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(PassportOrIdCardDetailsPage) match {
@@ -54,21 +55,21 @@ class PassportOrIdCardDetailsController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, request.otherIndividual, countryOptions.options))
+      Ok(view(preparedForm, mode, request.otherIndividual, countryOptions.options))
   }
 
-  def onSubmit(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, request.otherIndividual, countryOptions.options))),
+          Future.successful(BadRequest(view(formWithErrors, mode, request.otherIndividual, countryOptions.options))),
 
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(PassportOrIdCardDetailsPage, value))
             _              <- playbackRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(PassportOrIdCardDetailsPage, CheckMode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(PassportOrIdCardDetailsPage, mode, updatedAnswers))
       )
   }
 }
