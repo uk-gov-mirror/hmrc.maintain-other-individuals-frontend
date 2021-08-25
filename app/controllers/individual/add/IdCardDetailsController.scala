@@ -18,9 +18,7 @@ package controllers.individual.add
 
 import controllers.actions._
 import forms.IdCardDetailsFormProvider
-
-import javax.inject.Inject
-import models.{IdCard, Mode, NormalMode}
+import models.{IdCard, Mode}
 import navigation.Navigator
 import pages.individual.IdCardDetailsPage
 import play.api.data.Form
@@ -31,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.countryOptions.CountryOptions
 import views.html.individual.add.IdCardDetailsView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class IdCardDetailsController @Inject()(

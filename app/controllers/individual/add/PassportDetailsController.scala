@@ -18,9 +18,7 @@ package controllers.individual.add
 
 import controllers.actions._
 import forms.PassportDetailsFormProvider
-
-import javax.inject.Inject
-import models.{Mode, NormalMode, Passport}
+import models.{Mode, Passport}
 import navigation.Navigator
 import pages.individual.PassportDetailsPage
 import play.api.data.Form
@@ -31,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.countryOptions.CountryOptions
 import views.html.individual.add.PassportDetailsView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PassportDetailsController @Inject()(

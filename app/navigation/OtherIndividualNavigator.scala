@@ -19,11 +19,12 @@ package navigation
 import controllers.individual.add.{routes => addRts}
 import controllers.individual.amend.{routes => amendRts}
 import controllers.individual.{routes => rts}
-import javax.inject.Inject
 import models.{Mode, NormalMode, UserAnswers}
 import pages.Page
 import pages.individual._
 import play.api.mvc.Call
+
+import javax.inject.Inject
 
 class OtherIndividualNavigator @Inject()() extends Navigator {
 
@@ -60,20 +61,20 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case AddressYesNoPage => ua =>
       yesNoNav(ua, AddressYesNoPage, rts.LiveInTheUkYesNoController.onPageLoad(mode), navigateToMentalCapacity(mode, ua))
     case PassportDetailsYesNoPage => ua =>
-      yesNoNav(ua, PassportDetailsYesNoPage, addRts.PassportDetailsController.onPageLoad(), addRts.IdCardDetailsYesNoController.onPageLoad())
+      yesNoNav(ua, PassportDetailsYesNoPage, addRts.PassportDetailsController.onPageLoad(mode), addRts.IdCardDetailsYesNoController.onPageLoad(mode))
     case IdCardDetailsYesNoPage => ua =>
-      yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(), navigateToMentalCapacity(mode, ua))
+      yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(mode), navigateToMentalCapacity(mode, ua))
     case PassportOrIdCardDetailsYesNoPage => ua =>
-      yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(), navigateToMentalCapacity(mode, ua))
+      yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(mode), navigateToMentalCapacity(mode, ua))
     case MentalCapacityYesNoPage => ua =>
       yesNoNav(ua, MentalCapacityYesNoPage, navigateToStartDateOrCheckDetails(mode, ua), navigateToStartDateOrCheckDetails(mode, ua))
   }
 
   private def navigateToPassportDetails(mode: Mode) = {
     if (mode == NormalMode) {
-      addRts.PassportDetailsYesNoController.onPageLoad()
+      addRts.PassportDetailsYesNoController.onPageLoad(mode)
     } else {
-      amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad()
+      amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
     }
   }
 
@@ -124,7 +125,7 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
 
   private def navigateToStartDateOrCheckDetails(mode: Mode, answers: UserAnswers): Call = {
     if (mode == NormalMode) {
-      addRts.WhenIndividualAddedController.onPageLoad()
+      addRts.WhenIndividualAddedController.onPageLoad(mode)
     } else {
       checkDetailsRoute(answers)
     }

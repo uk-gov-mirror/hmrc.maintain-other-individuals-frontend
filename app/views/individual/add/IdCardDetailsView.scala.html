@@ -36,7 +36,7 @@
     showBackLink = true
 ) {
 
-    @formHelper(action = IdCardDetailsController.onSubmit(), 'autoComplete -> "off") {
+    @formHelper(action = IdCardDetailsController.onSubmit(mode), 'autoComplete -> "off") {
 
         @errorSummary(form.errors)
 

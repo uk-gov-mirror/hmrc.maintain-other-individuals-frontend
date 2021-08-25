@@ -47,12 +47,12 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(NormalMode).url),
       bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(NormalMode).url),
       bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress",rts.NonUkAddressController.onPageLoad(NormalMode).url),
-      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", addRts.PassportDetailsYesNoController.onPageLoad().url),
-      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad().url),
-      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad().url),
-      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(PassportDetailsYesNoPage, "otherIndividual.passportDetailsYesNo", addRts.PassportDetailsYesNoController.onPageLoad(NormalMode).url),
+      bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad(NormalMode).url),
+      bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad(NormalMode).url),
+      bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(NormalMode).url),
-      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad().url)
+      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad(NormalMode).url)
     ).flatten
 
     lazy val amend: Seq[AnswerRow] = Seq(
@@ -71,8 +71,8 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.yesNoQuestion(LiveInTheUkYesNoPage, "otherIndividual.liveInTheUkYesNo", rts.LiveInTheUkYesNoController.onPageLoad(CheckMode).url),
       bound.addressQuestion(UkAddressPage, "otherIndividual.ukAddress", rts.UkAddressController.onPageLoad(CheckMode).url),
       bound.addressQuestion(NonUkAddressPage, "otherIndividual.nonUkAddress", rts.NonUkAddressController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad().url),
-      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad().url),
+      bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(CheckMode).url),
+      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(CheckMode).url)
     ).flatten
 

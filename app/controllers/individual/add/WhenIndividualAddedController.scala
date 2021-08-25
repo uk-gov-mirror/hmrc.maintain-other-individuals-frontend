@@ -16,12 +16,9 @@
 
 package controllers.individual.add
 
-import java.time.LocalDate
 import controllers.actions.{NameRequiredAction, StandardActionSets}
 import forms.DateAddedToTrustFormProvider
-
-import javax.inject.Inject
-import models.{Mode, NormalMode}
+import models.Mode
 import models.requests.OtherIndividualNameRequest
 import navigation.Navigator
 import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
@@ -31,6 +28,8 @@ import repositories.PlaybackRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.individual.add.WhenIndividualAddedView
 
+import java.time.LocalDate
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhenIndividualAddedController @Inject()(
