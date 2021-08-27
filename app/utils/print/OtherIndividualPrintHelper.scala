@@ -31,6 +31,8 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
 
     val bound = answerRowConverter.bind(userAnswers, otherIndividualName)
 
+    // TODO - refactor to avoid duplication (see https://github.com/hmrc/maintain-settlors-frontend/blob/master/app/utils/print/IndividualSettlorPrintHelper.scala)
+
     lazy val add: Seq[AnswerRow] = Seq(
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(NormalMode).url),
       bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(NormalMode).url),

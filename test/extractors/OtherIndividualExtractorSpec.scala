@@ -18,7 +18,7 @@ package extractors
 
 import generators.ModelGenerators
 import models.Constant.GB
-import models.{CombinedPassportOrIdCard, Name, NationalInsuranceNumber, OtherIndividual, UkAddress, UserAnswers}
+import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, OtherIndividual, Passport, UkAddress, UserAnswers}
 import org.scalatest.{FreeSpec, MustMatchers}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual._
@@ -82,6 +82,92 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(MentalCapacityYesNoPage) mustNot be(defined)
   }
 
+  "should populate user answers when individual has a passport" in {
+
+    val passport = Passport("country", "number", date)
+
+    val individual = OtherIndividual(
+      name = name,
+      dateOfBirth = Some(date),
+      countryOfNationality = None,
+      countryOfResidence = None,
+      identification = Some(passport),
+      address = Some(address),
+      mentalCapacityYesNo = None,
+      entityStart = date,
+      provisional = true
+    )
+
+    val result = extractor(answers, individual, index).get
+
+    result.get(IndexPage).get mustBe index
+    result.get(NamePage).get mustBe name
+    result.get(DateOfBirthYesNoPage).get mustBe true
+    result.get(DateOfBirthPage).get mustBe date
+    result.get(CountryOfNationalityYesNoPage) mustNot be(defined)
+    result.get(CountryOfNationalityUkYesNoPage) mustNot be(defined)
+    result.get(CountryOfNationalityPage) mustNot be(defined)
+    result.get(NationalInsuranceNumberYesNoPage).get mustBe false
+    result.get(NationalInsuranceNumberPage) mustNot be(defined)
+    result.get(CountryOfResidenceYesNoPage) mustNot be(defined)
+    result.get(CountryOfResidenceUkYesNoPage) mustNot be(defined)
+    result.get(CountryOfResidencePage) mustNot be(defined)
+    result.get(AddressYesNoPage).get mustBe true
+    result.get(LiveInTheUkYesNoPage).get mustBe true
+    result.get(UkAddressPage).get mustBe address
+    result.get(NonUkAddressPage) mustNot be(defined)
+    result.get(PassportDetailsYesNoPage).get mustBe true
+    result.get(PassportDetailsPage).get mustBe passport
+    result.get(IdCardDetailsYesNoPage) mustNot be(defined)
+    result.get(IdCardDetailsPage) mustNot be(defined)
+    result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
+    result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
+    result.get(MentalCapacityYesNoPage) mustNot be(defined)
+  }
+
+  "should populate user answers when individual has an ID card" in {
+
+    val idCard = IdCard("country", "number", date)
+
+    val individual = OtherIndividual(
+      name = name,
+      dateOfBirth = Some(date),
+      countryOfNationality = None,
+      countryOfResidence = None,
+      identification = Some(idCard),
+      address = Some(address),
+      mentalCapacityYesNo = None,
+      entityStart = date,
+      provisional = true
+    )
+
+    val result = extractor(answers, individual, index).get
+
+    result.get(IndexPage).get mustBe index
+    result.get(NamePage).get mustBe name
+    result.get(DateOfBirthYesNoPage).get mustBe true
+    result.get(DateOfBirthPage).get mustBe date
+    result.get(CountryOfNationalityYesNoPage) mustNot be(defined)
+    result.get(CountryOfNationalityUkYesNoPage) mustNot be(defined)
+    result.get(CountryOfNationalityPage) mustNot be(defined)
+    result.get(NationalInsuranceNumberYesNoPage).get mustBe false
+    result.get(NationalInsuranceNumberPage) mustNot be(defined)
+    result.get(CountryOfResidenceYesNoPage) mustNot be(defined)
+    result.get(CountryOfResidenceUkYesNoPage) mustNot be(defined)
+    result.get(CountryOfResidencePage) mustNot be(defined)
+    result.get(AddressYesNoPage).get mustBe true
+    result.get(LiveInTheUkYesNoPage).get mustBe true
+    result.get(UkAddressPage).get mustBe address
+    result.get(NonUkAddressPage) mustNot be(defined)
+    result.get(PassportDetailsYesNoPage).get mustBe false
+    result.get(PassportDetailsPage) mustNot be(defined)
+    result.get(IdCardDetailsYesNoPage).get mustBe true
+    result.get(IdCardDetailsPage).get mustBe idCard
+    result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
+    result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
+    result.get(MentalCapacityYesNoPage) mustNot be(defined)
+  }
+
   "should populate user answers when individual has a passport/ID card" in {
 
     val combined = CombinedPassportOrIdCard("country", "number", date)
@@ -116,6 +202,10 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(LiveInTheUkYesNoPage).get mustBe true
     result.get(UkAddressPage).get mustBe address
     result.get(NonUkAddressPage) mustNot be(defined)
+    result.get(PassportDetailsYesNoPage) mustNot be(defined)
+    result.get(PassportDetailsPage) mustNot be(defined)
+    result.get(IdCardDetailsYesNoPage) mustNot be(defined)
+    result.get(IdCardDetailsPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsYesNoPage).get mustBe true
     result.get(PassportOrIdCardDetailsPage).get mustBe combined
     result.get(MentalCapacityYesNoPage) mustNot be(defined)

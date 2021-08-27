@@ -118,6 +118,7 @@ class OtherIndividualExtractor @Inject()() {
           .flatMap(_.set(PassportDetailsPage, p))
         case Some(id: IdCard) => answers
           .set(NationalInsuranceNumberYesNoPage, false)
+          .flatMap(_.set(PassportDetailsYesNoPage, false))
           .flatMap(_.set(IdCardDetailsYesNoPage, true))
           .flatMap(_.set(IdCardDetailsPage, id))
         case Some(combined: CombinedPassportOrIdCard) => answers
