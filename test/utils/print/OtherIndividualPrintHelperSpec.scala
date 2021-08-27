@@ -64,7 +64,7 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
 
         val userAnswers = baseAnswers
           .set(PassportDetailsYesNoPage, true).success.value
-          .set(PassportDetailsPage, Passport("GB", "1", LocalDate.of(2030, 10, 10))).success.value
+          .set(PassportDetailsPage, Passport("GB", "123ABC456", LocalDate.of(2030, 10, 10))).success.value
           .set(IdCardDetailsYesNoPage, true).success.value
           .set(IdCardDetailsPage, IdCard("GB", "1", LocalDate.of(2030, 10, 10))).success.value
 
@@ -87,12 +87,12 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = messages("otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = rts.LiveInTheUkYesNoController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.ukAddress.checkYourAnswersLabel", name.displayName), answer = Html("value 1<br />value 2<br />AB1 1AB"), changeUrl = rts.UkAddressController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.nonUkAddress.checkYourAnswersLabel", name.displayName), answer = Html("value 1<br />value 2<br />Germany"), changeUrl = rts.NonUkAddressController.onPageLoad(mode).url),
-            AnswerRow(label = messages("otherIndividual.passportDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = addRts.PassportDetailsYesNoController.onPageLoad().url),
-            AnswerRow(label = messages("otherIndividual.passportDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = addRts.PassportDetailsController.onPageLoad().url),
-            AnswerRow(label = messages("otherIndividual.idCardDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = addRts.IdCardDetailsYesNoController.onPageLoad().url),
-            AnswerRow(label = messages("otherIndividual.idCardDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = addRts.IdCardDetailsController.onPageLoad().url),
+            AnswerRow(label = messages("otherIndividual.passportDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = addRts.PassportDetailsYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = messages("otherIndividual.passportDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />123ABC456<br />10 October 2030"), changeUrl = addRts.PassportDetailsController.onPageLoad(mode).url),
+            AnswerRow(label = messages("otherIndividual.idCardDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = addRts.IdCardDetailsYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = messages("otherIndividual.idCardDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = addRts.IdCardDetailsController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = rts.MentalCapacityYesNoController.onPageLoad(mode).url),
-            AnswerRow(label = messages("otherIndividual.whenIndividualAdded.checkYourAnswersLabel", name.displayName), answer = Html("1 January 2020"), changeUrl = addRts.WhenIndividualAddedController.onPageLoad().url)
+            AnswerRow(label = messages("otherIndividual.whenIndividualAdded.checkYourAnswersLabel", name.displayName), answer = Html("1 January 2020"), changeUrl = addRts.WhenIndividualAddedController.onPageLoad(mode).url)
           )
         )
       }
@@ -103,7 +103,7 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
 
         val userAnswers = baseAnswers
           .set(PassportOrIdCardDetailsYesNoPage, true).success.value
-          .set(PassportOrIdCardDetailsPage, CombinedPassportOrIdCard("GB", "1", LocalDate.of(2030, 10, 10))).success.value
+          .set(PassportOrIdCardDetailsPage, CombinedPassportOrIdCard("GB", "123ABC456", LocalDate.of(2030, 10, 10))).success.value
 
         val result = helper(userAnswers, adding = false, name.displayName)
         result mustBe AnswerSection(
@@ -124,8 +124,8 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = messages("otherIndividual.liveInTheUkYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = rts.LiveInTheUkYesNoController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.ukAddress.checkYourAnswersLabel", name.displayName), answer = Html("value 1<br />value 2<br />AB1 1AB"), changeUrl = rts.UkAddressController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.nonUkAddress.checkYourAnswersLabel", name.displayName), answer = Html("value 1<br />value 2<br />Germany"), changeUrl = rts.NonUkAddressController.onPageLoad(mode).url),
-            AnswerRow(label = messages("otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad().url),
-            AnswerRow(label = messages("otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />1<br />10 October 2030"), changeUrl = amendRts.PassportOrIdCardDetailsController.onPageLoad().url),
+            AnswerRow(label = messages("otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode).url),
+            AnswerRow(label = messages("otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />Number ending C456<br />10 October 2030"), changeUrl = amendRts.PassportOrIdCardDetailsController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = rts.MentalCapacityYesNoController.onPageLoad(mode).url)
           )
         )

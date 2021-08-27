@@ -95,7 +95,7 @@ class AddressYesNoControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual controllers.individual.add.routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual controllers.individual.add.routes.WhenIndividualAddedController.onPageLoad(NormalMode).url
 
       application.stop()
     }

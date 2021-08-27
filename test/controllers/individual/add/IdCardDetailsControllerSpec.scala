@@ -17,10 +17,9 @@
 package controllers.individual.add
 
 import java.time.LocalDate
-
 import base.SpecBase
 import forms.IdCardDetailsFormProvider
-import models.{IdCard, Name, UserAnswers}
+import models.{IdCard, Name, NormalMode, UserAnswers}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{IdCardDetailsPage, NamePage}
 import play.api.mvc.Call
@@ -36,18 +35,18 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
   private def form = formProvider.withPrefix("otherIndividual")
 
   def onwardRoute: Call = Call("GET", "/foo")
-  val name: Name = Name("FirstName", None, "LastName")
+  private val name: Name = Name("FirstName", None, "LastName")
 
   override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
     .set(NamePage, name).success.value
 
-  val idCardDetailsRoute: String = routes.IdCardDetailsController.onPageLoad().url
+  private val idCardDetailsRoute: String = routes.IdCardDetailsController.onPageLoad(NormalMode).url
 
-  val getRequest = FakeRequest(GET, idCardDetailsRoute)
+  private val getRequest = FakeRequest(GET, idCardDetailsRoute)
 
-  val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
+  private val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
-  val validData: IdCard = IdCard("country", "card number", LocalDate.of(2020, 1, 1))
+  private val validData: IdCard = IdCard("country", "card number", LocalDate.of(2020, 1, 1))
 
   "IdCardDetails Controller" must {
 
@@ -62,7 +61,7 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, countryOptions, name.displayName)(getRequest, messages).toString
+        view(form, NormalMode, countryOptions, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -82,7 +81,7 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(validData), countryOptions, name.displayName)(getRequest, messages).toString
+        view(form.fill(validData), NormalMode, countryOptions, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -104,7 +103,7 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, countryOptions, name.displayName)(request, messages).toString
+        view(boundForm, NormalMode, countryOptions, name.displayName)(request, messages).toString
 
       application.stop()
     }
@@ -128,7 +127,7 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad().url
+      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad(NormalMode).url
 
       application.stop()
     }

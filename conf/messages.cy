@@ -83,6 +83,7 @@ site.error=Gwall:
 site.cannotRemove=Peidiwch â thynnu
 site.cannotRemove-hidden=Peidiwch â thynnu {0}
 site.address.country.select=Dewiswch wlad
+site.number-ending = Rhif sy’n gorffen gyda {0}
 timeout.title=Bydd eich cais yn dod i ben cyn hir
 timeout.keep-alive-button=Yn eich blaen â’r cais
 unauthorised.title=Ni allwch ddefnyddio’r gwasanaeth hwn gyda’r cyfrif hwn

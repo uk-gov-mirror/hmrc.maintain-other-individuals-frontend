@@ -18,9 +18,7 @@ package controllers.individual.amend
 
 import controllers.actions._
 import forms.CombinedPassportOrIdCardDetailsFormProvider
-
-import javax.inject.Inject
-import models.{CheckMode, CombinedPassportOrIdCard, Mode}
+import models.{CombinedPassportOrIdCard, Mode}
 import navigation.Navigator
 import pages.individual.PassportOrIdCardDetailsPage
 import play.api.data.Form
@@ -31,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.countryOptions.CountryOptions
 import views.html.individual.amend.PassportOrIdCardDetailsView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PassportOrIdCardDetailsController @Inject()(

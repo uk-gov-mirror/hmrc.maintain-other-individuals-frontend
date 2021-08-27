@@ -18,7 +18,7 @@ package views.individual.add
 
 import controllers.individual.add.routes
 import forms.PassportDetailsFormProvider
-import models.{Name, Passport}
+import models.{Name, NormalMode, Passport}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import utils.InputOption
@@ -40,7 +40,7 @@ class PassportDetailsViewSpec extends QuestionViewBehaviours[Passport] {
     val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
-      view.apply(form, countryOptions, name.displayName)(fakeRequest, messages)
+      view.apply(form, NormalMode, countryOptions, name.displayName)(fakeRequest, messages)
 
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName)
 
@@ -52,7 +52,7 @@ class PassportDetailsViewSpec extends QuestionViewBehaviours[Passport] {
         form,
         applyView,
         messageKeyPrefix,
-        routes.PassportDetailsController.onSubmit().url,
+        routes.PassportDetailsController.onSubmit(NormalMode).url,
         Seq(("country", None), ("number", None)),
         "expiryDate",
         name.displayName

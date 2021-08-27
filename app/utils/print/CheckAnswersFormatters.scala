@@ -92,10 +92,13 @@ class CheckAnswersFormatters @Inject()(languageUtils: LanguageUtils,
   }
 
   def formatPassportOrIdCardDetails(passportOrIdCard: CombinedPassportOrIdCard)(implicit messages: Messages): Html = {
-    val lines =
-      Seq(
+    def formatNumber(number: String): String =
+      if (passportOrIdCard.detailsType.isProvisional) { number }
+      else { messages("site.number-ending", number.takeRight(4)) }
+
+    val lines = Seq(
         Some(country(passportOrIdCard.countryOfIssue)),
-        Some(escape(passportOrIdCard.number)),
+        Some(escape(formatNumber(passportOrIdCard.number))),
         Some(formatDate(passportOrIdCard.expirationDate))
       ).flatten
 
