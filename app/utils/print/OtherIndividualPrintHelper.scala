@@ -30,7 +30,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
   def apply(userAnswers: UserAnswers, adding: Boolean, otherIndividualName: String)(implicit messages: Messages): AnswerSection = {
 
     val bound = answerRowConverter.bind(userAnswers, otherIndividualName)
-    
+
     def answerRows(mode: Mode): Seq[AnswerRow] = Seq(
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(mode).url),
       bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(mode).url),

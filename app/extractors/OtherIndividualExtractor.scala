@@ -18,8 +18,8 @@ package extractors
 
 import com.google.inject.Inject
 import models.Constant.GB
-import models.{Address, CombinedPassportOrIdCard, IdCard, IndividualIdentification, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
-import pages.individual.{AddressYesNoPage, CountryOfNationalityPage, CountryOfNationalityUkYesNoPage, CountryOfNationalityYesNoPage, CountryOfResidencePage, CountryOfResidenceUkYesNoPage, CountryOfResidenceYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, IndexPage, LiveInTheUkYesNoPage, MentalCapacityYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, ProvisionalIdDetailsPage, UkAddressPage, WhenIndividualAddedPage}
+import models.{Address, CombinedPassportOrIdCard, IdCard, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
+import pages.individual._
 
 import scala.util.{Success, Try}
 
@@ -36,7 +36,6 @@ class OtherIndividualExtractor @Inject()() {
       .flatMap(_.set(MentalCapacityYesNoPage, individual.mentalCapacityYesNo))
       .flatMap(_.set(WhenIndividualAddedPage, individual.entityStart))
       .flatMap(_.set(IndexPage, index))
-      .flatMap(answers => extractIfIdDetailsAreProvisional(individual.identification, answers))
 
   private def extractCountryOfNationality(countryOfNationality: Option[String], answers: UserAnswers): Try[UserAnswers] = {
     if (answers.is5mldEnabled && answers.isUnderlyingData5mld) {
@@ -141,18 +140,6 @@ class OtherIndividualExtractor @Inject()() {
     } else {
       Success(answers)
     }
-  }
-
-  // `identification` is an instance of CombinedPassportOrIdCard => not added in session (i.e. not provisional)
-  // `identification` is an instance of Passport or IdCard => added in session (i.e. provisional)
-  // `identification` is empty or an instance of NationalInsuranceNumber => nothing to set
-  private def extractIfIdDetailsAreProvisional(identification: Option[IndividualIdentification], answers: UserAnswers): Try[UserAnswers] = {
-    val provisional: Option[Boolean] = identification match {
-      case Some(_: CombinedPassportOrIdCard) => Some(false)
-      case Some(_: Passport) | Some(_: IdCard) => Some(true)
-      case _ => None
-    }
-    answers.set(ProvisionalIdDetailsPage, provisional)
   }
 
 }

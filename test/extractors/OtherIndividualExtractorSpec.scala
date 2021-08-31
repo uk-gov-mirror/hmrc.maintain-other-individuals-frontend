@@ -250,7 +250,6 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
     result.get(MentalCapacityYesNoPage) mustNot be(defined)
-    result.get(ProvisionalIdDetailsPage) mustNot be(defined)
   }
 
   "should populate user answers when individual has no identification or address" in {

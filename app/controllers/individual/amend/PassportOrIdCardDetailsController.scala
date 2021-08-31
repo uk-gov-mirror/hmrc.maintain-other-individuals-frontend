@@ -18,6 +18,7 @@ package controllers.individual.amend
 
 import controllers.actions._
 import forms.CombinedPassportOrIdCardDetailsFormProvider
+import models.DetailsType.{Combined, CombinedProvisional}
 import models.{CombinedPassportOrIdCard, Mode}
 import navigation.Navigator
 import pages.individual.PassportOrIdCardDetailsPage
@@ -64,9 +65,15 @@ class PassportOrIdCardDetailsController @Inject()(
         formWithErrors =>
           Future.successful(BadRequest(view(formWithErrors, mode, request.otherIndividual, countryOptions.options))),
 
-        value =>
+        newAnswer =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(PassportOrIdCardDetailsPage, value))
+            maybeOldAnswer <- Future.successful(request.userAnswers.get(PassportOrIdCardDetailsPage))
+            detailsType = maybeOldAnswer match {
+                case Some(oldAnswer) if oldAnswer.number == newAnswer.number && !oldAnswer.detailsType.isProvisional => Combined
+                case _ => CombinedProvisional
+              }
+
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(PassportOrIdCardDetailsPage, newAnswer.copy(detailsType = detailsType)))
             _              <- playbackRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(PassportOrIdCardDetailsPage, mode, updatedAnswers))
       )
