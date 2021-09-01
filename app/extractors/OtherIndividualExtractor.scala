@@ -19,7 +19,7 @@ package extractors
 import com.google.inject.Inject
 import models.Constant.GB
 import models.{Address, CombinedPassportOrIdCard, IdCard, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
-import pages.individual.{AddressYesNoPage, CountryOfNationalityPage, CountryOfNationalityUkYesNoPage, CountryOfNationalityYesNoPage, CountryOfResidencePage, CountryOfResidenceUkYesNoPage, CountryOfResidenceYesNoPage, DateOfBirthPage, DateOfBirthYesNoPage, IdCardDetailsPage, IdCardDetailsYesNoPage, IndexPage, LiveInTheUkYesNoPage, MentalCapacityYesNoPage, NamePage, NationalInsuranceNumberPage, NationalInsuranceNumberYesNoPage, NonUkAddressPage, PassportDetailsPage, PassportDetailsYesNoPage, PassportOrIdCardDetailsPage, PassportOrIdCardDetailsYesNoPage, UkAddressPage, WhenIndividualAddedPage}
+import pages.individual._
 
 import scala.util.{Success, Try}
 
@@ -117,6 +117,7 @@ class OtherIndividualExtractor @Inject()() {
           .flatMap(_.set(PassportDetailsPage, p))
         case Some(id: IdCard) => answers
           .set(NationalInsuranceNumberYesNoPage, false)
+          .flatMap(_.set(PassportDetailsYesNoPage, false))
           .flatMap(_.set(IdCardDetailsYesNoPage, true))
           .flatMap(_.set(IdCardDetailsPage, id))
         case Some(combined: CombinedPassportOrIdCard) => answers
@@ -134,7 +135,8 @@ class OtherIndividualExtractor @Inject()() {
 
   private def extractPassportOrIdCardDetailsYesNo(address: Option[Address], answers: UserAnswers): Try[UserAnswers] = {
     if (address.isDefined) {
-      answers.set(PassportOrIdCardDetailsYesNoPage, false)
+      answers.set(PassportDetailsYesNoPage, false)
+        .flatMap(_.set(IdCardDetailsYesNoPage, false))
     } else {
       Success(answers)
     }

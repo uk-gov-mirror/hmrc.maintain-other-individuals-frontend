@@ -18,8 +18,7 @@ package controllers.individual.add
 
 import controllers.actions._
 import forms.PassportDetailsFormProvider
-import javax.inject.Inject
-import models.{NormalMode, Passport}
+import models.{Mode, Passport}
 import navigation.Navigator
 import pages.individual.PassportDetailsPage
 import play.api.data.Form
@@ -30,6 +29,7 @@ import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import utils.countryOptions.CountryOptions
 import views.html.individual.add.PassportDetailsView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PassportDetailsController @Inject()(
@@ -46,7 +46,7 @@ class PassportDetailsController @Inject()(
 
   private val form: Form[Passport] = formProvider.withPrefix("otherIndividual")
 
-  def onPageLoad(): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction) {
     implicit request =>
 
       val preparedForm = request.userAnswers.get(PassportDetailsPage) match {
@@ -54,21 +54,21 @@ class PassportDetailsController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, countryOptions.options, request.otherIndividual))
+      Ok(view(preparedForm, mode, countryOptions.options, request.otherIndividual))
   }
 
-  def onSubmit(): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = standardActionSets.verifiedForUtr.andThen(nameAction).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, countryOptions.options, request.otherIndividual))),
+          Future.successful(BadRequest(view(formWithErrors, mode, countryOptions.options, request.otherIndividual))),
 
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(PassportDetailsPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(PassportDetailsPage, NormalMode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(PassportDetailsPage, mode, updatedAnswers))
       )
   }
 }

@@ -17,13 +17,13 @@
 package controllers.individual.amend
 
 import java.time.LocalDate
-
 import base.SpecBase
 import forms.CombinedPassportOrIdCardDetailsFormProvider
-import models.{CombinedPassportOrIdCard, Name, UserAnswers}
+import models.{CombinedPassportOrIdCard, DetailsType, Mode, Name, NormalMode, UserAnswers}
 import navigation.Navigator
+import org.mockito.ArgumentCaptor
 import org.mockito.Matchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{verify, when}
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, PassportOrIdCardDetailsPage}
 import play.api.data.Form
@@ -41,13 +41,13 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
   private val formProvider: CombinedPassportOrIdCardDetailsFormProvider = new CombinedPassportOrIdCardDetailsFormProvider(frontendAppConfig)
   private val form: Form[CombinedPassportOrIdCard] = formProvider.withPrefix("otherIndividual.passportOrIdCardDetails")
   private val name: Name = Name("Joe", None, "Bloggs")
-
+  private val mode: Mode = NormalMode
   private val countryOptions: CountryOptions = injector.instanceOf[CountryOptions]
 
   override val emptyUserAnswers: UserAnswers = super.emptyUserAnswers
     .set(NamePage, name).success.value
   
-  private lazy val passportOrIdCardDetailsRoute: String = routes.PassportOrIdCardDetailsController.onPageLoad().url
+  private lazy val passportOrIdCardDetailsRoute: String = routes.PassportOrIdCardDetailsController.onPageLoad(mode).url
 
   private val validData: CombinedPassportOrIdCard = CombinedPassportOrIdCard("country", "number", LocalDate.parse("2020-02-03"))
 
@@ -66,7 +66,7 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, name.displayName, countryOptions.options)(request, messages).toString
+        view(form, mode, name.displayName, countryOptions.options)(request, messages).toString
 
       application.stop()
     }
@@ -86,7 +86,7 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(validData), name.displayName, countryOptions.options)(request, messages).toString
+        view(form.fill(validData), mode, name.displayName, countryOptions.options)(request, messages).toString
 
       application.stop()
     }
@@ -108,7 +108,8 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
             "number" -> "123456",
             "expiryDate.day"   -> validData.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validData.expirationDate.getMonthValue.toString,
-            "expiryDate.year"  -> validData.expirationDate.getYear.toString
+            "expiryDate.year"  -> validData.expirationDate.getYear.toString,
+            "detailsType"      -> DetailsType.Combined.toString
           )
 
       val result = route(application, request).value
@@ -137,7 +138,7 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, name.displayName, countryOptions.options)(request, messages).toString
+        view(boundForm, NormalMode, name.displayName, countryOptions.options)(request, messages).toString
 
       application.stop()
     }

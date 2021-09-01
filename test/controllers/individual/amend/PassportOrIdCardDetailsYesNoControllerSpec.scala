@@ -18,7 +18,7 @@ package controllers.individual.amend
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.mockito.Matchers.any
 import org.mockito.Mockito.when
@@ -42,7 +42,7 @@ class PassportOrIdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSu
   override val emptyUserAnswers: UserAnswers = super.emptyUserAnswers
     .set(NamePage, name).success.value
   
-  private lazy val passportOrIdCardDetailsYesNoRoute: String = routes.PassportOrIdCardDetailsYesNoController.onPageLoad().url
+  private lazy val passportOrIdCardDetailsYesNoRoute: String = routes.PassportOrIdCardDetailsYesNoController.onPageLoad(NormalMode).url
 
   "PassportOrIdCardDetailsYesNo Controller" must {
 
@@ -59,7 +59,7 @@ class PassportOrIdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSu
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, name.displayName)(request, messages).toString
+        view(form, NormalMode, name.displayName)(request, messages).toString
 
       application.stop()
     }
@@ -79,7 +79,7 @@ class PassportOrIdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSu
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(true), name.displayName)(request, messages).toString
+        view(form.fill(true), NormalMode, name.displayName)(request, messages).toString
 
       application.stop()
     }
@@ -124,7 +124,7 @@ class PassportOrIdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSu
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, name.displayName)(request, messages).toString
+        view(boundForm, NormalMode, name.displayName)(request, messages).toString
 
       application.stop()
     }

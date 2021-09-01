@@ -16,8 +16,6 @@
 
 package controllers.individual.amend
 
-import java.time.LocalDate
-
 import base.SpecBase
 import connectors.TrustConnector
 import models.{Name, OtherIndividual, UkAddress}
@@ -35,6 +33,7 @@ import uk.gov.hmrc.http.HttpResponse
 import utils.print.OtherIndividualPrintHelper
 import views.html.individual.amend.CheckDetailsView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFutures {
@@ -70,7 +69,8 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
     .set(AddressYesNoPage, true).success.value
     .set(LiveInTheUkYesNoPage, true).success.value
     .set(UkAddressPage, address).success.value
-    .set(PassportOrIdCardDetailsYesNoPage, false).success.value
+    .set(PassportDetailsYesNoPage, false).success.value
+    .set(IdCardDetailsYesNoPage, false).success.value
     .set(WhenIndividualAddedPage, startDate).success.value
 
   "CheckDetails Controller" must {
@@ -94,7 +94,7 @@ class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFu
 
       val view = application.injector.instanceOf[CheckDetailsView]
       val printHelper = application.injector.instanceOf[OtherIndividualPrintHelper]
-      val answerSection = printHelper(userAnswers, provisional = false, name.displayName)
+      val answerSection = printHelper(userAnswers, adding = false, name.displayName)
 
       status(result) mustEqual OK
 

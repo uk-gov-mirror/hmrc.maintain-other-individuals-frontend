@@ -16,12 +16,9 @@
 
 package controllers.individual.add
 
-import java.time.LocalDate
-
 import controllers.actions.{NameRequiredAction, StandardActionSets}
 import forms.DateAddedToTrustFormProvider
-import javax.inject.Inject
-import models.NormalMode
+import models.Mode
 import models.requests.OtherIndividualNameRequest
 import navigation.Navigator
 import pages.individual.{DateOfBirthPage, WhenIndividualAddedPage}
@@ -31,6 +28,8 @@ import repositories.PlaybackRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.individual.add.WhenIndividualAddedView
 
+import java.time.LocalDate
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class WhenIndividualAddedController @Inject()(
@@ -44,7 +43,7 @@ class WhenIndividualAddedController @Inject()(
                                                view: WhenIndividualAddedView
                                              )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction) {
     implicit request =>
 
       val form = formProvider.withConfig("otherIndividual.whenIndividualAdded", minDate)
@@ -54,22 +53,22 @@ class WhenIndividualAddedController @Inject()(
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, request.otherIndividual))
+      Ok(view(preparedForm, mode, request.otherIndividual))
   }
 
-  def onSubmit(): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (standardActionSets.verifiedForUtr andThen nameAction).async {
     implicit request =>
 
       val form = formProvider.withConfig("otherIndividual.whenIndividualAdded", minDate)
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, request.otherIndividual))),
+          Future.successful(BadRequest(view(formWithErrors, mode, request.otherIndividual))),
         value =>
           for {
             updatedAnswers <- Future.fromTry(request.userAnswers.set(WhenIndividualAddedPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, NormalMode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(WhenIndividualAddedPage, mode, updatedAnswers))
       )
   }
 

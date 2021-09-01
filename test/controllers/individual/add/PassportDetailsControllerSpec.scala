@@ -17,10 +17,9 @@
 package controllers.individual.add
 
 import java.time.LocalDate
-
 import base.SpecBase
 import forms.PassportDetailsFormProvider
-import models.{Name, Passport, UserAnswers}
+import models.{Name, NormalMode, Passport, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, PassportDetailsPage}
@@ -34,22 +33,22 @@ import views.html.individual.add.PassportDetailsView
 
 class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new PassportDetailsFormProvider()
+  private val formProvider = new PassportDetailsFormProvider()
   private def form = formProvider.withPrefix("otherIndividual")
 
   def onwardRoute: Call = Call("GET", "/foo")
-  val name: Name = Name("FirstName", None, "LastName")
+  private val name: Name = Name("FirstName", None, "LastName")
 
   override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
     .set(NamePage, name).success.value
 
-  val passportDetailsRoute: String = routes.PassportDetailsController.onPageLoad().url
+  private val passportDetailsRoute: String = routes.PassportDetailsController.onPageLoad(NormalMode).url
 
-  val getRequest = FakeRequest(GET, passportDetailsRoute)
+  private val getRequest = FakeRequest(GET, passportDetailsRoute)
 
-  val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
+  private val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
-  val validData: Passport = Passport("country", "passport number", LocalDate.of(2020, 1, 1))
+  private val validData: Passport = Passport("country", "passport number", LocalDate.of(2020, 1, 1))
 
   "PassportDetails Controller" must {
 
@@ -64,7 +63,7 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, countryOptions, name.displayName)(getRequest, messages).toString
+        view(form, NormalMode, countryOptions, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -84,7 +83,7 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(validData), countryOptions, name.displayName)(getRequest, messages).toString
+        view(form.fill(validData), NormalMode, countryOptions, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -106,7 +105,7 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, countryOptions, name.displayName)(request, messages).toString
+        view(boundForm, NormalMode, countryOptions, name.displayName)(request, messages).toString
 
       application.stop()
     }

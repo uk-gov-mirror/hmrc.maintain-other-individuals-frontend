@@ -17,10 +17,9 @@
 package controllers.individual.add
 
 import java.time.LocalDate
-
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, PassportDetailsYesNoPage}
@@ -32,18 +31,18 @@ import views.html.individual.add.PassportDetailsYesNoView
 
 class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new YesNoFormProvider()
+  private val formProvider = new YesNoFormProvider()
   private def form = formProvider.withPrefix("otherIndividual.passportDetailsYesNo")
 
   def onwardRoute: Call = Call("GET", "/foo")
-  val name: Name = Name("FirstName", None, "LastName")
+  private val name: Name = Name("FirstName", None, "LastName")
 
   override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
     .set(NamePage, name).success.value
 
-  val passportDetailsYesNoRoute: String = routes.PassportDetailsYesNoController.onPageLoad().url
+  private val passportDetailsYesNoRoute: String = routes.PassportDetailsYesNoController.onPageLoad(NormalMode).url
 
-  val getRequest = FakeRequest(GET, passportDetailsYesNoRoute)
+  private val getRequest = FakeRequest(GET, passportDetailsYesNoRoute)
 
   "PassportDetailsYesNo Controller" must {
 
@@ -58,7 +57,7 @@ class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form, name.displayName)(getRequest, messages).toString
+        view(form, NormalMode, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -78,7 +77,7 @@ class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual OK
 
       contentAsString(result) mustEqual
-        view(form.fill(true), name.displayName)(getRequest, messages).toString
+        view(form.fill(true), NormalMode, name.displayName)(getRequest, messages).toString
 
       application.stop()
     }
@@ -100,7 +99,7 @@ class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
       status(result) mustEqual BAD_REQUEST
 
       contentAsString(result) mustEqual
-        view(boundForm, name.displayName)(request, messages).toString
+        view(boundForm, NormalMode, name.displayName)(request, messages).toString
 
       application.stop()
     }

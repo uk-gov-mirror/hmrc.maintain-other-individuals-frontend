@@ -16,11 +16,9 @@
 
 package controllers.individual.add
 
-import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.DateAddedToTrustFormProvider
-import models.{Name, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthPage, NamePage, WhenIndividualAddedPage}
@@ -31,6 +29,8 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.add.WhenIndividualAddedView
 
+import java.time.{LocalDate, ZoneOffset}
+
   class WhenIndividualAddedControllerSpec extends SpecBase with MockitoSugar {
 
     private val formProvider = new DateAddedToTrustFormProvider()
@@ -39,7 +39,7 @@ import views.html.individual.add.WhenIndividualAddedView
 
     private val validAnswer = LocalDate.now(ZoneOffset.UTC)
 
-    private lazy val addedDateRoute = routes.WhenIndividualAddedController.onPageLoad().url
+    private lazy val addedDateRoute = routes.WhenIndividualAddedController.onPageLoad(NormalMode).url
 
     private val name = Name("New", None, "Individual")
 
@@ -71,7 +71,7 @@ import views.html.individual.add.WhenIndividualAddedView
         status(result) mustEqual OK
 
         contentAsString(result) mustEqual
-          view(form, name.displayName)(getRequest, messages).toString
+          view(form, NormalMode,name.displayName)(getRequest(), messages).toString
 
         application.stop()
       }
@@ -91,7 +91,7 @@ import views.html.individual.add.WhenIndividualAddedView
         status(result) mustEqual OK
 
         contentAsString(result) mustEqual
-          view(form.fill(validAnswer), name.displayName)(getRequest(), messages).toString
+          view(form.fill(validAnswer), NormalMode, name.displayName)(getRequest(), messages).toString
 
         application.stop()
       }
@@ -113,7 +113,7 @@ import views.html.individual.add.WhenIndividualAddedView
         status(result) mustEqual BAD_REQUEST
 
         contentAsString(result) mustEqual
-          view(boundForm, name.displayName)(request, messages).toString
+          view(boundForm, NormalMode, name.displayName)(request, messages).toString
 
         application.stop()
       }
@@ -152,7 +152,7 @@ import views.html.individual.add.WhenIndividualAddedView
           status(result) mustEqual BAD_REQUEST
 
           contentAsString(result) mustEqual
-            view(boundForm(submittedDate), name.displayName)(getRequest, messages).toString
+            view(boundForm(submittedDate), NormalMode, name.displayName)(getRequest(), messages).toString
 
           application.stop()
         }
@@ -172,7 +172,7 @@ import views.html.individual.add.WhenIndividualAddedView
           status(result) mustEqual BAD_REQUEST
 
           contentAsString(result) mustEqual
-            view(boundForm(submittedDate), name.displayName)(getRequest, messages).toString
+            view(boundForm(submittedDate), NormalMode, name.displayName)(getRequest(), messages).toString
 
           application.stop()
         }
@@ -192,7 +192,7 @@ import views.html.individual.add.WhenIndividualAddedView
           status(result) mustEqual BAD_REQUEST
 
           contentAsString(result) mustEqual
-            view(boundForm(submittedDate), name.displayName)(getRequest, messages).toString
+            view(boundForm(submittedDate), NormalMode, name.displayName)(getRequest(), messages).toString
 
           application.stop()
         }

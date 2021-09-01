@@ -19,7 +19,7 @@ package views.individual.amend
 import base.FakeTrustsApp
 import controllers.individual.amend.routes
 import forms.CombinedPassportOrIdCardDetailsFormProvider
-import models.{CombinedPassportOrIdCard, Name}
+import models.{CombinedPassportOrIdCard, Name, NormalMode}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import utils.InputOption
@@ -41,7 +41,7 @@ class PassportOrIdCardDetailsViewSpec extends QuestionViewBehaviours[CombinedPas
     val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptions].options
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
-      view.apply(form, name.displayName, countryOptions)(fakeRequest, messages)
+      view.apply(form, NormalMode, name.displayName, countryOptions)(fakeRequest, messages)
 
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName)
 
@@ -53,7 +53,7 @@ class PassportOrIdCardDetailsViewSpec extends QuestionViewBehaviours[CombinedPas
         form,
         applyView,
         messageKeyPrefix,
-        routes.PassportOrIdCardDetailsController.onSubmit().url,
+        routes.PassportOrIdCardDetailsController.onSubmit(NormalMode).url,
         Seq(("country", None), ("number", None)),
         "expiryDate",
         name.displayName

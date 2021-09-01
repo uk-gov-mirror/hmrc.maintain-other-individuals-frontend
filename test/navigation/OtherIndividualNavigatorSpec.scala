@@ -73,7 +73,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(NationalInsuranceNumberYesNoPage, true).success.value
 
         navigator.nextPage(NationalInsuranceNumberPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Do you know NINO page -> No -> Do you know address page" in {
@@ -97,7 +97,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(AddressYesNoPage, false).success.value
 
         navigator.nextPage(AddressYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Is address in UK page -> Yes -> UK address page" in {
@@ -110,7 +110,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "UK address page -> Do you know passport details page" in {
         navigator.nextPage(UkAddressPage, mode, emptyUserAnswers)
-          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
       }
 
       "Is address in UK page -> No -> Non-UK address page" in {
@@ -123,7 +123,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Non-UK address page -> Do you know passport details page" in {
         navigator.nextPage(NonUkAddressPage, mode, emptyUserAnswers)
-          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know passport details page -> Yes -> Passport details page" in {
@@ -131,12 +131,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportDetailsYesNoPage, true).success.value
 
         navigator.nextPage(PassportDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.PassportDetailsController.onPageLoad())
+          .mustBe(addRts.PassportDetailsController.onPageLoad(mode))
       }
 
       "Passport details page -> Start Date page" in {
         navigator.nextPage(PassportDetailsPage, mode, emptyUserAnswers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Do you know passport details page -> No -> Do you know ID card details page" in {
@@ -144,7 +144,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportDetailsYesNoPage, false).success.value
 
         navigator.nextPage(PassportDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.IdCardDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.IdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know ID card details page -> Yes -> ID card details page" in {
@@ -152,12 +152,12 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(IdCardDetailsYesNoPage, true).success.value
 
         navigator.nextPage(IdCardDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.IdCardDetailsController.onPageLoad())
+          .mustBe(addRts.IdCardDetailsController.onPageLoad(mode))
       }
 
       "ID card details page -> Start Date page" in {
         navigator.nextPage(IdCardDetailsPage, mode, emptyUserAnswers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Do you know ID card details page -> No -> Start Date page" in {
@@ -165,7 +165,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(IdCardDetailsYesNoPage, false).success.value
 
         navigator.nextPage(IdCardDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Start date page -> Check details" in {
@@ -256,7 +256,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "UK address page -> Do you know passport or ID card details page" in {
         navigator.nextPage(UkAddressPage, mode, baseAnswers)
-          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Is address in UK page -> No -> Non-UK address page" in {
@@ -269,7 +269,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Non-UK address page -> Do you know passport or ID card details page" in {
         navigator.nextPage(NonUkAddressPage, mode, baseAnswers)
-          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know passport or ID card details page -> Yes -> Passport or ID card details page" in {
@@ -277,7 +277,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportOrIdCardDetailsYesNoPage, true).success.value
 
         navigator.nextPage(PassportOrIdCardDetailsYesNoPage, mode, answers)
-          .mustBe(amendRts.PassportOrIdCardDetailsController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsController.onPageLoad(mode))
       }
 
       "Do you know passport or ID card details page -> No -> Check details" in {
@@ -432,7 +432,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(MentalCapacityYesNoPage, true).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Mental Capacity Yes/No page -> No -> Start Date page" in {
@@ -440,7 +440,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(MentalCapacityYesNoPage, false).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Do you know NINO page -> No -> Do you know country of residence page" in {
@@ -522,7 +522,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "UK address page -> Do you know passport details page" in {
         navigator.nextPage(UkAddressPage, mode, baseAnswers)
-          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
       }
 
       "Is address in UK page -> No -> Non-UK address page" in {
@@ -535,7 +535,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Non-UK address page -> Do you know passport details page" in {
         navigator.nextPage(NonUkAddressPage, mode, baseAnswers)
-          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know passport details page -> Yes -> Passport details page" in {
@@ -543,7 +543,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportDetailsYesNoPage, true).success.value
 
         navigator.nextPage(PassportDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.PassportDetailsController.onPageLoad())
+          .mustBe(addRts.PassportDetailsController.onPageLoad(mode))
       }
 
       "Passport details page -> Mental Capacity Yes/No page" in {
@@ -556,7 +556,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportDetailsYesNoPage, false).success.value
 
         navigator.nextPage(PassportDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.IdCardDetailsYesNoController.onPageLoad())
+          .mustBe(addRts.IdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know ID card details page -> Yes -> ID card details page" in {
@@ -564,7 +564,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(IdCardDetailsYesNoPage, true).success.value
 
         navigator.nextPage(IdCardDetailsYesNoPage, mode, answers)
-          .mustBe(addRts.IdCardDetailsController.onPageLoad())
+          .mustBe(addRts.IdCardDetailsController.onPageLoad(mode))
       }
 
       "ID card details page -> Mental Capacity Yes/No page" in {
@@ -814,7 +814,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "UK address page -> Do you know passport or ID card details page" in {
         navigator.nextPage(UkAddressPage, mode, baseAnswers)
-          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Is address in UK page -> No -> Non-UK address page" in {
@@ -827,7 +827,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Non-UK address page -> Do you know passport or ID card details page" in {
         navigator.nextPage(NonUkAddressPage, mode, baseAnswers)
-          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
       }
 
       "Do you know passport or ID card details page -> Yes -> Passport or ID card details page" in {
@@ -835,7 +835,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(PassportOrIdCardDetailsYesNoPage, true).success.value
 
         navigator.nextPage(PassportOrIdCardDetailsYesNoPage, mode, answers)
-          .mustBe(amendRts.PassportOrIdCardDetailsController.onPageLoad())
+          .mustBe(amendRts.PassportOrIdCardDetailsController.onPageLoad(mode))
       }
 
       "Passport or ID card details page -> Mental Capacity Yes/No page" in {
@@ -969,7 +969,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(MentalCapacityYesNoPage, true).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Mental Capacity Yes/No page -> No -> Start Date page" in {
@@ -977,7 +977,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
           .set(MentalCapacityYesNoPage, false).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
-          .mustBe(addRts.WhenIndividualAddedController.onPageLoad())
+          .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
       }
 
       "Start Date page -> Check details" in {

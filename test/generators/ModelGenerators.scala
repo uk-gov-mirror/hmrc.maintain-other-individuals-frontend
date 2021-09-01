@@ -16,5 +16,12 @@
 
 package generators
 
+import models.DetailsType
+import models.DetailsType.DetailsType
+import org.scalacheck.{Arbitrary, Gen}
+
 trait ModelGenerators {
+  implicit lazy val arbitraryDetailsType: Arbitrary[DetailsType] = Arbitrary {
+    Gen.oneOf(DetailsType.values)
+  }
 }
