@@ -37,7 +37,7 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case CountryOfNationalityPage => ua => navigateAwayFromCountryOfNationalityQuestions(mode, ua.isTaxable)
     case NationalInsuranceNumberPage => ua => navigateAwayFromNinoPages(mode, ua)
     case CountryOfResidencePage => ua => navigateAwayFromCountryOfResidenceQuestions(mode, ua)
-    case UkAddressPage | NonUkAddressPage => _ => navigateToPassportDetails(mode)
+    case UkAddressPage | NonUkAddressPage => ua => navigateToPassportDetails(mode, ua)
     case PassportDetailsPage | IdCardDetailsPage => ua => navigateToMentalCapacity(mode, ua)
     case PassportOrIdCardDetailsPage => ua => navigateToMentalCapacity(mode, ua)
     case WhenIndividualAddedPage => _ => addRts.CheckDetailsController.onPageLoad()
@@ -70,11 +70,11 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
       yesNoNav(ua, MentalCapacityYesNoPage, navigateToStartDateOrCheckDetails(mode, ua), navigateToStartDateOrCheckDetails(mode, ua))
   }
 
-  private def navigateToPassportDetails(mode: Mode) = {
-    if (mode == NormalMode) {
-      addRts.PassportDetailsYesNoController.onPageLoad(mode)
-    } else {
+  private def navigateToPassportDetails(mode: Mode, ua: UserAnswers) = {
+    if (ua.get(PassportOrIdCardDetailsYesNoPage).isDefined || ua.get(PassportOrIdCardDetailsPage).isDefined) {
       amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
+    } else {
+      addRts.PassportDetailsYesNoController.onPageLoad(mode)
     }
   }
 

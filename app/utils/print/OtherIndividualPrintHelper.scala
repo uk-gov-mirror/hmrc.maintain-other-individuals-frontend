@@ -54,7 +54,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(CheckMode).url),
       bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad(CheckMode).url),
       bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(mode).url),
-      bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad(mode).url)
+      if(adding) bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad(mode).url) else None
     ).flatten
 
 
