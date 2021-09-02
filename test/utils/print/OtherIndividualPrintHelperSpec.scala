@@ -126,8 +126,6 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
             AnswerRow(label = messages("otherIndividual.passportOrIdCardDetailsYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.passportOrIdCardDetails.checkYourAnswersLabel", name.displayName), answer = Html("United Kingdom<br />Number ending C456<br />10 October 2030"), changeUrl = amendRts.PassportOrIdCardDetailsController.onPageLoad(mode).url),
             AnswerRow(label = messages("otherIndividual.mentalCapacityYesNo.checkYourAnswersLabel", name.displayName), answer = Html("Yes"), changeUrl = rts.MentalCapacityYesNoController.onPageLoad(mode).url),
-            AnswerRow(label = messages("otherIndividual.whenIndividualAdded.checkYourAnswersLabel", name.displayName), answer = Html("1 January 2020"), changeUrl = addRts.WhenIndividualAddedController.onPageLoad(mode).url)
-
           )
         )
       }
