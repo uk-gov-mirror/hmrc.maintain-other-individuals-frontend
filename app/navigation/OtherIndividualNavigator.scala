@@ -70,23 +70,20 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
       yesNoNav(ua, MentalCapacityYesNoPage, navigateToStartDateOrCheckDetails(mode, ua), navigateToStartDateOrCheckDetails(mode, ua))
   }
 
-  private def navigateToPassportDetails(mode: Mode, ua: UserAnswers) = {
-    if (ua.get(PassportOrIdCardDetailsYesNoPage).isDefined || ua.get(PassportOrIdCardDetailsPage).isDefined) {
-      amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
-    } else {
-      addRts.PassportDetailsYesNoController.onPageLoad(mode)
+  private def navigateToPassportDetails(mode: Mode, ua: UserAnswers) =
+    ua.get(PassportOrIdCardDetailsYesNoPage).orElse(ua.get(PassportOrIdCardDetailsPage)) match {
+      case Some(_) => amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
+      case _ => addRts.PassportDetailsYesNoController.onPageLoad(mode)
     }
-  }
 
   private def navigateAwayFromDateOfBirthQuestions(is5mldEnabled: Boolean, mode: Mode): Call = {
-    println("***")
-    println(is5mldEnabled)
     if (is5mldEnabled) {
       rts.CountryOfNationalityYesNoController.onPageLoad(mode)
     } else {
       rts.NationalInsuranceNumberYesNoController.onPageLoad(mode)
     }
   }
+  
   private def navigateAwayFromNinoPages(mode: Mode, answers: UserAnswers): Call = {
     (answers.is5mldEnabled, isNinoDefined(answers)) match {
       case (true, _) => rts.CountryOfResidenceYesNoController.onPageLoad(mode)
