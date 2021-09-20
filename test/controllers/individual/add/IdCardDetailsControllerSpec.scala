@@ -17,11 +17,14 @@
 package controllers.individual.add
 
 import java.time.LocalDate
+
 import base.SpecBase
 import forms.IdCardDetailsFormProvider
 import models.{IdCard, Name, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{IdCardDetailsPage, NamePage}
+import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -111,7 +114,9 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, idCardDetailsRoute)
@@ -127,7 +132,7 @@ class IdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad(NormalMode).url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }

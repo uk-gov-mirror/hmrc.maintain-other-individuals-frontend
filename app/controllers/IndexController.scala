@@ -42,12 +42,10 @@ class IndexController @Inject()(
 
       for {
         details <- connector.getTrustDetails(identifier)
-        is5mldEnabled <- trustsStoreService.is5mldEnabled()
         isUnderlyingData5mld <- connector.isTrust5mld(identifier)
         ua <- Future.successful(
           request.userAnswers match {
             case Some(userAnswers) => userAnswers.copy(
-              is5mldEnabled = is5mldEnabled,
               isTaxable = details.isTaxable,
               isUnderlyingData5mld = isUnderlyingData5mld
             )
@@ -55,7 +53,6 @@ class IndexController @Inject()(
               internalId = request.user.internalId,
               identifier = identifier,
               whenTrustSetup = details.startDate,
-              is5mldEnabled = is5mldEnabled,
               isTaxable = details.isTaxable,
               isUnderlyingData5mld = isUnderlyingData5mld
             )

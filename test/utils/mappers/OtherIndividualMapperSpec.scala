@@ -196,7 +196,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
       val nino = "AA123456A"
 
-      val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true)
         .set(NamePage, name).success.value
         .set(DateOfBirthYesNoPage, true).success.value
         .set(DateOfBirthPage, dateOfBirth).success.value
@@ -225,7 +225,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
       val nino = "AA123456A"
 
-      val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true)
         .set(NamePage, name).success.value
         .set(DateOfBirthYesNoPage, true).success.value
         .set(DateOfBirthPage, dateOfBirth).success.value
@@ -256,7 +256,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
       val nino = "AA123456A"
 
-      val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true)
         .set(NamePage, name).success.value
         .set(DateOfBirthYesNoPage, true).success.value
         .set(DateOfBirthPage, dateOfBirth).success.value
@@ -284,7 +284,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
     "Uk country of nationality and residence" in {
 
-      val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+      val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true, isTaxable = false)
         .set(NamePage, name).success.value
         .set(DateOfBirthYesNoPage, true).success.value
         .set(DateOfBirthPage, dateOfBirth).success.value
@@ -310,7 +310,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
   "Non Uk country of nationality and residence" in {
 
-    val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+    val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true, isTaxable = false)
       .set(NamePage, name).success.value
       .set(DateOfBirthYesNoPage, true).success.value
       .set(DateOfBirthPage, dateOfBirth).success.value
@@ -337,7 +337,7 @@ class OtherIndividualMapperSpec extends SpecBase {
 
   "No country of nationality and residence" in {
 
-    val userAnswers = emptyUserAnswers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+    val userAnswers = emptyUserAnswers.copy(isUnderlyingData5mld = true, isTaxable = false)
       .set(NamePage, name).success.value
       .set(DateOfBirthYesNoPage, true).success.value
       .set(DateOfBirthPage, dateOfBirth).success.value

@@ -38,7 +38,7 @@ class OtherIndividualExtractor @Inject()() {
       .flatMap(_.set(IndexPage, index))
 
   private def extractCountryOfNationality(countryOfNationality: Option[String], answers: UserAnswers): Try[UserAnswers] = {
-    if (answers.is5mldEnabled && answers.isUnderlyingData5mld) {
+    if (answers.isUnderlyingData5mld) {
       countryOfNationality match {
         case Some(GB) => answers
           .set(CountryOfNationalityYesNoPage, true)
@@ -57,7 +57,7 @@ class OtherIndividualExtractor @Inject()() {
   }
 
   private def extractCountryOfResidence(countryOfResidence: Option[String], answers: UserAnswers): Try[UserAnswers] = {
-    if (answers.is5mldEnabled && answers.isUnderlyingData5mld) {
+    if (answers.isUnderlyingData5mld) {
       countryOfResidence match {
         case Some(GB) => answers
           .set(CountryOfResidenceYesNoPage, true)

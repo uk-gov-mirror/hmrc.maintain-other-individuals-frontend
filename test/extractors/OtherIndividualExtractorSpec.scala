@@ -307,7 +307,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true)
 
       val result = extractor(answers5mld, individual, index).get
 
@@ -348,7 +348,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true)
 
       val result = extractor(answers5mld, individual, index).get
 
@@ -389,7 +389,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true)
 
       val result = extractor(answers5mld, individual, index).get
 
@@ -431,7 +431,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true, isTaxable = false)
 
       val result = extractor(answers5mld, individual, index).get
 
@@ -470,7 +470,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true, isTaxable = false)
 
       val result = extractor(answers5mld, individual, index).get
 
@@ -509,7 +509,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         provisional = true
       )
 
-      val answers5mld = answers.copy(is5mldEnabled = true, isUnderlyingData5mld = true, isTaxable = false)
+      val answers5mld = answers.copy(isUnderlyingData5mld = true, isTaxable = false)
 
       val result = extractor(answers5mld, individual, index).get
 
