@@ -29,7 +29,6 @@ final case class UserAnswers(
                               whenTrustSetup: LocalDate,
                               data: JsObject = Json.obj(),
                               updatedAt: LocalDateTime = LocalDateTime.now,
-                              is5mldEnabled: Boolean = false,
                               isTaxable: Boolean = true,
                               isUnderlyingData5mld: Boolean = false
                             ) {
@@ -107,7 +106,6 @@ object UserAnswers {
         (__ \ "whenTrustSetup").read[LocalDate] and
         (__ \ "data").read[JsObject] and
         (__ \ "updatedAt").read(MongoDateTimeFormats.localDateTimeRead) and
-        (__ \ "is5mldEnabled").readWithDefault[Boolean](false) and
         (__ \ "isTaxable").readWithDefault[Boolean](true) and
         (__ \ "isUnderlyingData5mld").readWithDefault[Boolean](false)
       ) (UserAnswers.apply _)
@@ -123,7 +121,6 @@ object UserAnswers {
         (__ \ "whenTrustSetup").write[LocalDate] and
         (__ \ "data").write[JsObject] and
         (__ \ "updatedAt").write(MongoDateTimeFormats.localDateTimeWrite) and
-        (__ \ "is5mldEnabled").write[Boolean] and
         (__ \ "isTaxable").write[Boolean] and
         (__ \ "isUnderlyingData5mld").write[Boolean]
       ) (unlift(UserAnswers.unapply))

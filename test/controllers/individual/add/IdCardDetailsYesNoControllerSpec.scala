@@ -25,8 +25,10 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.add.IdCardDetailsYesNoView
-
 import java.time.LocalDate
+
+import navigation.Navigator
+import play.api.inject.bind
 
 class IdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
@@ -118,7 +120,9 @@ class IdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
     "redirect to the next page when valid data is submitted  is submitted" in {
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+          .overrides(bind[Navigator].toInstance(fakeNavigator))
+          .build()
 
       val request =
         FakeRequest(POST, idCardDetailsYesNoRoute)
@@ -128,7 +132,7 @@ class IdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
       status(result) mustEqual SEE_OTHER
 
-      redirectLocation(result).value mustEqual routes.WhenIndividualAddedController.onPageLoad(NormalMode).url
+      redirectLocation(result).value mustEqual fakeNavigator.desiredRoute.url
 
       application.stop()
     }
