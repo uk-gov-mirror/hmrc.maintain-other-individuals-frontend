@@ -18,7 +18,7 @@ package extractors
 
 import generators.ModelGenerators
 import models.Constant.GB
-import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, OtherIndividual, Passport, UkAddress, UserAnswers}
+import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, OtherIndividual, Passport, UkAddress, UserAnswers, YesNoDontKnow}
 import org.scalatest.{FreeSpec, MustMatchers}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual._
@@ -54,7 +54,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       countryOfResidence = None,
       identification = Some(nino),
       address = None,
-      mentalCapacityYesNo = None,
+      mentalCapacityYesNo = Some(YesNoDontKnow.Yes),
       entityStart = date,
       provisional = true
     )
@@ -79,7 +79,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(NonUkAddressPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-    result.get(MentalCapacityYesNoPage) mustNot be(defined)
+    result.get(MentalCapacityYesNoPage) mustBe Some(YesNoDontKnow.Yes)
   }
 
   "should populate user answers when individual has a passport" in {
@@ -93,7 +93,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       countryOfResidence = None,
       identification = Some(passport),
       address = Some(address),
-      mentalCapacityYesNo = None,
+      mentalCapacityYesNo = Some(YesNoDontKnow.DontKnow),
       entityStart = date,
       provisional = true
     )
@@ -122,7 +122,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(IdCardDetailsPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-    result.get(MentalCapacityYesNoPage) mustNot be(defined)
+    result.get(MentalCapacityYesNoPage) mustBe Some(YesNoDontKnow.DontKnow)
   }
 
   "should populate user answers when individual has an ID card" in {
@@ -136,7 +136,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       countryOfResidence = None,
       identification = Some(idCard),
       address = Some(address),
-      mentalCapacityYesNo = None,
+      mentalCapacityYesNo = Some(YesNoDontKnow.DontKnow),
       entityStart = date,
       provisional = true
     )
@@ -165,7 +165,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
     result.get(IdCardDetailsPage).get mustBe idCard
     result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
     result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-    result.get(MentalCapacityYesNoPage) mustNot be(defined)
+    result.get(MentalCapacityYesNoPage) mustBe Some(YesNoDontKnow.DontKnow)
   }
 
   "should populate user answers when individual has a passport/ID card" in {
@@ -302,7 +302,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = Some(GB),
         identification = Some(nino),
         address = None,
-        mentalCapacityYesNo = Some(true),
+        mentalCapacityYesNo = Some(YesNoDontKnow.Yes),
         entityStart = date,
         provisional = true
       )
@@ -329,7 +329,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe true
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.Yes
     }
 
     "with non UK country of Nationality and Residence" in {
@@ -343,7 +343,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = Some("FR"),
         identification = Some(nino),
         address = None,
-        mentalCapacityYesNo = Some(false),
+        mentalCapacityYesNo = Some(YesNoDontKnow.No),
         entityStart = date,
         provisional = true
       )
@@ -370,7 +370,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe false
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.No
     }
 
     "with unknown country of Nationality and Residence" in {
@@ -384,7 +384,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = None,
         identification = Some(nino),
         address = None,
-        mentalCapacityYesNo = Some(true),
+        mentalCapacityYesNo = Some(YesNoDontKnow.Yes),
         entityStart = date,
         provisional = true
       )
@@ -411,7 +411,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe true
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.Yes
     }
   }
 
@@ -426,7 +426,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = Some(GB),
         identification = None,
         address = None,
-        mentalCapacityYesNo = Some(true),
+        mentalCapacityYesNo = Some(YesNoDontKnow.Yes),
         entityStart = date,
         provisional = true
       )
@@ -453,7 +453,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe true
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.Yes
     }
 
     "with non UK country of Nationality and Residence" in {
@@ -465,7 +465,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = Some("FR"),
         identification = None,
         address = None,
-        mentalCapacityYesNo = Some(false),
+        mentalCapacityYesNo = Some(YesNoDontKnow.No),
         entityStart = date,
         provisional = true
       )
@@ -492,7 +492,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe false
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.No
     }
 
     "with unknown country of Nationality and Residence" in {
@@ -504,7 +504,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
         countryOfResidence = None,
         identification = None,
         address = None,
-        mentalCapacityYesNo = Some(true),
+        mentalCapacityYesNo = Some(YesNoDontKnow.Yes),
         entityStart = date,
         provisional = true
       )
@@ -531,7 +531,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
       result.get(NonUkAddressPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsYesNoPage) mustNot be(defined)
       result.get(PassportOrIdCardDetailsPage) mustNot be(defined)
-      result.get(MentalCapacityYesNoPage).get mustBe true
+      result.get(MentalCapacityYesNoPage).get mustBe YesNoDontKnow.Yes
     }
   }
 }

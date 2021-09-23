@@ -111,11 +111,13 @@ class OtherIndividualMapper extends Logging {
     }
   }
 
-  private def readMentalCapacity: Reads[Option[Boolean]] = {
-    MentalCapacityYesNoPage.path.readNullable[Boolean].flatMap[Option[Boolean]] {
-      case Some(value) => Reads(_ => JsSuccess(Some(value)))
-      case _ => Reads(_ => JsSuccess(None))
-    }
+  private def readMentalCapacity: Reads[Option[YesNoDontKnow]] = {
+    MentalCapacityYesNoPage.path
+      .readNullable[YesNoDontKnow]
+      .flatMap[Option[YesNoDontKnow]] {
+        case Some(value) => Reads(_ => JsSuccess(Some(value)))
+        case _ => Reads(_ => JsSuccess(None))
+      }
   }
 
 }

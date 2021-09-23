@@ -40,6 +40,8 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case PassportDetailsPage | IdCardDetailsPage => _ => rts.MentalCapacityYesNoController.onPageLoad(mode)
     case PassportOrIdCardDetailsPage => _ => rts.MentalCapacityYesNoController.onPageLoad(mode)
     case WhenIndividualAddedPage => _ => addRts.CheckDetailsController.onPageLoad()
+    case MentalCapacityYesNoPage => ua => navigateToStartDateOrCheckDetails(mode, ua)
+
   }
 
   private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
@@ -65,8 +67,6 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
       yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(mode), rts.MentalCapacityYesNoController.onPageLoad(mode))
     case PassportOrIdCardDetailsYesNoPage => ua =>
       yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(mode), rts.MentalCapacityYesNoController.onPageLoad(mode))
-    case MentalCapacityYesNoPage => ua =>
-      yesNoNav(ua, MentalCapacityYesNoPage, navigateToStartDateOrCheckDetails(mode, ua), navigateToStartDateOrCheckDetails(mode, ua))
   }
 
   private def navigateToPassportDetails(mode: Mode, ua: UserAnswers): Call = {

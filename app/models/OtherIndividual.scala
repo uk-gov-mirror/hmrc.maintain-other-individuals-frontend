@@ -27,7 +27,7 @@ final case class OtherIndividual(name: Name,
                                  countryOfResidence: Option[String],
                                  identification: Option[IndividualIdentification],
                                  address : Option[Address],
-                                 mentalCapacityYesNo: Option[Boolean],
+                                 mentalCapacityYesNo: Option[YesNoDontKnow],
                                  entityStart: LocalDate,
                                  provisional : Boolean)
 
@@ -40,7 +40,7 @@ object OtherIndividual {
       (__ \ 'countryOfResidence).readNullable[String] and
       __.lazyRead(readNullableAtSubPath[IndividualIdentification](__ \ 'identification)) and
       __.lazyRead(readNullableAtSubPath[Address](__ \ 'identification \ 'address)) and
-      (__ \ 'legallyIncapable).readNullable[Boolean].map(_.map(!_)) and
+      readMentalCapacity and
       (__ \ "entityStart").read[LocalDate] and
       (__ \ "provisional").readWithDefault(false)).tupled.map{
 
@@ -56,15 +56,26 @@ object OtherIndividual {
       (__ \ 'countryOfResidence).writeNullable[String] and
       (__ \ 'identification).writeNullable[IndividualIdentification] and
       (__ \ 'identification \ 'address).writeNullable[Address] and
-      (__ \ 'legallyIncapable).writeNullable[Boolean](x => JsBoolean(!x)) and
+      (__ \ 'legallyIncapable).writeNullable[YesNoDontKnow](writeMentalCapacity) and
       (__ \ "entityStart").write[LocalDate] and
       (__ \ "provisional").write[Boolean]
       ).apply(unlift(OtherIndividual.unapply))
 
-  def readNullableAtSubPath[T:Reads](subPath : JsPath) : Reads[Option[T]] = Reads (
+  private def readNullableAtSubPath[T:Reads](subPath : JsPath) : Reads[Option[T]] = Reads (
     _.transform(subPath.json.pick)
       .flatMap(_.validate[T])
       .map(Some(_))
       .recoverWith(_ => JsSuccess(None))
   )
+
+  private def readMentalCapacity: Reads[Option[YesNoDontKnow]] =
+    (__ \ 'legallyIncapable).readNullable[Boolean].flatMap[Option[YesNoDontKnow]] { x: Option[Boolean] =>
+      Reads(_ => JsSuccess(YesNoDontKnow.fromBoolean(x)))
+    }
+
+  private def writeMentalCapacity: Writes[YesNoDontKnow] = {
+    case YesNoDontKnow.Yes => JsBoolean(false)
+    case YesNoDontKnow.No => JsBoolean(true)
+    case _ => JsNull
+  }
 }

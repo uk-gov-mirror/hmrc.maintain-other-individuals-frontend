@@ -17,19 +17,19 @@
 package views.individual
 
 import controllers.individual.routes
-import forms.YesNoFormProvider
-import models.{Name, NormalMode}
+import forms.{YesNoDontKnowFormProvider, YesNoFormProvider}
+import models.{Name, NormalMode, YesNoDontKnow}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.YesNoViewBehaviours
+import views.behaviours.{QuestionViewBehaviours, YesNoViewBehaviours}
 import views.html.individual.MentalCapacityYesNoView
 
-class MentalCapacityYesNoViewSpec extends YesNoViewBehaviours {
+class MentalCapacityYesNoViewSpec extends QuestionViewBehaviours[YesNoDontKnow] {
 
   val messageKeyPrefix = "otherIndividual.mentalCapacityYesNo"
   val name: Name = Name("First", None, "Last")
 
-  val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)
+  val form: Form[YesNoDontKnow] = new YesNoDontKnowFormProvider().withPrefix(messageKeyPrefix)
 
   "MentalCapacityYesNoView" must {
 
@@ -41,8 +41,6 @@ class MentalCapacityYesNoViewSpec extends YesNoViewBehaviours {
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName,"p1", "bulletpoint1", "bulletpoint2", "bulletpoint3", "bulletpoint4")
 
     behave like pageWithBackLink(applyView(form))
-
-    behave like yesNoPage(form, applyView, messageKeyPrefix, Some(name.displayName), routes.MentalCapacityYesNoController.onSubmit(NormalMode).url)
 
     behave like pageWithASubmitButton(applyView(form))
   }

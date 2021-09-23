@@ -22,7 +22,7 @@ import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig
 import generators.Generators
-import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
+import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails, YesNoDontKnow}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import play.api.libs.json.{JsBoolean, Json}
@@ -193,7 +193,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
                   countryOfResidence = None,
                   identification = None,
                   address = None,
-                  mentalCapacityYesNo = None,
+                  mentalCapacityYesNo = Some(YesNoDontKnow.DontKnow),
                   entityStart = LocalDate.parse("2019-09-23"),
                   provisional = false
                 )
