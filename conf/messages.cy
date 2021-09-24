@@ -137,6 +137,10 @@ otherIndividual.addressYesNo.heading=A ydych yn gwybod cyfeiriad {0}?
 otherIndividual.addressYesNo.error.required=Dewiswch ’Iawn’ os ydych yn gwybod cyfeiriad yr unigolyn
 otherIndividual.checkDetails.title=Gwirio manylion yr unigolyn
 otherIndividual.checkDetails.heading=Gwirio manylion yr unigolyn
+
+otherIndividual.cannotChange.p1 = Does dim modd newid peth o’r wybodaeth rydym yn gofyn amdani ynghylch yr unigolyn.
+otherIndividual.cannotChange.p2 = Os oes angen i chi ddiweddaru manylion yr unigolyn, bydd yn rhaid i chi ei dynnu ac yna ei ychwanegu fel unigolyn newydd.
+
 otherIndividual.dateOfBirth.checkYourAnswersLabel=Beth yw dyddiad geni {0}?
 otherIndividual.dateOfBirth.title=Beth yw dyddiad geni’r unigolyn?
 otherIndividual.dateOfBirth.heading=Beth yw dyddiad geni {0}?

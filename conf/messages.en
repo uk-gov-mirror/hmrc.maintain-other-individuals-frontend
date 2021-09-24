@@ -107,6 +107,9 @@ otherIndividual.addressYesNo.error.required = Select yes if you know the individ
 otherIndividual.checkDetails.title = Check individual details
 otherIndividual.checkDetails.heading = Check individual details
 
+otherIndividual.cannotChange.p1 = Some of the information we ask about the individual cannot be changed.
+otherIndividual.cannotChange.p2 = If you need to update the individuals’s details, you will need to remove them, then add them as a new individual.
+
 otherIndividual.dateOfBirth.checkYourAnswersLabel = What is {0}’s date of birth?
 otherIndividual.dateOfBirth.title = What is the individual’s date of birth?
 otherIndividual.dateOfBirth.heading = What is {0}’s date of birth?
