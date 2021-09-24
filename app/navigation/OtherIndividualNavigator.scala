@@ -37,11 +37,10 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case NationalInsuranceNumberPage => _ => rts.CountryOfResidenceYesNoController.onPageLoad(mode)
     case CountryOfResidencePage => ua => navigateAwayFromCountryOfResidenceQuestions(mode, ua)
     case UkAddressPage | NonUkAddressPage => ua => navigateToPassportDetails(mode, ua)
-    case PassportDetailsPage | IdCardDetailsPage => _ => rts.MentalCapacityYesNoController.onPageLoad(mode)
-    case PassportOrIdCardDetailsPage => _ => rts.MentalCapacityYesNoController.onPageLoad(mode)
+    case PassportDetailsPage | IdCardDetailsPage => _ => navigateAwayFromPassportIdCardCombined(mode)
+    case PassportOrIdCardDetailsPage => _ => navigateAwayFromPassportIdCardCombined(mode)
     case WhenIndividualAddedPage => _ => addRts.CheckDetailsController.onPageLoad()
     case MentalCapacityYesNoPage => ua => navigateToStartDateOrCheckDetails(mode, ua)
-
   }
 
   private def yesNoNavigation(mode: Mode): PartialFunction[Page, UserAnswers => Call] = {
@@ -66,12 +65,24 @@ class OtherIndividualNavigator @Inject()() extends Navigator {
     case IdCardDetailsYesNoPage => ua =>
       yesNoNav(ua, IdCardDetailsYesNoPage, addRts.IdCardDetailsController.onPageLoad(mode), rts.MentalCapacityYesNoController.onPageLoad(mode))
     case PassportOrIdCardDetailsYesNoPage => ua =>
-      yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(mode), rts.MentalCapacityYesNoController.onPageLoad(mode))
+      if (mode == NormalMode) {
+        yesNoNav(ua, PassportOrIdCardDetailsYesNoPage, amendRts.PassportOrIdCardDetailsController.onPageLoad(mode), rts.MentalCapacityYesNoController.onPageLoad(mode))
+      } else {
+        rts.MentalCapacityYesNoController.onPageLoad(mode)
+      }
+  }
+
+  private def navigateAwayFromPassportIdCardCombined(mode: Mode): Call = {
+    rts.MentalCapacityYesNoController.onPageLoad(mode)
   }
 
   private def navigateToPassportDetails(mode: Mode, ua: UserAnswers): Call = {
     if (ua.get(PassportOrIdCardDetailsYesNoPage).isDefined || ua.get(PassportOrIdCardDetailsPage).isDefined) {
-      amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
+      if (mode == NormalMode) {
+        amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode)
+      } else {
+        rts.MentalCapacityYesNoController.onPageLoad(mode)
+      }
     } else {
       addRts.PassportDetailsYesNoController.onPageLoad(mode)
     }
