@@ -53,7 +53,7 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad(mode).url),
       bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(CheckMode).url),
       bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad(CheckMode).url),
-      bound.yesNoQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(mode).url),
+      bound.enumQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(mode).url, "site"),
       if(adding) bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad(mode).url) else None
     ).flatten
 

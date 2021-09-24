@@ -18,7 +18,7 @@ package extractors
 
 import com.google.inject.Inject
 import models.Constant.GB
-import models.{Address, CombinedPassportOrIdCard, IdCard, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers}
+import models.{Address, CombinedPassportOrIdCard, IdCard, NationalInsuranceNumber, NonUkAddress, OtherIndividual, Passport, UkAddress, UserAnswers, YesNoDontKnow}
 import pages.individual._
 
 import scala.util.{Success, Try}
@@ -33,9 +33,17 @@ class OtherIndividualExtractor @Inject()() {
       .flatMap(answers => extractCountryOfResidence(individual.countryOfResidence, answers))
       .flatMap(answers => extractAddress(individual.address, answers))
       .flatMap(answers => extractIdentification(individual, answers))
-      .flatMap(_.set(MentalCapacityYesNoPage, individual.mentalCapacityYesNo))
+      .flatMap(answers => extractMentalCapacity(individual.mentalCapacityYesNo, answers))
       .flatMap(_.set(WhenIndividualAddedPage, individual.entityStart))
       .flatMap(_.set(IndexPage, index))
+
+
+  private def extractMentalCapacity(mentalCapacityYesNo: Option[YesNoDontKnow], answers: UserAnswers): Try[UserAnswers] = {
+      mentalCapacityYesNo match {
+        case Some(v) => answers.set(MentalCapacityYesNoPage, v)
+        case None => Success(answers)
+    }
+  }
 
   private def extractCountryOfNationality(countryOfNationality: Option[String], answers: UserAnswers): Try[UserAnswers] = {
     if (answers.isUnderlyingData5mld) {

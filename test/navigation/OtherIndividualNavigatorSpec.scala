@@ -20,7 +20,7 @@ import base.SpecBase
 import controllers.individual.add.{routes => addRts}
 import controllers.individual.amend.{routes => amendRts}
 import controllers.individual.{routes => rts}
-import models.{CheckMode, CombinedPassportOrIdCard, Mode, NormalMode, UserAnswers}
+import models.{CheckMode, CombinedPassportOrIdCard, Mode, NormalMode, UserAnswers, YesNoDontKnow}
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual._
 
@@ -169,7 +169,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> Yes -> Start Date page" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, true).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.Yes).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
@@ -177,7 +177,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> No -> Start Date page" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, false).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.No).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
@@ -461,7 +461,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> Yes -> Check details" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, true).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.Yes).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(amendRts.CheckDetailsController.renderFromUserAnswers(index))
@@ -469,7 +469,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> No -> Check details" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, false).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.No).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(amendRts.CheckDetailsController.renderFromUserAnswers(index))
@@ -750,7 +750,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> Yes -> Start Date page" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, true).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.Yes).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
@@ -758,7 +758,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> No -> Start Date page" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, false).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.No).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(addRts.WhenIndividualAddedController.onPageLoad(mode))
@@ -885,7 +885,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> Yes -> Check details" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, true).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.Yes).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(amendRts.CheckDetailsController.renderFromUserAnswers(index))
@@ -893,7 +893,7 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Mental Capacity Yes/No page -> No -> Check details" in {
         val answers = baseAnswers
-          .set(MentalCapacityYesNoPage, false).success.value
+          .set(MentalCapacityYesNoPage, YesNoDontKnow.No).success.value
 
         navigator.nextPage(MentalCapacityYesNoPage, mode, answers)
           .mustBe(amendRts.CheckDetailsController.renderFromUserAnswers(index))

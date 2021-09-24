@@ -17,19 +17,20 @@
 package views.individual
 
 import controllers.individual.routes
-import forms.YesNoFormProvider
-import models.{Name, NormalMode}
+import forms.{YesNoDontKnowFormProvider, YesNoFormProvider}
+import models.{Name, NormalMode, YesNoDontKnow}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
-import views.behaviours.YesNoViewBehaviours
+import viewmodels.RadioOption
+import views.behaviours.{OptionsViewBehaviours, QuestionViewBehaviours, YesNoViewBehaviours}
 import views.html.individual.MentalCapacityYesNoView
 
-class MentalCapacityYesNoViewSpec extends YesNoViewBehaviours {
+class MentalCapacityYesNoViewSpec extends OptionsViewBehaviours {
 
   val messageKeyPrefix = "otherIndividual.mentalCapacityYesNo"
   val name: Name = Name("First", None, "Last")
 
-  val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)
+  val form: Form[YesNoDontKnow] = new YesNoDontKnowFormProvider().withPrefix(messageKeyPrefix)
 
   "MentalCapacityYesNoView" must {
 
@@ -38,11 +39,17 @@ class MentalCapacityYesNoViewSpec extends YesNoViewBehaviours {
     def applyView(form: Form[_]): HtmlFormat.Appendable =
       view.apply(form, NormalMode, name.displayName)(fakeRequest, messages)
 
+    val options = List(
+      RadioOption(id = "value-yes", value = YesNoDontKnow.Yes.toString, messageKey = "site.yes"),
+      RadioOption(id = "value-no", value = YesNoDontKnow.No.toString, messageKey = "site.no"),
+      RadioOption(id = "value-dontKnow", value = YesNoDontKnow.DontKnow.toString, messageKey = "site.dontKnow")
+    )
+
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName,"p1", "bulletpoint1", "bulletpoint2", "bulletpoint3", "bulletpoint4")
 
     behave like pageWithBackLink(applyView(form))
 
-    behave like yesNoPage(form, applyView, messageKeyPrefix, Some(name.displayName), routes.MentalCapacityYesNoController.onSubmit(NormalMode).url)
+    behave like pageWithOptions[YesNoDontKnow](form, applyView, options)
 
     behave like pageWithASubmitButton(applyView(form))
   }

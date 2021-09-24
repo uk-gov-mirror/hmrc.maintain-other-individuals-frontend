@@ -50,7 +50,7 @@ class OtherIndividualPrintHelperSpec extends SpecBase {
     .set(LiveInTheUkYesNoPage, true).success.value
     .set(UkAddressPage, ukAddress).success.value
     .set(NonUkAddressPage, nonUkAddress).success.value
-    .set(MentalCapacityYesNoPage, true).success.value
+    .set(MentalCapacityYesNoPage, YesNoDontKnow.Yes).success.value
     .set(WhenIndividualAddedPage, LocalDate.of(2020, 1, 1)).success.value
 
   "OtherIndividualPrintHelper" must {
