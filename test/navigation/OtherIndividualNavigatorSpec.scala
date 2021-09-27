@@ -554,27 +554,27 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "UK address page" when {
         "combined passport/id card details not present" must {
-          "-> Do you know passport details yes/no page" in {
+          "-> Mental capacity" in {
             navigator.nextPage(UkAddressPage, mode, baseAnswers)
               .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
           }
         }
 
         "combined passport/id card details yes/no present" must {
-          "-> Do you know passport or ID card details yes/no page" in {
+          "-> Mental capacity" in {
             val answers = baseAnswers.set(PassportOrIdCardDetailsYesNoPage, false).success.value
 
             navigator.nextPage(UkAddressPage, mode, answers)
-              .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
+              .mustBe(rts.MentalCapacityYesNoController.onPageLoad(mode))
           }
         }
 
         "combined passport/id card details present" must {
-          "-> Do you know passport or ID card details yes/no page" in {
+          "-> Mental capacity" in {
             val answers = baseAnswers.set(PassportOrIdCardDetailsPage, passportOrId).success.value
 
             navigator.nextPage(UkAddressPage, mode, answers)
-              .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
+              .mustBe(rts.MentalCapacityYesNoController.onPageLoad(mode))
           }
         }
       }
@@ -589,37 +589,37 @@ class OtherIndividualNavigatorSpec extends SpecBase with ScalaCheckPropertyCheck
 
       "Non-UK address page" when {
         "combined passport/id card details not present" must {
-          "-> Do you know passport details yes/no page" in {
+          "-> Mental capacity" in {
             navigator.nextPage(NonUkAddressPage, mode, baseAnswers)
               .mustBe(addRts.PassportDetailsYesNoController.onPageLoad(mode))
           }
         }
 
         "combined passport/id card details yes/no present" must {
-          "-> Do you know passport or ID card details yes/no page" in {
+          "-> Mental capacity" in {
             val answers = baseAnswers.set(PassportOrIdCardDetailsYesNoPage, false).success.value
 
             navigator.nextPage(NonUkAddressPage, mode, answers)
-              .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
+              .mustBe(rts.MentalCapacityYesNoController.onPageLoad(mode))
           }
         }
 
         "combined passport/id card details present" must {
-          "-> Do you know passport or ID card details yes/no page" in {
+          "-> Mental capacity" in {
             val answers = baseAnswers.set(PassportOrIdCardDetailsPage, passportOrId).success.value
 
             navigator.nextPage(NonUkAddressPage, mode, answers)
-              .mustBe(amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(mode))
+              .mustBe(rts.MentalCapacityYesNoController.onPageLoad(mode))
           }
         }
       }
 
-      "Do you know passport or ID card details page -> Yes -> Passport or ID card details page" in {
+      "Do you know passport or ID card details page -> Yes -> Mental capacity" in {
         val answers = baseAnswers
           .set(PassportOrIdCardDetailsYesNoPage, true).success.value
 
         navigator.nextPage(PassportOrIdCardDetailsYesNoPage, mode, answers)
-          .mustBe(amendRts.PassportOrIdCardDetailsController.onPageLoad(mode))
+          .mustBe(rts.MentalCapacityYesNoController.onPageLoad(mode))
       }
 
       "Passport or ID card details page -> Mental Capacity Yes/No page" in {
