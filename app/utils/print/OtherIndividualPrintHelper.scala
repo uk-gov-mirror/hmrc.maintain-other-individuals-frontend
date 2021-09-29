@@ -31,6 +31,9 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
 
     val bound = answerRowConverter.bind(userAnswers, otherIndividualName)
 
+    val changeLinkOrNone: (Boolean, String) => Option[String] =
+      (adding: Boolean, route: String) => if(adding) Some(route) else None
+
     def answerRows(mode: Mode): Seq[AnswerRow] = Seq(
       bound.nameQuestion(NamePage, "otherIndividual.name", rts.NameController.onPageLoad(mode).url),
       bound.yesNoQuestion(DateOfBirthYesNoPage, "otherIndividual.dateOfBirthYesNo", rts.DateOfBirthYesNoController.onPageLoad(mode).url),
@@ -51,8 +54,8 @@ class OtherIndividualPrintHelper @Inject()(answerRowConverter: AnswerRowConverte
       bound.passportDetailsQuestion(PassportDetailsPage, "otherIndividual.passportDetails", addRts.PassportDetailsController.onPageLoad(mode).url),
       bound.yesNoQuestion(IdCardDetailsYesNoPage, "otherIndividual.idCardDetailsYesNo", addRts.IdCardDetailsYesNoController.onPageLoad(mode).url),
       bound.idCardDetailsQuestion(IdCardDetailsPage, "otherIndividual.idCardDetails", addRts.IdCardDetailsController.onPageLoad(mode).url),
-      bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(CheckMode).url),
-      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", amendRts.PassportOrIdCardDetailsController.onPageLoad(CheckMode).url),
+      bound.yesNoQuestion(PassportOrIdCardDetailsYesNoPage, "otherIndividual.passportOrIdCardDetailsYesNo", changeLinkOrNone(adding, amendRts.PassportOrIdCardDetailsYesNoController.onPageLoad(CheckMode).url)),
+      bound.passportOrIdCardDetailsQuestion(PassportOrIdCardDetailsPage, "otherIndividual.passportOrIdCardDetails", changeLinkOrNone(adding, amendRts.PassportOrIdCardDetailsController.onPageLoad(CheckMode).url)),
       bound.enumQuestion(MentalCapacityYesNoPage, "otherIndividual.mentalCapacityYesNo", rts.MentalCapacityYesNoController.onPageLoad(mode).url, "site"),
       if(adding) bound.dateQuestion(WhenIndividualAddedPage, "otherIndividual.whenIndividualAdded", addRts.WhenIndividualAddedController.onPageLoad(mode).url) else None
     ).flatten

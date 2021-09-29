@@ -55,6 +55,13 @@ class AnswerRowConverter @Inject()(checkAnswersFormatters: CheckAnswersFormatter
       question(query, labelKey, format, changeUrl)
     }
 
+    def yesNoQuestion(query: Gettable[Boolean],
+                      labelKey: String,
+                      changeUrl: Option[String]): Option[AnswerRow] = {
+      val format = (x: Boolean) => checkAnswersFormatters.yesOrNo(x)
+      question(query, labelKey, format, changeUrl)
+    }
+
     def dateQuestion(query: Gettable[LocalDate],
                      labelKey: String,
                      changeUrl: String): Option[AnswerRow] = {
@@ -106,7 +113,7 @@ class AnswerRowConverter @Inject()(checkAnswersFormatters: CheckAnswersFormatter
 
     def passportOrIdCardDetailsQuestion(query: QuestionPage[CombinedPassportOrIdCard],
                                         labelKey: String,
-                                        changeUrl: String): Option[AnswerRow] = {
+                                        changeUrl: Option[String]): Option[AnswerRow] = {
       val format = (x: CombinedPassportOrIdCard) => checkAnswersFormatters.formatPassportOrIdCardDetails(x)
       question(query, labelKey, format, changeUrl)
     }
@@ -124,6 +131,20 @@ class AnswerRowConverter @Inject()(checkAnswersFormatters: CheckAnswersFormatter
                             labelKey: String,
                             format: T => Html,
                             changeUrl: String)
+                           (implicit rds: Reads[T]): Option[AnswerRow] = {
+      userAnswers.get(query) map { x =>
+        AnswerRow(
+          label = messages(s"$labelKey.checkYourAnswersLabel", name),
+          answer = format(x),
+          changeUrl = Some(changeUrl)
+        )
+      }
+    }
+
+    private def question[T](query: Gettable[T],
+                            labelKey: String,
+                            format: T => Html,
+                            changeUrl: Option[String])
                            (implicit rds: Reads[T]): Option[AnswerRow] = {
       userAnswers.get(query) map { x =>
         AnswerRow(

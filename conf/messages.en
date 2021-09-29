@@ -34,6 +34,7 @@ site.edit = Change
 site.hidden-delete = Remove {0}
 site.hidden-edit = Change {0}
 site.change.details = Change details
+site.cannot.change = Cannot change
 site.yes = Yes
 site.no = No
 site.or = or

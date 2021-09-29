@@ -17,7 +17,7 @@
 package controllers.individual
 
 import base.SpecBase
-import forms.{YesNoDontKnowFormProvider, YesNoFormProvider}
+import forms.YesNoDontKnowFormProvider
 import models.{Name, NormalMode, UserAnswers, YesNoDontKnow}
 import navigation.{FakeNavigator, Navigator}
 import pages.individual.{MentalCapacityYesNoPage, NamePage}
