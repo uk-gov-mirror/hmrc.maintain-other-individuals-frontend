@@ -78,6 +78,7 @@ site.edit=Newid
 site.hidden-delete=Tynnu {0}
 site.hidden-edit=Newid {0}
 site.change.details=Newid manylion
+site.cannot.change = Dim modd newid
 site.yes=Iawn
 site.no=Na
 site.or = neu
