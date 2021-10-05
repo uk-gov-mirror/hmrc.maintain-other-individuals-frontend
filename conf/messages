@@ -176,8 +176,8 @@ otherIndividual.mentalCapacityYesNo.p3 = HMRC will assume that the individual do
 otherIndividual.mentalCapacityYesNo.p4 = If you are not certain whether the individual has mental capacity, select ‘I don’t know’.
 
 otherIndividual.mentalCapacityYesNo.heading2 = Why HMRC are asking this question
-otherIndividual.mentalCapacityYesNo.p5 = Normally, HMRC can share a person’s data under the Money Laundering and Terrorist Financing (Amendment) Regulations 2020.
-otherIndividual.mentalCapacityYesNo.p6 = Where a person does not have mental capacity, HMRC are required to not share their personal data.
+otherIndividual.mentalCapacityYesNo.p5 = Under certain limited circumstances, HMRC can share personal data under the Money Laundering and Terrorist Financing (Amendment) Regulations 2020.
+otherIndividual.mentalCapacityYesNo.p6 = Where a person does not have mental capacity, HMRC will not share their personal data.
 
 otherIndividual.idCardDetails.checkYourAnswersLabel = What are {0}’s ID card details?
 otherIndividual.idCardDetails.title = What are the individual’s ID card details?
