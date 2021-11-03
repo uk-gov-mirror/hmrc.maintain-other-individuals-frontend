@@ -60,8 +60,6 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
 
     "get trusts details" in {
 
-      val utr = "1000000008"
-
       val json = Json.parse(
         """
           |{
@@ -91,11 +89,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
       val connector = application.injector.instanceOf[TrustConnector]
 
       server.stubFor(
-        get(urlEqualTo(s"/trusts/trust-details/$utr/transformed"))
+        get(urlEqualTo(s"/trusts/trust-details/$identifier/transformed"))
           .willReturn(okJson(json.toString))
       )
 
-      val processed = connector.getTrustDetails(utr)
+      val processed = connector.getTrustDetails(identifier)
 
       whenReady(processed) {
         r =>
@@ -106,8 +104,6 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
     "get other individuals returns a trust with empty lists" must {
 
       "return a default empty list of other individuals" in {
-
-        val identifier = "1000000008"
 
         val json = Json.parse(
           """
@@ -147,7 +143,6 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
     "get other individuals" must {
 
       "parse the response and return the other individuals" in {
-        val utr = "1000000008"
 
         val json = Json.parse(
           """
@@ -176,11 +171,11 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
         val connector = application.injector.instanceOf[TrustConnector]
 
         server.stubFor(
-          get(urlEqualTo(s"/trusts/other-individuals/$utr/transformed"))
+          get(urlEqualTo(s"/trusts/other-individuals/$identifier/transformed"))
             .willReturn(okJson(json.toString))
         )
 
-        val processed = connector.getOtherIndividuals(utr)
+        val processed = connector.getOtherIndividuals(identifier)
 
         whenReady(processed) {
           result =>
