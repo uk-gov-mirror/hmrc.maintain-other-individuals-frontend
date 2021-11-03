@@ -91,7 +91,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
       val connector = application.injector.instanceOf[TrustConnector]
 
       server.stubFor(
-        get(urlEqualTo(s"/trusts/$utr/trust-details"))
+        get(urlEqualTo(s"/trusts/trust-details/$utr/transformed"))
           .willReturn(okJson(json.toString))
       )
 
