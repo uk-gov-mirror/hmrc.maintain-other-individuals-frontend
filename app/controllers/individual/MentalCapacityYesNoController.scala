@@ -17,7 +17,7 @@
 package controllers.individual
 
 import controllers.actions._
-import forms.{YesNoDontKnowFormProvider, YesNoFormProvider}
+import forms.YesNoDontKnowFormProvider
 import models.{Mode, YesNoDontKnow}
 import navigation.Navigator
 import pages.individual.MentalCapacityYesNoPage

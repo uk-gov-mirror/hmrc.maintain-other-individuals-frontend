@@ -40,7 +40,7 @@ class LiveInTheUkYesNoControllerSpec extends SpecBase with MockitoSugar {
   val name = Name("FirstName", None, "LastName")
 
 
-  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
+  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   lazy val liveInTheUkYesNoControllerRoute = routes.LiveInTheUkYesNoController.onPageLoad(NormalMode).url

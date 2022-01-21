@@ -43,7 +43,7 @@ import java.time.{LocalDate, ZoneOffset}
 
     private val name = Name("New", None, "Individual")
 
-    override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", date)
+    override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", date)
       .set(NamePage, name)
       .success.value
 
@@ -120,7 +120,7 @@ import java.time.{LocalDate, ZoneOffset}
 
       "return a Bad Request and errors" when {
 
-        def userAnswers(trustStartDate: LocalDate, dateOfBirth: LocalDate) = UserAnswers("id", "UTRUTRUTR", trustStartDate)
+        def userAnswers(trustStartDate: LocalDate, dateOfBirth: LocalDate) = UserAnswers("id", "UTRUTRUTR", "sessionId", trustStartDate)
           .set(NamePage, name).success.value
           .set(DateOfBirthPage, dateOfBirth).success.value
 

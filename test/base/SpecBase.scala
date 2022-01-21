@@ -47,7 +47,7 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
 
   val fakeNavigator = new FakeNavigator()
 
-  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", LocalDate.now(), Json.obj())
+  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", "sessionId", LocalDate.now(), Json.obj())
 
   val bodyParsers: BodyParsers.Default = injector.instanceOf[BodyParsers.Default]
 

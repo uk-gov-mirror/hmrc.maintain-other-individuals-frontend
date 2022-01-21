@@ -39,7 +39,7 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute: Call = Call("GET", "/foo")
   private val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   private val passportDetailsRoute: String = routes.PassportDetailsController.onPageLoad(NormalMode).url

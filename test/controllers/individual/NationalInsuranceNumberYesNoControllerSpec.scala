@@ -36,7 +36,7 @@ class NationalInsuranceNumberYesNoControllerSpec extends SpecBase with MockitoSu
   val individualName = "FirstName LastName"
   val name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
+  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   lazy val nationalInsuranceNumberYesNoRoute = routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url

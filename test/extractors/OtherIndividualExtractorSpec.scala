@@ -31,6 +31,7 @@ class OtherIndividualExtractorSpec extends FreeSpec with ScalaCheckPropertyCheck
   val answers: UserAnswers = UserAnswers(
     "Id",
     "UTRUTRUTR",
+    "sessionId",
     LocalDate.of(1987, 12, 31),
     Json.obj()
   )
