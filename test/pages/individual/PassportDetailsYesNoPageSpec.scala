@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ class PassportDetailsYesNoPageSpec extends PageBehaviours {
     }
 
     "implement cleanup logic when YES selected" in {
-      val userAnswers = UserAnswers("id", "utr", LocalDate.now)
+      val userAnswers = UserAnswers("id", "utr", "sessionId", LocalDate.now)
         .set(IdCardDetailsYesNoPage, true )
         .flatMap(_.set(IdCardDetailsPage, IdCard("Germany", "1234567", LocalDate.now)))
         .flatMap(_.set(PassportDetailsYesNoPage, true))

@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ class LiveInTheUkYesNoControllerSpec extends SpecBase with MockitoSugar {
   val name = Name("FirstName", None, "LastName")
 
 
-  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", LocalDate.now())
+  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   lazy val liveInTheUkYesNoControllerRoute = routes.LiveInTheUkYesNoController.onPageLoad(NormalMode).url

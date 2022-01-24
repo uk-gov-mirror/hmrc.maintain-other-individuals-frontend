@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@ class CountryOfNationalityYesNoPageSpec extends PageBehaviours {
     beRemovable[Boolean](CountryOfNationalityYesNoPage)
 
     "implement cleanup logic when NO selected" in {
-      val userAnswers = UserAnswers("id", "identifier", LocalDate.now)
+      val userAnswers = UserAnswers("id", "identifier", "sessionId", LocalDate.now)
         .set(CountryOfNationalityUkYesNoPage, false).success.value
         .set(CountryOfNationalityPage, "FR").success.value
 

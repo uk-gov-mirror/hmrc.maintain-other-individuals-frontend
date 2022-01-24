@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 HM Revenue & Customs
+ * Copyright 2022 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,7 +47,7 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
 
   val fakeNavigator = new FakeNavigator()
 
-  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", LocalDate.now(), Json.obj())
+  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", "sessionId", LocalDate.now(), Json.obj())
 
   val bodyParsers: BodyParsers.Default = injector.instanceOf[BodyParsers.Default]
 
