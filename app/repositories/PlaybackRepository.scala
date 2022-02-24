@@ -40,13 +40,12 @@ class PlaybackRepositoryImpl @Inject()(
   override val lastUpdatedIndexName: String = "user-answers-updated-at-index"
 
   override def idIndex: Index.Aux[BSONSerializationPack.type] = MongoIndex(
-    key = Seq("internalId" -> IndexType.Ascending, "utr" -> IndexType.Ascending, "newId" -> IndexType.Ascending),
-    name = "internal-id-and-utr-and-newId-compound-index"
+    key = Seq("newId" -> IndexType.Ascending),
+    name = "internal-id-and-utr-and-sessionId-compound-index"
   )
 
   private def selector(internalId: String, utr: String, sessionId: String): JsObject = Json.obj(
-    "internalId" -> internalId,
-    "utr" -> utr
+    "newId" -> s"$internalId-$utr-$sessionId"
   )
 
   override def get(internalId: String, utr: String, sessionId: String): Future[Option[UserAnswers]] = {
