@@ -16,9 +16,9 @@
 
 package pages.individual
 
-import java.time.LocalDate
-
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 
 class DateOfBirthYesNoPageSpec extends PageBehaviours {

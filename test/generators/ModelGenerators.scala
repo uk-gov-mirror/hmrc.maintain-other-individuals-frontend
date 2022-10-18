@@ -16,13 +16,13 @@
 
 package generators
 
-import models.{DetailsType, YesNoDontKnow}
 import models.DetailsType.DetailsType
+import models.{DetailsType, YesNoDontKnow}
 import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
   implicit lazy val arbitraryDetailsType: Arbitrary[DetailsType] = Arbitrary {
-    Gen.oneOf(DetailsType.values)
+    Gen.oneOf(DetailsType.values.toSeq)
   }
 
   implicit lazy val arbitraryYesNoDontKnowType: Arbitrary[YesNoDontKnow] = Arbitrary {

@@ -16,13 +16,13 @@
 
 package pages.individual
 
-import java.time.LocalDate
-
 import generators.Generators
 import models._
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 class AddressYesNoPageSpec extends PageBehaviours with ScalaCheckPropertyChecks with Generators {
 

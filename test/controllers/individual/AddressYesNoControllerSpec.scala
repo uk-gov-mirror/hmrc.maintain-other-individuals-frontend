@@ -16,33 +16,34 @@
 
 package controllers.individual
 
-import java.time.LocalDate
-
 import base.SpecBase
 import forms.YesNoFormProvider
 import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{AddressYesNoPage, NamePage}
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.AddressYesNoView
 
+import java.time.LocalDate
+
 class AddressYesNoControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("otherIndividual.addressYesNo")
+  val form: Form[Boolean] = formProvider.withPrefix("otherIndividual.addressYesNo")
   val individualName = "FirstName LastName"
-  val name = Name("FirstName", None, "LastName")
+  val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
-  lazy val addressYesNoControllerRoute = routes.AddressYesNoController.onPageLoad(NormalMode).url
+  lazy val addressYesNoControllerRoute: String = routes.AddressYesNoController.onPageLoad(NormalMode).url
 
   "AddressYesNo Controller" must {
 

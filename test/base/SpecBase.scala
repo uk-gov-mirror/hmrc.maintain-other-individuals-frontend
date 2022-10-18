@@ -16,12 +16,10 @@
 
 package base
 
-import java.time.LocalDate
-
 import controllers.actions._
 import models.UserAnswers
 import navigation.FakeNavigator
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
 import org.scalatest.{TestSuite, TryValues}
@@ -30,11 +28,11 @@ import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice._
 import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.json.Json
 import play.api.mvc.BodyParsers
 import repositories.{ActiveSessionRepository, PlaybackRepository}
 import uk.gov.hmrc.auth.core.{AffinityGroup, Enrolment, Enrolments}
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutures with IntegrationPatience with MockitoSugar with FakeTrustsApp {
@@ -47,7 +45,8 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
 
   val fakeNavigator = new FakeNavigator()
 
-  def emptyUserAnswers: UserAnswers = UserAnswers(userAnswersId, "UTRUTRUTR", "sessionId", LocalDate.now(), Json.obj())
+  def emptyUserAnswers: UserAnswers =
+    UserAnswers(userAnswersId, "UTRUTRUTR", "sessionId", s"$userAnswersId-UTRUTRUTR-sessionId", LocalDate.now())
 
   val bodyParsers: BodyParsers.Default = injector.instanceOf[BodyParsers.Default]
 
@@ -55,7 +54,7 @@ trait SpecBaseHelpers extends GuiceOneAppPerSuite with TryValues with ScalaFutur
 
   when(playbackRepository.set(any())).thenReturn(Future.successful(true))
 
-  val mockSessionRepository : ActiveSessionRepository = mock[ActiveSessionRepository]
+  val mockSessionRepository: ActiveSessionRepository = mock[ActiveSessionRepository]
 
   protected def applicationBuilder(userAnswers: Option[models.UserAnswers] = None,
                                    affinityGroup: AffinityGroup = AffinityGroup.Organisation,

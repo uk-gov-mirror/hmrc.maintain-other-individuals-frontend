@@ -16,35 +16,37 @@
 
 package controllers.individual
 
-import java.time.LocalDate
-
 import base.SpecBase
 import forms.NonUkAddressFormProvider
 import models.{Name, NonUkAddress, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, NonUkAddressPage}
+import play.api.data.Form
 import play.api.inject.bind
-import play.api.mvc.Call
+import play.api.mvc.{AnyContentAsEmpty, Call}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import utils.InputOption
 import utils.countryOptions.CountryOptionsNonUK
 import views.html.individual.NonUkAddressView
 
+import java.time.LocalDate
+
 class NonUkAddressControllerSpec extends SpecBase with MockitoSugar {
 
-  val form = new NonUkAddressFormProvider().apply()
+  val form: Form[NonUkAddress] = new NonUkAddressFormProvider().apply()
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
+
   val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   val nonUkAddressRoute: String = routes.NonUkAddressController.onPageLoad(NormalMode).url
 
-  val getRequest = FakeRequest(GET, nonUkAddressRoute)
+  val getRequest: FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, nonUkAddressRoute)
 
   val countryOptions: Seq[InputOption] = app.injector.instanceOf[CountryOptionsNonUK].options
 

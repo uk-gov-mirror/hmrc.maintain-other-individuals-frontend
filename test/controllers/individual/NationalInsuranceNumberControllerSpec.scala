@@ -20,7 +20,7 @@ import base.SpecBase
 import forms.NationalInsuranceNumberFormProvider
 import models.{Name, NormalMode}
 import navigation.Navigator
-import org.mockito.Matchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{reset, verify, when}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatestplus.mockito.MockitoSugar

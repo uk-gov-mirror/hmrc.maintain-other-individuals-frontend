@@ -18,10 +18,11 @@ package controllers.individual
 
 import base.SpecBase
 import forms.YesNoFormProvider
-import models.{Name, NormalMode}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthYesNoPage, NamePage}
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -30,13 +31,13 @@ import views.html.individual.DateOfBirthYesNoView
 class DateOfBirthYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("otherIndividual.dateOfBirthYesNo")
+  val form: Form[Boolean] = formProvider.withPrefix("otherIndividual.dateOfBirthYesNo")
 
-  lazy val dateOfBirthYesNoRoute = routes.DateOfBirthYesNoController.onPageLoad(NormalMode).url
+  lazy val dateOfBirthYesNoRoute: String = routes.DateOfBirthYesNoController.onPageLoad(NormalMode).url
 
-  val name = Name("New", None, "Individual")
+  val name: Name = Name("New", None, "Individual")
 
-  override val emptyUserAnswers = super.emptyUserAnswers
+  override val emptyUserAnswers: UserAnswers = super.emptyUserAnswers
     .set(NamePage, name).success.value
 
   "Other Individual DateOfBirthYesNoPage Controller" must {

@@ -37,7 +37,7 @@ class AddAnOtherIndividualSpec extends AnyWordSpec with Matchers with ScalaCheck
 
     "deserialise valid values" in {
 
-      val gen = Gen.oneOf(AddAnOtherIndividual.values.toSeq)
+      val gen = Gen.oneOf(AddAnOtherIndividual.values)
 
       forAll(gen) {
         addAnOtherIndividual =>
@@ -59,7 +59,7 @@ class AddAnOtherIndividualSpec extends AnyWordSpec with Matchers with ScalaCheck
 
     "serialise" in {
 
-      val gen = Gen.oneOf(AddAnOtherIndividual.values.toSeq)
+      val gen = Gen.oneOf(AddAnOtherIndividual.values)
 
       forAll(gen) {
         addAnOtherIndividual =>

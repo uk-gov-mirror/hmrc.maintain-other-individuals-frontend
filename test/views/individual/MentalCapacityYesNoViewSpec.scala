@@ -16,13 +16,12 @@
 
 package views.individual
 
-import controllers.individual.routes
-import forms.{YesNoDontKnowFormProvider, YesNoFormProvider}
+import forms.YesNoDontKnowFormProvider
 import models.{Name, NormalMode, YesNoDontKnow}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import viewmodels.RadioOption
-import views.behaviours.{OptionsViewBehaviours, QuestionViewBehaviours, YesNoViewBehaviours}
+import views.behaviours.OptionsViewBehaviours
 import views.html.individual.MentalCapacityYesNoView
 
 class MentalCapacityYesNoViewSpec extends OptionsViewBehaviours {
@@ -45,7 +44,7 @@ class MentalCapacityYesNoViewSpec extends OptionsViewBehaviours {
       RadioOption(id = "value-dontKnow", value = YesNoDontKnow.DontKnow.toString, messageKey = "site.dontKnow")
     )
 
-    behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName,"p1", "bulletpoint1", "bulletpoint2", "bulletpoint3", "bulletpoint4")
+    behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName, "p1", "bulletpoint1", "bulletpoint2", "bulletpoint3", "bulletpoint4")
 
     behave like pageWithBackLink(applyView(form))
 

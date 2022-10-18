@@ -18,7 +18,7 @@ package controllers.actions
 
 import base.SpecBase
 import config.FrontendAppConfig
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito._
 import play.api.Application
 import play.api.mvc.Results.Redirect
@@ -71,7 +71,7 @@ class IdentifierActionSpec extends SpecBase {
           .thenReturn(authRetrievals(AffinityGroup.Agent, noEnrollment))
 
         val mockAuthService = mock[AuthenticationService]
-        when (mockAuthService.authenticateAgent()(any(), any())).thenReturn(Future.successful(Left(Redirect("test-redirect-url"))))
+        when(mockAuthService.authenticateAgent()(any(), any())).thenReturn(Future.successful(Left(Redirect("test-redirect-url"))))
 
         val action = actionToTest(application, mockAuthService)
 

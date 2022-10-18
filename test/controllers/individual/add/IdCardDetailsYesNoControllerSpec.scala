@@ -19,26 +19,28 @@ package controllers.individual.add
 import base.SpecBase
 import forms.YesNoFormProvider
 import models.{Name, NormalMode, UserAnswers}
+import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{IdCardDetailsYesNoPage, NamePage}
+import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.add.IdCardDetailsYesNoView
-import java.time.LocalDate
 
-import navigation.Navigator
-import play.api.inject.bind
+import java.time.LocalDate
 
 class IdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new YesNoFormProvider()
+
   private def form = formProvider.withPrefix("otherIndividual.idCardDetailsYesNo")
 
   def onwardRoute: Call = Call("GET", "/foo")
+
   private val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   private val idCardDetailsYesNoRoute: String = routes.IdCardDetailsYesNoController.onPageLoad(NormalMode).url

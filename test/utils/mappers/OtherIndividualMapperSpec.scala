@@ -16,11 +16,12 @@
 
 package utils.mappers
 
-import java.time.LocalDate
 import base.SpecBase
 import models.Constant.GB
 import models._
 import pages.individual._
+
+import java.time.LocalDate
 
 class OtherIndividualMapperSpec extends SpecBase {
 
@@ -273,7 +274,7 @@ class OtherIndividualMapperSpec extends SpecBase {
       result.dateOfBirth mustBe Some(dateOfBirth)
       result.countryOfNationality mustNot be(defined)
       result.identification mustBe Some(NationalInsuranceNumber(nino))
-      result.countryOfResidence  mustNot be(defined)
+      result.countryOfResidence mustNot be(defined)
       result.address mustBe None
       result.mentalCapacityYesNo mustBe Some(YesNoDontKnow.Yes)
       result.entityStart mustBe startDate
@@ -352,7 +353,7 @@ class OtherIndividualMapperSpec extends SpecBase {
     result.dateOfBirth mustBe Some(dateOfBirth)
     result.countryOfNationality mustNot be(defined)
     result.identification mustBe None
-    result.countryOfResidence  mustNot be(defined)
+    result.countryOfResidence mustNot be(defined)
     result.address mustBe None
     result.mentalCapacityYesNo mustBe Some(YesNoDontKnow.Yes)
     result.entityStart mustBe startDate

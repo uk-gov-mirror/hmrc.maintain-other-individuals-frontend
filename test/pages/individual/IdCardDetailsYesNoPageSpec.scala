@@ -16,10 +16,10 @@
 
 package pages.individual
 
-import java.time.LocalDate
-
 import models.IdCard
 import pages.behaviours.PageBehaviours
+
+import java.time.LocalDate
 
 
 class IdCardDetailsYesNoPageSpec extends PageBehaviours {

@@ -16,13 +16,11 @@
 
 package controllers.individual.remove
 
-import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import connectors.TrustConnector
 import forms.DateRemovedFromTrustFormProvider
 import models.{Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals}
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import play.api.inject.bind
@@ -33,6 +31,7 @@ import services.{TrustService, TrustServiceImpl}
 import uk.gov.hmrc.http.HttpResponse
 import views.html.individual.remove.WhenRemovedView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class WhenRemovedControllerSpec extends SpecBase with MockitoSugar {
@@ -41,16 +40,16 @@ class WhenRemovedControllerSpec extends SpecBase with MockitoSugar {
 
   private def form = formProvider.withPrefixAndEntityStartDate("otherIndividual.whenRemoved", LocalDate.now())
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer: LocalDate = LocalDate.now(ZoneOffset.UTC)
 
   val index = 0
 
   val name = "Name 1"
-  val mockConnector = mock[TrustConnector]
+  val mockConnector: TrustConnector = mock[TrustConnector]
 
   val fakeService = new TrustServiceImpl(mockConnector)
 
-  lazy val dateRemovedFromTrustRoute = routes.WhenRemovedController.onPageLoad(index).url
+  lazy val dateRemovedFromTrustRoute: String = routes.WhenRemovedController.onPageLoad(index).url
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, dateRemovedFromTrustRoute)
@@ -58,12 +57,12 @@ class WhenRemovedControllerSpec extends SpecBase with MockitoSugar {
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
     FakeRequest(POST, dateRemovedFromTrustRoute)
       .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
+        "value.day" -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
+        "value.year" -> validAnswer.getYear.toString
       )
 
-  def otherIndividual(id: Int) = OtherIndividual(
+  def otherIndividual(id: Int): OtherIndividual = OtherIndividual(
     name = Name(firstName = "Name", middleName = None, lastName = s"$id"),
     dateOfBirth = Some(LocalDate.parse("1983-09-24")),
     countryOfNationality = None,
@@ -75,7 +74,7 @@ class WhenRemovedControllerSpec extends SpecBase with MockitoSugar {
     provisional = false
   )
 
-  val otherIndividuals = List(otherIndividual(1), otherIndividual(2), otherIndividual(3))
+  val otherIndividuals: List[OtherIndividual] = List(otherIndividual(1), otherIndividual(2), otherIndividual(3))
 
   "WhenRemoved Controller" must {
 

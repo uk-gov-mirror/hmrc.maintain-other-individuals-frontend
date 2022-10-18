@@ -16,11 +16,9 @@
 
 package controllers.individual
 
-import java.time.{LocalDate, ZoneOffset}
-
 import base.SpecBase
 import forms.DateOfBirthFormProvider
-import models.{Name, NormalMode}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{DateOfBirthPage, NamePage}
@@ -30,21 +28,24 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.DateOfBirthView
 
+import java.time.{LocalDate, ZoneOffset}
+
 class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new DateOfBirthFormProvider()
+
   private def form = formProvider.withPrefix("otherIndividual.dateOfBirth")
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
-  val validAnswer = LocalDate.now(ZoneOffset.UTC)
+  val validAnswer: LocalDate = LocalDate.now(ZoneOffset.UTC)
   val individualName = "FirstName LastName"
-  val name = Name("FirstName", None, "LastName")
+  val name: Name = Name("FirstName", None, "LastName")
   val index: Int = 0
 
-  lazy val dateOfBirthRoute = routes.DateOfBirthController.onPageLoad(NormalMode).url
+  lazy val dateOfBirthRoute: String = routes.DateOfBirthController.onPageLoad(NormalMode).url
 
-  val userAnswersWithName = emptyUserAnswers.set(NamePage, name)
+  val userAnswersWithName: UserAnswers = emptyUserAnswers.set(NamePage, name)
     .success.value
 
   def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
@@ -53,9 +54,9 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
   def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
     FakeRequest(POST, dateOfBirthRoute)
       .withFormUrlEncodedBody(
-        "value.day"   -> validAnswer.getDayOfMonth.toString,
+        "value.day" -> validAnswer.getDayOfMonth.toString,
         "value.month" -> validAnswer.getMonthValue.toString,
-        "value.year"  -> validAnswer.getYear.toString
+        "value.year" -> validAnswer.getYear.toString
       )
 
   "DateOfBirth Controller" must {
@@ -109,9 +110,9 @@ class DateOfBirthControllerSpec extends SpecBase with MockitoSugar {
       val request =
         FakeRequest(POST, dateOfBirthRoute)
           .withFormUrlEncodedBody(
-            "value.day"   -> validAnswer.getDayOfMonth.toString,
+            "value.day" -> validAnswer.getDayOfMonth.toString,
             "value.month" -> validAnswer.getMonthValue.toString,
-            "value.year"  -> validAnswer.getYear.toString
+            "value.year" -> validAnswer.getYear.toString
           )
 
       val result = route(application, request).value
