@@ -32,7 +32,7 @@ class CountryOfResidenceYesNoPageSpec extends PageBehaviours {
     beRemovable[Boolean](CountryOfResidenceYesNoPage)
 
     "implement cleanup logic when NO selected" in {
-      val userAnswers = UserAnswers("id", "identifier", "sessionId", LocalDate.now)
+      val userAnswers = UserAnswers("id", "identifier", "sessionId", "id-identifier-sessionId", LocalDate.now)
         .set(CountryOfResidencePage, "FR").success.value
         .set(CountryOfResidenceUkYesNoPage, false).success.value
         .set(CountryOfResidencePage, "FR").success.value

@@ -41,7 +41,7 @@ class LiveInTheUkYesNoPageSpec extends PageBehaviours {
 
     "implement cleanup logic when YES selected" in {
       val userAnswers = emptyUserAnswers
-        .set(NonUkAddressPage, NonUkAddress("line1", "line2", None,"country"))
+        .set(NonUkAddressPage, NonUkAddress("line1", "line2", None, "country"))
         .flatMap(_.set(LiveInTheUkYesNoPage, true))
 
       userAnswers.get.get(NonUkAddressPage) mustNot be(defined)

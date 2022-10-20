@@ -16,30 +16,31 @@
 
 package controllers.individual
 
-import java.time.LocalDate
-
 import base.SpecBase
 import forms.YesNoFormProvider
 import models.{Name, NormalMode, UserAnswers}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.{NamePage, NationalInsuranceNumberYesNoPage}
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.NationalInsuranceNumberYesNoView
 
+import java.time.LocalDate
+
 class NationalInsuranceNumberYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new YesNoFormProvider()
-  val form = formProvider.withPrefix("otherIndividual.nationalInsuranceNumberYesNo")
+  val form: Form[Boolean] = formProvider.withPrefix("otherIndividual.nationalInsuranceNumberYesNo")
   val individualName = "FirstName LastName"
-  val name = Name("FirstName", None, "LastName")
+  val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
-  lazy val nationalInsuranceNumberYesNoRoute = routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url
+  lazy val nationalInsuranceNumberYesNoRoute: String = routes.NationalInsuranceNumberYesNoController.onPageLoad(NormalMode).url
 
   "NationalInsuranceNumberYesNo Controller" must {
 

@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.TrustsStoreConnector
 import models.TaskStatus.Completed
-import org.mockito.Matchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{reset, verify, when}
 import org.scalatest.BeforeAndAfterEach
 import play.api.http.Status.OK

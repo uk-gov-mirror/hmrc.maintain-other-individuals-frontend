@@ -16,7 +16,6 @@
 
 package controllers.individual.add
 
-import java.time.LocalDate
 import base.SpecBase
 import forms.PassportDetailsFormProvider
 import models.{Name, NormalMode, Passport, UserAnswers}
@@ -31,15 +30,19 @@ import utils.InputOption
 import utils.countryOptions.CountryOptions
 import views.html.individual.add.PassportDetailsView
 
+import java.time.LocalDate
+
 class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
 
   private val formProvider = new PassportDetailsFormProvider()
+
   private def form = formProvider.withPrefix("otherIndividual")
 
   def onwardRoute: Call = Call("GET", "/foo")
+
   private val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   private val passportDetailsRoute: String = routes.PassportDetailsController.onPageLoad(NormalMode).url
@@ -134,9 +137,9 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
           .withFormUrlEncodedBody(
             "country" -> "country",
             "number" -> "123456",
-            "expiryDate.day"   -> validData.expirationDate.getDayOfMonth.toString,
+            "expiryDate.day" -> validData.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validData.expirationDate.getMonthValue.toString,
-            "expiryDate.year"  -> validData.expirationDate.getYear.toString
+            "expiryDate.year" -> validData.expirationDate.getYear.toString
           )
 
       val result = route(application, request).value
@@ -157,9 +160,9 @@ class PassportDetailsControllerSpec extends SpecBase with MockitoSugar {
           .withFormUrlEncodedBody(
             "country" -> "country",
             "number" -> "123456",
-            "expiryDate.day"   -> validData.expirationDate.getDayOfMonth.toString,
+            "expiryDate.day" -> validData.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validData.expirationDate.getMonthValue.toString,
-            "expiryDate.year"  -> validData.expirationDate.getYear.toString
+            "expiryDate.year" -> validData.expirationDate.getYear.toString
           )
 
       val result = route(application, request).value

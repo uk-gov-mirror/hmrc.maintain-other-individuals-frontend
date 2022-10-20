@@ -35,7 +35,7 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
   override val emptyUserAnswers: UserAnswers = super.emptyUserAnswers
     .set(NamePage, name).success.value
     .set(IndexPage, index).success.value
-  
+
   private lazy val passportOrIdCardDetailsRoute: String = routes.PassportOrIdCardDetailsController.onPageLoad(mode).url
 
   private lazy val checkDetailsRoute =
@@ -87,10 +87,10 @@ class PassportOrIdCardDetailsControllerSpec extends SpecBase with MockitoSugar {
           .withFormUrlEncodedBody(
             "country" -> "country",
             "number" -> "123456",
-            "expiryDate.day"   -> validData.expirationDate.getDayOfMonth.toString,
+            "expiryDate.day" -> validData.expirationDate.getDayOfMonth.toString,
             "expiryDate.month" -> validData.expirationDate.getMonthValue.toString,
-            "expiryDate.year"  -> validData.expirationDate.getYear.toString,
-            "detailsType"      -> DetailsType.Combined.toString
+            "expiryDate.year" -> validData.expirationDate.getYear.toString,
+            "detailsType" -> DetailsType.Combined.toString
           )
 
       val result = route(application, request).value

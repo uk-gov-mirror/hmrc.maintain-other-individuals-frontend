@@ -16,22 +16,22 @@
 
 package pages.behaviours
 
-import java.time.LocalDate
-
 import generators.Generators
 import models.UserAnswers
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
-import org.scalatest.{OptionValues, TryValues}
 import org.scalatest.matchers.must.Matchers
 import org.scalatest.wordspec.AnyWordSpec
+import org.scalatest.{OptionValues, TryValues}
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.QuestionPage
 import play.api.libs.json._
 
+import java.time.LocalDate
+
 trait PageBehaviours extends AnyWordSpec with Matchers with ScalaCheckPropertyChecks with Generators with OptionValues with TryValues {
 
-  val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now(), Json.obj())
+  val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now(), Json.obj())
 
   class BeRetrievable[A] {
     def apply[P <: QuestionPage[A]](genP: Gen[P])(implicit ev1: Arbitrary[A], ev2: Format[A]): Unit = {
@@ -43,7 +43,7 @@ trait PageBehaviours extends AnyWordSpec with Matchers with ScalaCheckPropertyCh
           "the question has not been answered" in {
 
             val gen = for {
-              page        <- genP
+              page <- genP
               userAnswers <- arbitrary[UserAnswers]
             } yield (page, userAnswers.remove(page).success.value)
 
@@ -63,8 +63,8 @@ trait PageBehaviours extends AnyWordSpec with Matchers with ScalaCheckPropertyCh
           "the question has been answered" in {
 
             val gen = for {
-              page        <- genP
-              savedValue  <- arbitrary[A]
+              page <- genP
+              savedValue <- arbitrary[A]
               userAnswers <- arbitrary[UserAnswers]
             } yield (page, savedValue, userAnswers.set(page, savedValue).success.value)
 
@@ -85,8 +85,8 @@ trait PageBehaviours extends AnyWordSpec with Matchers with ScalaCheckPropertyCh
       "be able to be set on UserAnswers" in {
 
         val gen = for {
-          page        <- genP
-          newValue    <- arbitrary[A]
+          page <- genP
+          newValue <- arbitrary[A]
           userAnswers <- arbitrary[UserAnswers]
         } yield (page, newValue, userAnswers)
 
@@ -106,8 +106,8 @@ trait PageBehaviours extends AnyWordSpec with Matchers with ScalaCheckPropertyCh
       "be able to be removed from UserAnswers" in {
 
         val gen = for {
-          page        <- genP
-          savedValue  <- arbitrary[A]
+          page <- genP
+          savedValue <- arbitrary[A]
           userAnswers <- arbitrary[UserAnswers]
         } yield (page, userAnswers.set(page, savedValue).success.value)
 

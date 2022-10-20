@@ -16,14 +16,14 @@
 
 package views.individual
 
-import java.time.LocalDate
-
 import forms.DateOfBirthFormProvider
 import models.{Name, NormalMode}
 import play.api.data.Form
 import play.twirl.api.HtmlFormat
 import views.behaviours.QuestionViewBehaviours
 import views.html.individual.DateOfBirthView
+
+import java.time.LocalDate
 
 class DateOfBirthViewSpec extends QuestionViewBehaviours[LocalDate] {
 
@@ -38,7 +38,7 @@ class DateOfBirthViewSpec extends QuestionViewBehaviours[LocalDate] {
 
     def applyView(form: Form[_]): HtmlFormat.Appendable =
       view.apply(form, name.displayName, NormalMode)(fakeRequest, messages)
-    
+
     behave like dynamicTitlePage(applyView(form), messageKeyPrefix, name.displayName)
 
     behave like pageWithBackLink(applyView(form))

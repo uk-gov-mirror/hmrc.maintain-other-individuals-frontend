@@ -15,11 +15,12 @@
  */
 
 package services
+
 import base.SpecBase
 import connectors.TrustAuthConnector
 import models.requests.{AgentUser, DataRequest}
 import models.{TrustAuthAgentAllowed, TrustAuthAllowed, TrustAuthDenied, TrustAuthInternalServerError}
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{EitherValues, RecoverMethods}
@@ -31,6 +32,7 @@ import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.Future
+
 class AuthenticationServiceSpec extends SpecBase with ScalaFutures with EitherValues with RecoverMethods {
 
   private val utr = "0987654321"
@@ -45,7 +47,7 @@ class AuthenticationServiceSpec extends SpecBase with ScalaFutures with EitherVa
 
   private implicit val hc: HeaderCarrier = HeaderCarrier()
   private implicit val dataRequest: DataRequest[AnyContent]
-    = DataRequest[AnyContent](fakeRequest, emptyUserAnswers, AgentUser("internalId", enrolments, "SomeVal"))
+  = DataRequest[AnyContent](fakeRequest, emptyUserAnswers, AgentUser("internalId", enrolments, "SomeVal"))
 
   type RetrievalType = Option[String] ~ Option[AffinityGroup] ~ Enrolments
 
@@ -62,7 +64,7 @@ class AuthenticationServiceSpec extends SpecBase with ScalaFutures with EitherVa
 
         whenReady(service.authenticateForUtr[AnyContent](utr)) {
           result =>
-            result.right.value mustBe dataRequest
+            result.value mustBe dataRequest
         }
       }
     }
@@ -110,7 +112,7 @@ class AuthenticationServiceSpec extends SpecBase with ScalaFutures with EitherVa
 
         whenReady(service.authenticateAgent()) {
           result =>
-            result.right.value mustBe "SomeARN"
+            result.value mustBe "SomeARN"
         }
       }
     }

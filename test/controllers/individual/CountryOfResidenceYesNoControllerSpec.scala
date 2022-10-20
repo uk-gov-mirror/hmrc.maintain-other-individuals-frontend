@@ -115,7 +115,7 @@ class CountryOfResidenceYesNoControllerSpec extends SpecBase {
       contentAsString(result) mustEqual
         view(boundForm, NormalMode, name.displayName)(request, messages).toString
 
-       application.stop()
+      application.stop()
     }
 
     "redirect to Session Expired for a GET if no existing data is found" in {

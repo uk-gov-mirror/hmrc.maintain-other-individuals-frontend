@@ -20,7 +20,7 @@ import base.SpecBase
 import connectors.TrustConnector
 import models.TaskStatus.InProgress
 import models.{Name, OtherIndividual, OtherIndividuals, TrustDetails}
-import org.mockito.Matchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito._
 import play.api.inject.bind
 import play.api.test.FakeRequest

@@ -143,10 +143,10 @@ trait ViewBehaviours extends ViewSpecBase {
   }
 
   def normalPageTitleWithSectionSubheading(view: HtmlFormat.Appendable,
-                                 messageKeyPrefix: String,
-                                 messageKeyParam: String,
-                                 captionParam: String,
-                                 expectedGuidanceKeys: String*): Unit = {
+                                           messageKeyPrefix: String,
+                                           messageKeyParam: String,
+                                           captionParam: String,
+                                           expectedGuidanceKeys: String*): Unit = {
 
     "behave like a normal page" when {
 
@@ -187,7 +187,7 @@ trait ViewBehaviours extends ViewSpecBase {
   }
 
 
-  def pageWithASubmitButton(view: HtmlFormat.Appendable) = {
+  def pageWithASubmitButton(view: HtmlFormat.Appendable): Unit = {
 
     "behave like a page with a submit button" must {
       "have a submit button" in {
@@ -197,12 +197,12 @@ trait ViewBehaviours extends ViewSpecBase {
     }
   }
 
-  def pageWithContinueButton(view: HtmlFormat.Appendable, url : String): Unit = {
+  def pageWithContinueButton(view: HtmlFormat.Appendable, url: String): Unit = {
 
     "behave like a page with a Continue button" must {
       "have a continue button" in {
         val doc = asDocument(view)
-        assertContainsTextForId(doc,"button", "Continue")
+        assertContainsTextForId(doc, "button", "Continue")
         assertAttributeValueForElement(
           doc.getElementById("button"),
           "href",

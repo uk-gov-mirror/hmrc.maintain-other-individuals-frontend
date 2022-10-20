@@ -19,7 +19,7 @@ package services
 import base.SpecBase
 import connectors.TrustConnector
 import models.{Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals}
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import uk.gov.hmrc.http.HeaderCarrier
 

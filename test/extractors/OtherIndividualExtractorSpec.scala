@@ -19,8 +19,8 @@ package extractors
 import generators.ModelGenerators
 import models.Constant.GB
 import models.{CombinedPassportOrIdCard, IdCard, Name, NationalInsuranceNumber, OtherIndividual, Passport, UkAddress, UserAnswers, YesNoDontKnow}
-import org.scalatest.matchers.must.Matchers
 import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.must.Matchers
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual._
 import play.api.libs.json.Json
@@ -33,6 +33,7 @@ class OtherIndividualExtractorSpec extends AnyFreeSpec with ScalaCheckPropertyCh
     "Id",
     "UTRUTRUTR",
     "sessionId",
+    "Id-UTRUTRUTR-sessionId",
     LocalDate.of(1987, 12, 31),
     Json.obj()
   )

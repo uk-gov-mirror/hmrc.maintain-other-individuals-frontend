@@ -16,23 +16,23 @@
 
 package controllers.individual.remove
 
-import java.time.LocalDate
-
 import base.SpecBase
 import connectors.TrustConnector
 import forms.YesNoFormProvider
 import models.{Name, NationalInsuranceNumber, OtherIndividual, OtherIndividuals}
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
 import pages.individual.RemoveYesNoPage
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HttpResponse
 import views.html.individual.remove.RemoveOtherIndividualView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckPropertyChecks with ScalaFutures {
@@ -40,13 +40,13 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
   val messagesPrefix = "removeOtherIndividualYesNo"
 
   lazy val formProvider = new YesNoFormProvider()
-  lazy val form = formProvider.withPrefix(messagesPrefix)
+  lazy val form: Form[Boolean] = formProvider.withPrefix(messagesPrefix)
 
-  lazy val name : String = "Name 1"
+  lazy val name: String = "Name 1"
 
   val mockConnector: TrustConnector = mock[TrustConnector]
 
-  def otherIndividual(id: Int, provisional : Boolean) = OtherIndividual(
+  def otherIndividual(id: Int, provisional: Boolean): OtherIndividual = OtherIndividual(
     name = Name(firstName = "Name", middleName = None, lastName = s"$id"),
     dateOfBirth = Some(LocalDate.parse("1983-09-24")),
     countryOfNationality = None,
@@ -58,9 +58,9 @@ class RemoveOtherIndividualControllerSpec extends SpecBase with ScalaCheckProper
     provisional = provisional
   )
 
-  val expectedResult = otherIndividual(2, provisional = true)
+  val expectedResult: OtherIndividual = otherIndividual(2, provisional = true)
 
-  val otherIndividuals = List(
+  val otherIndividuals: List[OtherIndividual] = List(
     otherIndividual(1, provisional = false),
     expectedResult,
     otherIndividual(3, provisional = true)

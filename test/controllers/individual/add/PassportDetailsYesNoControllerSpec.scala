@@ -16,7 +16,6 @@
 
 package controllers.individual.add
 
-import java.time.LocalDate
 import base.SpecBase
 import forms.YesNoFormProvider
 import models.{Name, NormalMode, UserAnswers}
@@ -29,15 +28,19 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.individual.add.PassportDetailsYesNoView
 
+import java.time.LocalDate
+
 class PassportDetailsYesNoControllerSpec extends SpecBase with MockitoSugar {
 
   private val formProvider = new YesNoFormProvider()
+
   private def form = formProvider.withPrefix("otherIndividual.passportDetailsYesNo")
 
   def onwardRoute: Call = Call("GET", "/foo")
+
   private val name: Name = Name("FirstName", None, "LastName")
 
-  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", LocalDate.now())
+  override val emptyUserAnswers: UserAnswers = UserAnswers("id", "UTRUTRUTR", "sessionId", "id-UTRUTRUTR-sessionId", LocalDate.now())
     .set(NamePage, name).success.value
 
   private val passportDetailsYesNoRoute: String = routes.PassportDetailsYesNoController.onPageLoad(NormalMode).url

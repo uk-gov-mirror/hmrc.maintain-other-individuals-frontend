@@ -16,7 +16,6 @@
 
 package connectors
 
-import java.time.LocalDate
 import base.SpecBase
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock._
@@ -28,6 +27,8 @@ import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach, Inside}
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.test.Helpers._
 import uk.gov.hmrc.http.HeaderCarrier
+
+import java.time.LocalDate
 
 class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
   with Inside with BeforeAndAfterAll with BeforeAndAfterEach with IntegrationPatience {
@@ -54,6 +55,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
   val index = 0
 
   private def amendOtherIndividualUrl(identifier: String, index: Int) = s"/trusts/other-individuals/amend/$identifier/$index"
+
   private def isTrust5mldUrl(identifier: String) = s"/trusts/$identifier/is-trust-5mld"
 
   "trust connector" when {
@@ -193,7 +195,7 @@ class TrustConnectorSpec extends SpecBase with Generators with ScalaFutures
                   provisional = false
                 )
               )
-            )
+              )
         }
 
         application.stop()

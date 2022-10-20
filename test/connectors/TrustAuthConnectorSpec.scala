@@ -16,24 +16,25 @@
 
 package connectors
 
+import base.WireMockHelper
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder
 import com.github.tomakehurst.wiremock.client.WireMock._
 import models.{TrustAuthAgentAllowed, TrustAuthAllowed, TrustAuthDenied, TrustAuthInternalServerError}
-import org.scalatest.matchers.must.Matchers
 import org.scalatest.freespec.AsyncFreeSpec
+import org.scalatest.matchers.must.Matchers
 import play.api.Application
 import play.api.http.Status
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.libs.json.{JsValue, Json}
 import play.api.test.DefaultAwaitTimeout
 import uk.gov.hmrc.http.HeaderCarrier
-import base.WireMockHelper
 
-class TrustAuthConnectorSpec extends AsyncFreeSpec with Matchers with WireMockHelper with DefaultAwaitTimeout{
+class TrustAuthConnectorSpec extends AsyncFreeSpec with Matchers with WireMockHelper with DefaultAwaitTimeout {
 
   implicit lazy val hc: HeaderCarrier = HeaderCarrier()
 
   private val authorisedUrl: String = s"/trusts-auth/agent-authorised"
+
   private def authorisedUrlFor(utr: String): String = s"/trusts-auth/authorised/$utr"
 
   private def responseFromJson(json: JsValue) = {
@@ -41,6 +42,7 @@ class TrustAuthConnectorSpec extends AsyncFreeSpec with Matchers with WireMockHe
   }
 
   private def allowedResponse = responseFromJson(Json.obj("authorised" -> true))
+
   private def allowedAgentResponse = responseFromJson(Json.obj("arn" -> "SomeArn"))
 
   private def redirectResponse(redirectUrl: String) = responseFromJson(Json.obj("redirectUrl" -> redirectUrl))

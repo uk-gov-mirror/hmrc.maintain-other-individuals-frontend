@@ -34,7 +34,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
                          messageKeyPrefix: String,
                          messageKeyParam: Option[String],
                          expectedFormAction: String,
-                         fields: String*) = {
+                         fields: String*): Unit = {
 
     "behave like a question page" when {
 
@@ -51,7 +51,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
         "not render an error summary" in {
 
           val doc = asDocument(createView(form))
-          assertNotRenderedById(doc,  "error-summary-title")
+          assertNotRenderedById(doc, "error-summary-title")
         }
       }
 
@@ -90,10 +90,10 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
                                             messageKeyPrefix: String,
                                             expectedFormAction: String,
                                             textFields: Seq[(String, Option[String])],
-                                            dateKey : String,
-                                            args: String*) = {
+                                            dateKey: String,
+                                            args: String*): Unit = {
 
-    val dateFields = Seq(s"${dateKey}.day", s"${dateKey}.month", s"${dateKey}.year")
+    val dateFields = Seq(s"$dateKey.day", s"$dateKey.month", s"$dateKey.year")
 
     "behave like a passportOrIDCard page" when {
 
@@ -118,7 +118,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
         "not render an error summary" in {
 
           val doc = asDocument(createView(form))
-          assertNotRenderedById(doc,  "error-summary-title")
+          assertNotRenderedById(doc, "error-summary-title")
         }
       }
 
@@ -179,9 +179,9 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
                          createView: Form[A] => HtmlFormat.Appendable,
                          messageKeyPrefix: String,
                          key: String,
-                         args: String*) = {
+                         args: String*): Unit = {
 
-    val fields = Seq(s"${key}.day", s"${key}.month", s"${key}.year")
+    val fields = Seq(s"$key.day", s"$key.month", s"$key.year")
 
     "behave like a question page" when {
 
@@ -198,7 +198,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
         "not render an error summary" in {
 
           val doc = asDocument(createView(form))
-          assertNotRenderedById(doc,  "error-summary-title")
+          assertNotRenderedById(doc, "error-summary-title")
         }
       }
 
@@ -216,7 +216,7 @@ trait QuestionViewBehaviours[A] extends ViewBehaviours {
         "show an error summary" in {
 
           val doc = asDocument(createView(form.withError(FormError(key, "error"))))
-          assertRenderedById(doc,  "error-summary-title")
+          assertRenderedById(doc, "error-summary-title")
         }
 
         "show an error in the legend" in {

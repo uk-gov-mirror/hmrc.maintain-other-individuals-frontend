@@ -22,6 +22,7 @@ import models.{Name, NormalMode}
 import navigation.Navigator
 import org.scalatestplus.mockito.MockitoSugar
 import pages.individual.NamePage
+import play.api.data.Form
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -30,12 +31,12 @@ import views.html.individual.NameView
 
 class NameControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   val formProvider = new NameFormProvider()
-  val form = formProvider.withPrefix("otherIndividual.name")
+  val form: Form[Name] = formProvider.withPrefix("otherIndividual.name")
 
-  lazy val nameRoute = routes.NameController.onPageLoad(NormalMode).url
+  lazy val nameRoute: String = routes.NameController.onPageLoad(NormalMode).url
 
   "Name Controller" must {
 

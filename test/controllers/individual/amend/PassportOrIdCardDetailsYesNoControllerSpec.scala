@@ -37,7 +37,7 @@ class PassportOrIdCardDetailsYesNoControllerSpec extends SpecBase with MockitoSu
 
   private lazy val checkDetailsRoute =
     controllers.individual.amend.routes.CheckDetailsController.renderFromUserAnswers(index).url
-  
+
   private lazy val passportOrIdCardDetailsYesNoRoute: String =
     controllers.individual.amend.routes.PassportOrIdCardDetailsYesNoController.onPageLoad(mode).url
 

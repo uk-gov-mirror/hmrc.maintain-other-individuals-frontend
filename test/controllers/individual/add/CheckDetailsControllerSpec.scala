@@ -16,12 +16,10 @@
 
 package controllers.individual.add
 
-import java.time.LocalDate
-
 import base.SpecBase
 import connectors.TrustConnector
 import models.Name
-import org.mockito.Matchers.any
+import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.mockito.MockitoSugar
@@ -34,6 +32,7 @@ import uk.gov.hmrc.http.HttpResponse
 import utils.print.OtherIndividualPrintHelper
 import views.html.individual.add.CheckDetailsView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class CheckDetailsControllerSpec extends SpecBase with MockitoSugar with ScalaFutures {

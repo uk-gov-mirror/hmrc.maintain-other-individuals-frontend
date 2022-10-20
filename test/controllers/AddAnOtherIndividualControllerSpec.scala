@@ -21,7 +21,7 @@ import connectors.TrustsStoreConnector
 import forms.{AddAnOtherIndividualFormProvider, YesNoFormProvider}
 import models.TaskStatus.Completed
 import models.{AddAnOtherIndividual, Name, NationalInsuranceNumber, NormalMode, OtherIndividual, OtherIndividuals, RemoveOtherIndividual}
-import org.mockito.Matchers.{any, eq => eqTo}
+import org.mockito.ArgumentMatchers.{any, eq => eqTo}
 import org.mockito.Mockito.{reset, verify, when}
 import org.scalatest.BeforeAndAfterEach
 import org.scalatest.concurrent.ScalaFutures
@@ -65,7 +65,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures with
 
   private val otherIndividuals = OtherIndividuals(List(otherIndividual))
 
-  val otherIndividualRows = List(
+  val otherIndividualRows: List[AddRow] = List(
     AddRow(
       "First Last",
       typeLabel = "Other individual",
@@ -257,7 +257,7 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures with
         status(result) mustEqual SEE_OTHER
 
         redirectLocation(result).value mustEqual "http://localhost:9788/maintain-a-trust/overview"
-        
+
         verify(mockStoreConnector).updateTaskStatus(any(), eqTo(Completed))(any(), any())
 
         application.stop()

@@ -30,14 +30,14 @@ import views.html.individual.UkAddressView
 
 class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
-  def onwardRoute = Call("GET", "/foo")
+  def onwardRoute: Call = Call("GET", "/foo")
 
   val form = new UkAddressFormProvider()()
 
-  val individualName = Name("FirstName", None, "LastName")
-  val validAnswer = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
+  val individualName: Name = Name("FirstName", None, "LastName")
+  val validAnswer: UkAddress = UkAddress("value 1", "value 2", None, None, "AB1 1AB")
 
-  lazy val ukAddressControllerRoute = routes.UkAddressController.onPageLoad(NormalMode).url
+  lazy val ukAddressControllerRoute: String = routes.UkAddressController.onPageLoad(NormalMode).url
 
   "UkAddress Controller" must {
 
@@ -95,7 +95,7 @@ class UkAddressControllerSpec extends SpecBase with MockitoSugar {
 
       val request =
         FakeRequest(POST, ukAddressControllerRoute)
-          .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"),("postcode", "NE1 1ZZ"))
+          .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"), ("postcode", "NE1 1ZZ"))
 
       val result = route(application, request).value
 

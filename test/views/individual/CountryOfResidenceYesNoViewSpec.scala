@@ -28,7 +28,7 @@ class CountryOfResidenceYesNoViewSpec extends YesNoViewBehaviours {
 
   val messageKeyPrefix = "otherIndividual.countryOfResidenceYesNo"
   val name = "Name"
-  val form = new YesNoFormProvider().withPrefix(messageKeyPrefix)
+  val form: Form[Boolean] = new YesNoFormProvider().withPrefix(messageKeyPrefix)
 
   "CountryOfResidenceYesNoView view" must {
 
