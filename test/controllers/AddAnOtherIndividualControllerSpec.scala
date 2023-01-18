@@ -263,26 +263,6 @@ class AddAnOtherIndividualControllerSpec extends SpecBase with ScalaFutures with
         application.stop()
       }
 
-      "redirect to the maintain task list when the user says they want to add later" ignore {
-
-        val fakeService = new FakeService(otherIndividuals)
-
-        val application = applicationBuilder(userAnswers = Some(emptyUserAnswers))
-          .overrides(bind(classOf[TrustService]).toInstance(fakeService))
-          .build()
-
-        val request = FakeRequest(POST, submitAnotherRoute)
-          .withFormUrlEncodedBody(("value", AddAnOtherIndividual.YesLater.toString))
-
-        val result = route(application, request).value
-
-        status(result) mustEqual SEE_OTHER
-
-        redirectLocation(result).value mustEqual "http://localhost:9788/maintain-a-trust/overview"
-
-        application.stop()
-      }
-
       "redirect to name page when the user answers yes now" in {
 
         val fakeService = new FakeService(otherIndividuals)
