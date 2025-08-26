@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package utils
+package views.components
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class ButtonSpec extends SpecBase{
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "Button component" should {
 
-  private val format = "d MMMM yyyy"
+    "render as a submit button" in {
+      val application = applicationBuilder().build()
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      val view = application.injector.instanceOf[views.html.components.Button]
+
+      val result = view.apply()(messages)
+
+      result.body must include ("Continue")
+    }
   }
 
 }
+
+

@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package utils
+package views.components
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class WarningSpec extends SpecBase {
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "Warning component" should {
 
-  private val format = "d MMMM yyyy"
+    "render as a GOV.UK warning text" in {
+      val application = applicationBuilder().build()
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      val view = application.injector.instanceOf[views.html.components.Warning]
+
+      val result = view.apply("timeout.message")(messages)
+      result.body must include("govuk-warning-text")
+    }
+
   }
-
 }

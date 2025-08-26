@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package utils
+package models
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import org.scalatest.matchers.must.Matchers
+import org.scalatest.wordspec.AnyWordSpec
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class ModeSpec extends AnyWordSpec with Matchers{
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
-
-  private val format = "d MMMM yyyy"
-
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+  "Mode" must {
+    "return a NormalMode type" in{
+      Mode.jsLiteral.to(NormalMode) mustBe "NormalMode"
+    }
+    "return a CheckMode type" in{
+      Mode.jsLiteral.to(CheckMode) mustBe "CheckMode"
+    }
   }
-
 }

@@ -14,21 +14,25 @@
  * limitations under the License.
  */
 
-package utils
+package views.components
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class SubHeadingSpec extends SpecBase{
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "SubHeading component" should {
 
-  private val format = "d MMMM yyyy"
+    "render as sub sections" in {
+      val application = applicationBuilder().build()
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      val view = application.injector.instanceOf[views.html.components.SubHeading]
+
+      val result = view.apply("otherIndividual.interrupt.page.caption", "en")(messages)
+
+      result.body must include ("This section is")
+    }
   }
 
 }
+
+

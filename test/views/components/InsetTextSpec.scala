@@ -14,21 +14,22 @@
  * limitations under the License.
  */
 
-package utils
+package views.components
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class InsetTextSpec extends SpecBase {
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "Inset Text component" should {
 
-  private val format = "d MMMM yyyy"
+    "render as a GOV.UK inset text" in {
+      val application = applicationBuilder().build()
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      val view = application.injector.instanceOf[views.html.components.InsetText]
+
+      val result = view.apply("site.complete", "id")(messages)
+      result.body must include("govuk-inset-text")
+    }
+
   }
-
 }

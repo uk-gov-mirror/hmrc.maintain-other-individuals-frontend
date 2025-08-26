@@ -14,21 +14,27 @@
  * limitations under the License.
  */
 
-package utils
+package models
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class YesNoDontKnowSpec extends SpecBase {
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "YesNoDontKnow" when {
 
-  private val format = "d MMMM yyyy"
+    ".fromBoolean" should {
+      "return Yes when give Some(false)" in {
+        YesNoDontKnow.fromBoolean(Some(false)) mustBe Some(YesNoDontKnow.Yes)
+      }
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      "return No when give Some(true)" in {
+        YesNoDontKnow.fromBoolean(Some(true)) mustBe Some(YesNoDontKnow.No)
+      }
+
+      "return DontKnow when give no value" in {
+        YesNoDontKnow.fromBoolean(None) mustBe Some(YesNoDontKnow.DontKnow)
+      }
+    }
   }
 
 }

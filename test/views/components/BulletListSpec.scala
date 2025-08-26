@@ -14,21 +14,23 @@
  * limitations under the License.
  */
 
-package utils
+package views.components
 
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import base.SpecBase
 
-import com.google.inject.Inject
-import config.FrontendAppConfig
+class BulletListSpec extends SpecBase {
 
-class DateFormatter @Inject()(config: FrontendAppConfig) {
+  "BulletList Component" should {
 
-  private val format = "d MMMM yyyy"
+    "render a list of items" in {
+     val application = applicationBuilder().build()
 
-  def formatDate(dateTime: LocalDateTime): String = {
-    val dateFormatter = DateTimeFormatter.ofPattern(format)
-    dateTime.format(dateFormatter)
+      val view = application.injector.instanceOf[views.html.components.BulletList]
+
+      val result = view.apply("otherIndividual.mentalCapacityYesNo", Seq("bulletpoint1", "bulletpoint2"))( messages)
+
+      result.body must include ("govuk-list--bullet")
+      result.body must include ("<li>" + messages("otherIndividual.mentalCapacityYesNo.bulletpoint1"))
   }
-
+}
 }
